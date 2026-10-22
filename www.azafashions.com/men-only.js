@@ -6,7 +6,7 @@
     'Kids',
     'Jewellery',
     'Accessories',
-    'Aza Editorials',
+    'Kryaa Editorials',
     "What's Next?"
   ]);
 
@@ -24,7 +24,7 @@
       const filteredSections = sections.filter((section) => {
         const title = String(section.title || '').toLowerCase();
         const heading = String(section.sectionHeadingText || '').replace(/\s+/g, ' ').trim();
-        return title !== 'magazine' && heading !== 'Aza Editorials' && heading !== "What's Next?";
+        return title !== 'magazine' && heading !== 'Kryaa Editorials' && heading !== "What's Next?";
       });
 
       if (filteredSections.length === sections.length) return;
@@ -56,7 +56,7 @@
 
   const cleanEditorialSection = () => {
     document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
-      if (heading.textContent.replace(/\s+/g, ' ').trim() !== 'Aza Editorials') return;
+      if (heading.textContent.replace(/\s+/g, ' ').trim() !== 'Kryaa Editorials') return;
 
       const section = heading.closest('section') || heading.parentElement?.parentElement;
       if (section) section.remove();

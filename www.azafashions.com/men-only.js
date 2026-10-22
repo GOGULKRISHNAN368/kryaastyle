@@ -14,6 +14,39 @@
     '../image/newarrival10.jpg'
   ];
 
+  const shopByOccasionCards = [
+    {
+      title: 'Wedding',
+      image: '../images/Wedding.png',
+      href: 'aza-curates/sunkissed-summer-weddings/3401.html?category_uFilter=Men'
+    },
+    {
+      title: 'Sangeet',
+      image: '../images/sangeet.png',
+      href: 'aza-curates/sangeet/3748.html'
+    },
+    {
+      title: 'Reception & Cocktail',
+      image: '../images/Reception.png',
+      href: 'aza-curates/reception/3750.html'
+    },
+    {
+      title: 'Festive',
+      image: '../images/festival.png',
+      href: 'aza-curates/mehendi/3747.html'
+    },
+    {
+      title: 'Casuals',
+      image: '../images/Casuals.png',
+      href: 'aza-curates/roka/3746.html'
+    },
+    {
+      title: 'Office Wear',
+      image: '../images/Office_Wear.png',
+      href: 'aza-curates/haldi-classics/3615.html'
+    }
+  ];
+
   const unwantedLabels = new Set([
     'Women',
     'Kids',
@@ -343,6 +376,87 @@
     setPage(Number(carousel.dataset.currentPage || 0));
   };
 
+  const setupShopByOccasionSection = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Occasion');
+    const section = heading?.parentElement?.parentElement;
+    const grid = section?.querySelector('.grid');
+    if (!section || !grid || grid.dataset.localOccasionsReady === 'true') return;
+
+    const cards = Array.from(grid.children).slice(0, shopByOccasionCards.length);
+    if (cards.length !== shopByOccasionCards.length) return;
+
+    cards.forEach((card, index) => {
+      const item = shopByOccasionCards[index];
+      card.classList.add('shop-by-occasion-card');
+      card.innerHTML = `
+        <a href="${item.href}" aria-label="Shop ${item.title}">
+          <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">
+          <span>${item.title}</span>
+        </a>
+      `;
+    });
+
+    grid.dataset.localOccasionsReady = 'true';
+
+    if (!document.getElementById('shop-by-occasion-styles')) {
+      const style = document.createElement('style');
+      style.id = 'shop-by-occasion-styles';
+      style.textContent = `
+        .shop-by-occasion-card {
+          overflow: hidden;
+          border-radius: 16px;
+          background: #f1eee9;
+        }
+
+        .shop-by-occasion-card > a {
+          position: absolute;
+          inset: 0;
+          display: block;
+          overflow: hidden;
+        }
+
+        .shop-by-occasion-card img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform .35s ease;
+        }
+
+        .shop-by-occasion-card:hover img {
+          transform: scale(1.03);
+        }
+
+        .shop-by-occasion-card span {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          padding: 28px 14px 14px;
+          color: #fff;
+          font-size: 18px;
+          line-height: 1.15;
+          text-align: center;
+          text-shadow: 0 1px 5px rgba(0, 0, 0, .55);
+          background: linear-gradient(transparent, rgba(0, 0, 0, .55));
+        }
+
+        @media screen and (max-width: 767px) {
+          .shop-by-occasion-card {
+            border-radius: 12px;
+          }
+
+          .shop-by-occasion-card span {
+            padding: 20px 5px 7px;
+            font-size: 10px;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  };
+
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -369,6 +483,7 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupShopByOccasionSection();
     cleanPageLinks();
     cleanEditorialSection();
   };

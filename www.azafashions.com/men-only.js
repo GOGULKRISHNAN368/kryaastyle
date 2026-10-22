@@ -47,6 +47,16 @@
     }
   ];
 
+  const shopByCategoryCards = [
+    { title: 'Chudi', image: '../image/chudi.png', href: 'collection/women/chudi.html' },
+    { title: 'Short Tops', image: '../image/Short%20Tops.png', href: 'collection/women/short-tops.html' },
+    { title: 'Full Frocks', image: '../image/FUll%20frocks.png', href: 'collection/women/full-frocks.html' },
+    { title: 'Kurti Sets', image: '../image/Kurti%20Sets.png', href: 'collection/women/kurti-sets.html' },
+    { title: 'Sarees', image: '../image/saree.png', href: 'collection/women/sarees.html' },
+    { title: 'Salwar Suits', image: '../image/Salwar%20Suits.png', href: 'collection/women/salwar-suits.html' },
+    { title: 'Anarkali Suits', image: '../image/Anarkali%20Suits.png', href: 'collection/women/anarkali-suits.html' }
+  ];
+
   const unwantedLabels = new Set([
     'Women',
     'Kids',
@@ -457,6 +467,192 @@
     }
   };
 
+  const setupShopByCategorySection = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Category');
+    const section = heading?.closest('.kryaa-category-section') || heading?.parentElement?.parentElement;
+    if (!section || section.dataset.womenCategoriesReady === 'true') return;
+
+    section.dataset.womenCategoriesReady = 'true';
+    section.classList.add('women-category-section');
+
+    const makeCard = (item) => `
+      <a class="women-category-card" href="${item.href}">
+        <span class="women-category-circle">
+          <img src="${item.image}" alt="${item.title}" loading="lazy" decoding="async">
+        </span>
+        <span class="women-category-title">${item.title}</span>
+      </a>
+    `;
+
+    section.innerHTML = `
+      <div class="flex items-center gap-x-3 lg:gap-x-7 px-4 lg:px-0 justify-center">
+        <h2 class="lg:text-[32px] lg:leading-9 text-xl flex items-center text-azaBlackShade3 __className_f37194 font-normal">Shop By Category</h2>
+      </div>
+      <div class="women-category-desktop">${shopByCategoryCards.map(makeCard).join('')}</div>
+      <div class="women-category-mobile" aria-label="Women categories">
+        <div class="women-category-mobile-track">
+          <div class="women-category-mobile-page">${shopByCategoryCards.slice(0, 6).map(makeCard).join('')}</div>
+          <div class="women-category-mobile-page">${shopByCategoryCards.slice(6).map(makeCard).join('')}</div>
+        </div>
+        <div class="women-category-dots" aria-label="Category pages">
+          <button type="button" class="women-category-dot is-active" aria-label="Show first category page"></button>
+          <button type="button" class="women-category-dot" aria-label="Show second category page"></button>
+        </div>
+      </div>
+    `;
+
+    if (!document.getElementById('women-category-styles')) {
+      const style = document.createElement('style');
+      style.id = 'women-category-styles';
+      style.textContent = `
+        .women-category-desktop {
+          display: grid;
+          grid-template-columns: repeat(7, minmax(0, 1fr));
+          gap: 14px;
+          padding: 0 8px;
+        }
+
+        .women-category-card {
+          display: flex;
+          min-width: 0;
+          flex-direction: column;
+          align-items: center;
+          color: #3c4242;
+          text-decoration: none;
+        }
+
+        .women-category-circle {
+          display: block;
+          width: min(160px, 100%);
+          aspect-ratio: 1;
+          overflow: hidden;
+          border: 2px solid #fff;
+          border-radius: 999px;
+          background: #f7f7f7;
+          box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
+        }
+
+        .women-category-circle img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top;
+          transition: transform .3s ease;
+        }
+
+        .women-category-card:hover .women-category-circle img {
+          transform: scale(1.06);
+        }
+
+        .women-category-title {
+          margin-top: 12px;
+          color: #3c4242;
+          font-size: 15px;
+          line-height: 1.3;
+          text-align: center;
+        }
+
+        .women-category-mobile {
+          display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+          .women-category-desktop {
+            display: none;
+          }
+
+          .women-category-mobile {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            padding: 0 4px;
+            touch-action: pan-y;
+          }
+
+          .women-category-mobile-track {
+            display: flex;
+            width: 200%;
+            transition: transform .35s cubic-bezier(.25, 1, .5, 1);
+          }
+
+          .women-category-mobile-page {
+            display: grid;
+            width: 50%;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px 8px;
+            padding: 0 8px;
+            box-sizing: border-box;
+          }
+
+          .women-category-mobile-page .women-category-card {
+            width: 100%;
+          }
+
+          .women-category-mobile .women-category-circle {
+            width: 92px;
+            max-width: 100%;
+          }
+
+          .women-category-mobile .women-category-title {
+            margin-top: 8px;
+            font-size: 13px;
+          }
+
+          .women-category-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 14px 0 4px;
+          }
+
+          .women-category-dot {
+            width: 7px;
+            height: 7px;
+            padding: 0;
+            border: 0;
+            border-radius: 999px;
+            background: #d1d5db;
+          }
+
+          .women-category-dot.is-active {
+            width: 9px;
+            height: 9px;
+            background: #1f2937;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    const track = section.querySelector('.women-category-mobile-track');
+    const dots = Array.from(section.querySelectorAll('.women-category-dot'));
+    const setPage = (page) => {
+      const nextPage = Math.max(0, Math.min(1, page));
+      track.style.transform = `translateX(-${nextPage * 50}%)`;
+      dots.forEach((dot, index) => dot.classList.toggle('is-active', index === nextPage));
+    };
+
+    dots.forEach((dot, index) => { dot.onclick = () => setPage(index); });
+
+    let startX = 0;
+    let distance = 0;
+    const mobile = section.querySelector('.women-category-mobile');
+    mobile.addEventListener('touchstart', (event) => {
+      startX = event.changedTouches[0]?.clientX || 0;
+      distance = 0;
+    }, { passive: true });
+    mobile.addEventListener('touchmove', (event) => {
+      distance = (event.changedTouches[0]?.clientX || 0) - startX;
+    }, { passive: true });
+    mobile.addEventListener('touchend', () => {
+      const activePage = track.style.transform.includes('-50%') ? 1 : 0;
+      if (Math.abs(distance) < 40) return;
+      setPage(activePage + (distance < 0 ? 1 : -1));
+    }, { passive: true });
+  };
+
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -484,6 +680,7 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupShopByCategorySection();
     setupShopByOccasionSection();
     cleanPageLinks();
     cleanEditorialSection();

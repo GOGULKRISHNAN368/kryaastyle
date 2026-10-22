@@ -460,6 +460,7 @@
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
+      if (/(^|\/)collection\/women\//i.test(href)) return;
       if (!unwantedPage.test(href) || /(^|\/)men\//i.test(href)) return;
 
       const item = link.closest('li') || link;

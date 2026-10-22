@@ -1,0 +1,14 @@
+{
+  "name": "kryaastyle",
+  "version": "1.0.0",
+  "description": "Kryaa Style website",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "serve": "npx serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

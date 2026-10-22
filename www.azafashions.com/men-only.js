@@ -1,7 +1,10 @@
 (() => {
   'use strict';
 
-  const newArrivalImage = '../image/newarrival1.jpg';
+  const newArrivalImages = [
+    '../image/newarrival1.jpg',
+    '../image/newarrival2.jpg'
+  ];
 
   const unwantedLabels = new Set([
     'Women',
@@ -34,9 +37,9 @@
         const heading = String(section.sectionHeadingText || '').replace(/\s+/g, ' ').trim();
         if (heading === 'Designers In The Spotlight') {
           section.sectionHeadingText = 'New Arrivals';
-          if (section.list?.[0]?.bannerData) {
-            section.list[0].bannerData.image = newArrivalImage;
-          }
+          section.list?.slice(0, newArrivalImages.length).forEach((item, index) => {
+            if (item?.bannerData) item.bannerData.image = newArrivalImages[index];
+          });
           dataChanged = true;
         }
       });
@@ -79,11 +82,11 @@
       if (label !== 'New Arrivals' && label !== 'Designers In The Spotlight') return;
 
       const section = heading.closest('section') || heading.parentElement?.parentElement;
-      const image = section?.querySelector('img');
-      if (!image) return;
-
-      image.src = newArrivalImage;
-      image.removeAttribute('srcset');
+      const images = Array.from(section?.querySelectorAll('img') || []);
+      images.slice(0, newArrivalImages.length).forEach((image, index) => {
+        image.src = newArrivalImages[index];
+        image.removeAttribute('srcset');
+      });
     });
   };
 

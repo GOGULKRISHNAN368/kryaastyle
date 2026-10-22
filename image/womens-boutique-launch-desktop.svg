@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2256 802" role="img" aria-labelledby="title desc">
+  <title id="title">Kryaa Style — The Woman’s Edit</title>
+  <desc id="desc">A season of your own. Launching 25 October.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0" stop-color="#30090b" stop-opacity="0"/>
+      <stop offset=".18" stop-color="#30090b" stop-opacity=".88"/>
+      <stop offset="1" stop-color="#30090b" stop-opacity=".97"/>
+    </linearGradient>
+    <linearGradient id="footer" x1="0" x2="1">
+      <stop stop-color="#30090b" stop-opacity=".72"/>
+      <stop offset=".5" stop-color="#30090b" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#30090b" stop-opacity=".72"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feOffset dy="2"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".42"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <image href="../static3.azafashions.com/uploads/landing_page_section_content_image/1790599568970wedding-stories-by-aza.jpg" width="2256" height="802" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="900" y="0" width="1356" height="802" fill="url(#panel)"/>
+  <rect x="0" y="610" width="2256" height="192" fill="url(#footer)"/>
+  <g text-anchor="middle" filter="url(#soft-shadow)">
+    <text x="1630" y="157" fill="#f2d99d" font-family="Arial, sans-serif" font-size="25" letter-spacing="10">KRYAA STYLE</text>
+    <path d="M1450 191h130m100 0h130" stroke="#d4ac65" stroke-width="2"/>
+    <path d="M1630 178l12 13-12 13-12-13z" fill="#dfbd79"/>
+    <text x="1630" y="273" fill="#fff5e3" font-family="Arial, sans-serif" font-size="23" letter-spacing="8">THE WOMAN’S EDIT</text>
+    <text x="1630" y="378" fill="#f3d18c" font-family="Georgia, 'Times New Roman', serif" font-size="77">A season of your own</text>
+    <text x="1630" y="435" fill="#fff7ed" font-family="Arial, sans-serif" font-size="25" letter-spacing="1.5">Modern heirlooms for every celebration</text>
+    <rect x="1386" y="492" width="488" height="70" rx="3" fill="none" stroke="#e0bd78" stroke-width="2"/>
+    <text x="1630" y="537" fill="#f2d99d" font-family="Arial, sans-serif" font-size="23" font-weight="600" letter-spacing="5">LAUNCHING 25 OCTOBER</text>
+  </g>
+  <text x="1128" y="686" fill="#f4e5c9" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" letter-spacing="7">CELEBRATE YOUR EVERYDAY EXTRAORDINARY</text>
+</svg>

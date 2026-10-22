@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" role="img" aria-label="Light up your style this Diwali.">
+  <defs>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dy="2"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".65"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g text-anchor="middle" filter="url(#shadow)">
+    <text x="300" y="64" fill="#fff7e9" font-family="Arial, sans-serif" font-size="18" letter-spacing="5">LIGHT UP YOUR STYLE THIS</text>
+    <path d="M205 91h70m50 0h70" stroke="#d9ad63" stroke-width="1"/>
+    <path d="M300 82l8 9-8 9-8-9z" fill="#e8c27b"/>
+    <text x="300" y="190" fill="#f1c979" font-family="Georgia, 'Times New Roman', serif" font-size="102">Diwali</text>
+    <path d="M175 211h250" stroke="#d9ad63" stroke-width="1"/>
+    <text x="300" y="245" fill="#fff7e9" font-family="Arial, sans-serif" font-size="16" letter-spacing="1">Timeless Ethnic Wear  |  Festive Vibes</text>
+  </g>
+</svg>

@@ -3,7 +3,15 @@
 
   const newArrivalImages = [
     '../image/newarrival1.jpg',
-    '../image/newarrival2.jpg'
+    '../image/newarrival2.jpg',
+    '../image/newarrival3.jpg',
+    '../image/newarrival4.jpg',
+    '../image/newarrival5.jpg',
+    '../image/newarrival6.jpg',
+    '../image/newarrival7.jpg',
+    '../image/newarrival8.jpg',
+    '../image/newarrival9.jpg',
+    '../image/newarrival10.jpg'
   ];
 
   const unwantedLabels = new Set([

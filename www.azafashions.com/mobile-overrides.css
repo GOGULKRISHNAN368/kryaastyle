@@ -1,24 +1,10 @@
 /* Mobile layout refinements for the Kryaa storefront. */
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .slick-arrow {
+.wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) .slick-arrow {
   display: none !important;
 }
 
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) picture img {
+.wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture img {
   filter: brightness(1.05) saturate(.98);
-}
-
-@media (min-width: 768px) {
-  .wrapperContainer:has(img[src*="banner-desktop.jpg"]) a > div[style*="aspect-ratio"]::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    left: 59%;
-    top: 80%;
-    width: 17%;
-    height: 11%;
-    background: #57171e;
-    pointer-events: none;
-  }
 }
 
 @media (max-width: 767px) {
@@ -33,30 +19,30 @@
     display: none !important;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) {
     padding-inline: 22px;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) > .overflow-hidden {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) > .overflow-hidden {
     border-radius: 24px;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) a > div[style*="aspect-ratio"] {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) a > div[style*="aspect-ratio"] {
     aspect-ratio: 1.03 !important;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) picture {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture {
     overflow: hidden;
     background: #59151a;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) picture img {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture img {
     z-index: 1;
     object-fit: cover !important;
     object-position: center center !important;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) picture::before {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture::before {
     content: "";
     position: absolute;
     z-index: 2;
@@ -65,7 +51,7 @@
     pointer-events: none;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) picture::after {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture::after {
     content: "";
     position: absolute;
     z-index: 3;
@@ -77,11 +63,11 @@
     pointer-events: none;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) a > div[style*="aspect-ratio"] > div.absolute {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) a > div[style*="aspect-ratio"] > div.absolute {
     display: none !important;
   }
 
-  main > .relative > .wrapperContainer:has(img[src*="banner-desktop.jpg"]) .slick-arrow {
+  main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) .slick-arrow {
     display: none !important;
   }
 

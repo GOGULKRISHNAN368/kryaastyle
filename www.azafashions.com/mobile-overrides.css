@@ -1,10 +1,12 @@
-/* Mobile layout refinements for the Kryaa storefront. */
+/* Banner and mobile layout refinements for the Kryaa storefront. */
 .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) .slick-arrow {
   display: none !important;
 }
 
-.wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture img {
-  filter: brightness(1.05) saturate(.98);
+@media (min-width: 768px) {
+  .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) a > div[style*="aspect-ratio"] > div.absolute {
+    display: none !important;
+  }
 }
 
 @media (max-width: 767px) {
@@ -40,6 +42,7 @@
     z-index: 1;
     object-fit: cover !important;
     object-position: center center !important;
+    filter: brightness(1.05) saturate(.98);
   }
 
   main > .relative > .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) picture::before {

@@ -26,17 +26,17 @@
       href: 'aza-curates/sangeet/3748.html'
     },
     {
-      title: 'Reception & Cocktail',
+      title: 'Reception',
       image: '../images/Reception.png',
       href: 'aza-curates/reception/3750.html'
     },
     {
-      title: 'Festive',
+      title: 'Festival',
       image: '../images/festival.png',
       href: 'aza-curates/mehendi/3747.html'
     },
     {
-      title: 'Casuals',
+      title: 'Casual',
       image: '../images/Casuals.png',
       href: 'aza-curates/roka/3746.html'
     },
@@ -403,7 +403,7 @@
 
   const setupShopByOccasionSection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
-      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Occasion');
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop by Occasion');
     const section = heading?.parentElement?.parentElement;
     const grid = section?.querySelector('.grid');
     if (!section || !grid || grid.dataset.localOccasionsReady === 'true') return;

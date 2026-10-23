@@ -18,43 +18,56 @@
     {
       title: 'Wedding',
       image: '../images/Wedding.png',
-      href: 'aza-curates/sunkissed-summer-weddings/3401.html?category_uFilter=Men'
+      href: 'category.html?edit=wedding'
     },
     {
       title: 'Sangeet',
       image: '../images/sangeet.png',
-      href: 'aza-curates/sangeet/3748.html'
+      href: 'category.html?edit=sangeet'
     },
     {
       title: 'Reception & Cocktail',
       image: '../images/Reception.png',
-      href: 'aza-curates/reception/3750.html'
+      href: 'category.html?edit=reception'
     },
     {
       title: 'Festive',
       image: '../images/festival.png',
-      href: 'aza-curates/mehendi/3747.html'
+      href: 'category.html?edit=festival'
     },
     {
       title: 'Casuals',
       image: '../images/Casuals.png',
-      href: 'aza-curates/roka/3746.html'
+      href: 'category.html?edit=casual'
     },
     {
       title: 'Office Wear',
       image: '../images/Office_Wear.png',
-      href: 'aza-curates/haldi-classics/3615.html'
+      href: 'category.html?edit=office-wear'
     }
   ];
 
+  const curatedTrendingLooks = [
+    { title: 'Midnight Garden Suit Set', caption: 'A richly embroidered black suit set for elegant evening celebrations.', image: '../image/newarrival1.jpg', href: 'category.html?category=chudi' },
+    { title: 'Ruby Heirloom Gown', caption: 'A dramatic ruby silhouette with fine detailing for a memorable occasion.', image: '../image/newarrival2.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Emerald Garden Anarkali', caption: 'Deep emerald embroidery and a graceful flare bring this look to life.', image: '../image/newarrival3.jpg', href: 'category.html?category=anarkali-suits' },
+    { title: 'Sapphire Embroidered Gown', caption: 'A midnight blue statement with delicate embroidery and a fluid finish.', image: '../image/newarrival4.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Golden Hour Celebration Suit', caption: 'A warm golden look designed for festive gatherings and special moments.', image: '../image/newarrival5.jpg', href: 'category.html?category=salwar-suits' },
+    { title: 'Teal Blossom Anarkali', caption: 'A teal embroidered silhouette with soft movement and timeless detail.', image: '../image/newarrival6.jpg', href: 'category.html?category=anarkali-suits' },
+    { title: 'Lavender Dream Gown', caption: 'Light lavender layers and delicate embellishment create an ethereal finish.', image: '../image/newarrival7.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Coral Garden Occasion Look', caption: 'A fresh coral palette with floral detailing for daytime celebrations.', image: '../image/newarrival8.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Ivory Lumière Embroidered Look', caption: 'Soft ivory embroidery brings understated elegance to occasion dressing.', image: '../image/newarrival9.jpg', href: 'category.html?category=kurti-sets' },
+    { title: 'Plum Royale Anarkali', caption: 'A rich plum tone and intricate finish make this a striking celebration look.', image: '../image/newarrival10.jpg', href: 'category.html?category=anarkali-suits' }
+  ];
+
   const shopByCategoryCards = [
-    { title: 'Chudi', image: '../image/chudi.png', href: 'collection/women/chudi.html' },
-    { title: 'Short Tops', image: '../image/Short%20Tops.png', href: 'collection/women/short-tops.html' },
-    { title: 'Full Frocks', image: '../image/FUll%20frocks.png', href: 'collection/women/full-frocks.html' },
-    { title: 'Kurti Sets', image: '../image/Kurti%20Sets.png', href: 'collection/women/kurti-sets.html' },
-    { title: 'Sarees', image: '../image/saree.png', href: 'collection/women/sarees.html' },
-    { title: 'Salwar Suits', image: '../image/Salwar%20Suits.png', href: 'collection/women/salwar-suits.html' },
-    { title: 'Anarkali Suits', image: '../image/Anarkali%20Suits.png', href: 'collection/women/anarkali-suits.html' }
+    { title: 'Chudi', image: '../image/category-chudi.png', href: 'category.html?category=chudi' },
+    { title: 'Short Tops', image: '../image/category-short-tops.png', href: 'category.html?category=short-tops' },
+    { title: 'Full Frocks', image: '../image/category-full-frocks.png', href: 'category.html?category=full-frocks' },
+    { title: 'Kurti Sets', image: '../image/category-kurti-sets.png', href: 'category.html?category=kurti-sets' },
+    { title: 'Sarees', image: '../image/category-sarees.png', href: 'category.html?category=sarees' },
+    { title: 'Salwar Suits', image: '../image/category-salwar-suits.png', href: 'category.html?category=salwar-suits' },
+    { title: 'Anarkali Suits', image: '../image/category-anarkali-suits.png', href: 'category.html?category=anarkali-suits' }
   ];
 
   const kryaaLuxeSlides = [
@@ -70,19 +83,6 @@
       image: '../image/kryaa-luxe-green.png',
       alt: 'Original fashion editorial portrait of a woman wearing an emerald green embroidered saree'
     }
-  ];
-
-  const curatedTrendingLooks = [
-    { title: 'Black Kurta Set', caption: 'A timeless statement in deep black, made for evenings that call for understated impact.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068555339Black%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Gold Bandhgala Set', caption: 'A refined bandhgala brings a polished finish to celebrations after sundown.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068439819Gold%20Bandhgala%20Set.jpg', href: 'collection/men/bandhgalas' },
-    { title: 'Ivory Jacket Kurta Set', caption: 'Soft ivory layers create an easy statement for the season\'s special occasions.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Cream Nehru Jacket Set', caption: 'A clean, modern take on occasion dressing with a quietly dressed-up feel.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068141747Cream%20Nehru%20Jacket%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Beige Kurta Set', caption: 'Warm neutrals and relaxed tailoring make this an effortless celebration look.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067993159Beige%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Ivory Embroidered Bundi Set', caption: 'Intricate embroidery adds just the right note of detail to a classic silhouette.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067901613Ivory%20Embroidered%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Jacket Kurta Set', caption: 'A fresh shade of green gives traditional layers a confident new mood.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067765481Green%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Silk Bundi Set', caption: 'Lustrous silk and rich colour bring a little occasion-ready drama.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067591654Green%20Silk%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Bundi Set', caption: 'A versatile layered look that moves easily from daytime gatherings to dinner.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067448148Green%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Olive Green Sherwani Set', caption: 'A distinctive olive sherwani for moments worth dressing up for.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790061621555Olive%20Green%20Sherwani%20Set.jpg', href: 'collection/men/sherwanis' }
   ];
 
   const unwantedLabels = new Set([
@@ -121,6 +121,11 @@
           });
           dataChanged = true;
         }
+        if (heading === 'In High Demand') {
+          section.sectionHeadingText = 'Curated Trending Looks';
+          section.sectionDescription = 'A considered edit of the looks trending now.';
+          dataChanged = true;
+        }
       });
 
       if (!dataChanged) return;
@@ -140,31 +145,6 @@
     });
   };
 
-  const syncHeaderToCategories = () => {
-    document.querySelectorAll('header ul').forEach((list) => {
-      const items = Array.from(list.querySelectorAll(':scope > li'));
-      const hasMenNavigation = items.some((item) => {
-        const href = item.querySelector('a')?.getAttribute('href') || '';
-        return /collection\/men\//i.test(href) || /men\/category\/accessories\/footwear/i.test(href);
-      });
-      if (!hasMenNavigation) return;
-
-      list.classList.add('kryaa-category-header-list');
-
-      shopByCategoryCards.forEach((category, index) => {
-        const item = items[index];
-        const link = item?.querySelector('a');
-        if (!item || !link) return;
-
-        link.setAttribute('href', category.href);
-        const label = link.querySelector('div, span') || link;
-        label.textContent = category.title;
-      });
-
-      items.slice(shopByCategoryCards.length).forEach((item) => item.remove());
-    });
-  };
-
   const cleanImageSearch = () => {
     document.querySelectorAll('#imageSearchIO_deskNav').forEach((input) => {
       const section = input.closest('section');
@@ -174,7 +154,7 @@
 
   const setupHeroCarousel = () => {
     const hero = Array.from(document.querySelectorAll('.slick-slider'))
-      .find((slider) => slider.querySelector('img[src*="banner-desktop"]'));
+      .find((slider) => slider.querySelector('img[src*="banner-desktop.jpg"]'));
     const track = hero?.querySelector('.slick-track');
     const firstSlide = track?.querySelector('.slick-slide');
     if (!hero || !track || !firstSlide || hero.classList.contains('kryaa-hero-carousel')) return;
@@ -184,23 +164,21 @@
     secondSlide.classList.add('kryaa-inclusive-slide');
     secondSlide.dataset.index = '1';
     secondSlide.setAttribute('aria-hidden', 'true');
-
     const image = secondSlide.querySelector('img');
     const source = secondSlide.querySelector('source');
+    const imagePath = '../images/Inclusive%20Comfort%20Fashion%20Collection%20(1).png';
     if (image) {
-      image.src = '../images/Inclusive%20Comfort%20Fashion%20Collection%20(1).png';
+      image.src = imagePath;
       image.alt = 'Inclusive Comfort Fashion Collection';
       image.removeAttribute('srcset');
       image.removeAttribute('fetchpriority');
     }
     if (source) source.srcset = '../images/Designed%20for%20Every%20Story.png';
-
     const link = secondSlide.querySelector('a');
     if (link) {
       link.href = 'collection/men';
       link.setAttribute('aria-label', 'Shop the Inclusive Comfort Fashion collection');
     }
-
     track.appendChild(secondSlide);
     hero.classList.add('kryaa-hero-carousel');
     track.dataset.kryaaSlide = '0';
@@ -217,13 +195,11 @@
         slide.setAttribute('aria-hidden', String(!isActive));
       });
     };
-
     hero.querySelectorAll('.slick-arrow').forEach((arrow) => {
       arrow.addEventListener('click', () => {
         update(Number(track.dataset.kryaaSlide || 0) + (arrow.classList.contains('slick-prev') ? -1 : 1));
       });
     });
-
     let timer = window.setInterval(() => update(Number(track.dataset.kryaaSlide || 0) + 1), 3000);
     hero.addEventListener('mouseenter', () => window.clearInterval(timer));
     hero.addEventListener('mouseleave', () => {
@@ -252,6 +228,22 @@
         image.removeAttribute('srcset');
       });
     });
+  };
+
+  const setupNewArrivalsCollectionLinks = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'New Arrivals');
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    if (!section || section.dataset.collectionLinksReady === 'true') return;
+
+    section.addEventListener('click', (event) => {
+      const card = event.target.closest('.slick-slide, .new-arrivals-mobile-grid-card');
+      if (!card || !section.contains(card)) return;
+      if (event.target.closest('button')) return;
+      event.preventDefault();
+      window.location.href = 'category.html?edit=new-arrivals';
+    });
+    section.dataset.collectionLinksReady = 'true';
   };
 
   const injectNewArrivalsMobileStyles = () => {
@@ -468,11 +460,11 @@
       controls = document.createElement('div');
       controls.className = 'new-arrivals-mobile-controls';
       controls.innerHTML = `
-        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">‹</button>
+        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">â€¹</button>
         <div class="new-arrivals-mobile-progress" aria-hidden="true">
           <span class="new-arrivals-mobile-progress-thumb"></span>
         </div>
-        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">›</button>
+        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">â€º</button>
       `;
       host.appendChild(controls);
     }
@@ -520,6 +512,7 @@
     setPage(Number(carousel.dataset.currentPage || 0));
   };
 
+
   const setupNewArrivalsDesktopCarousel = () => {
     if (window.matchMedia('(max-width: 767px)').matches) return;
 
@@ -563,7 +556,6 @@
     slider.dataset.newArrivalsDesktopReady = 'true';
     setSlide(0);
   };
-
   const setupShopByOccasionSection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop by Occasion');
@@ -645,6 +637,104 @@
     }
   };
 
+  const setupCuratedTrendingLooks = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'In High Demand' || item.textContent.replace(/\s+/g, ' ').trim() === 'Curated Trending Looks');
+    if (!heading) return;
+
+    const label = heading.textContent.replace(/\s+/g, ' ').trim();
+    if (label === 'In High Demand') heading.textContent = 'Curated Trending Looks';
+
+    let host = heading.closest('section') || heading.parentElement?.parentElement;
+    for (let depth = 0; host && depth < 4 && !host.querySelector('.slick-slider'); depth += 1) {
+      host = host.parentElement;
+    }
+    const originalSlider = host?.querySelector('.slick-slider');
+    if (!host || !originalSlider) return;
+
+    let carousel = host.querySelector('.curated-trending-looks');
+    if (!carousel) {
+      carousel = document.createElement('div');
+      carousel.className = 'curated-trending-looks';
+      carousel.innerHTML = `
+        <div class="curated-trending-looks__eyebrow">THE LOOKBOOK</div>
+        <div class="curated-trending-looks__viewport" role="region" aria-label="Curated trending looks carousel" aria-roledescription="carousel">
+          <div class="curated-trending-looks__track"></div>
+        </div>
+        <div class="curated-trending-looks__footer">
+          <div class="curated-trending-looks__progress" aria-hidden="true"><span></span></div>
+          <div class="curated-trending-looks__navigation">
+            <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous look">&lsaquo;</button>
+            <span class="curated-trending-looks__count" aria-live="polite">01 / 10</span>
+            <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next look">&rsaquo;</button>
+          </div>
+        </div>
+      `;
+
+      const track = carousel.querySelector('.curated-trending-looks__track');
+      curatedTrendingLooks.forEach((look, index) => {
+        const slide = document.createElement('article');
+        slide.className = 'curated-trending-looks__slide';
+        slide.setAttribute('aria-roledescription', 'slide');
+        slide.innerHTML = `
+          <a class="curated-trending-looks__visual" href="${look.href}" tabindex="${index === 0 ? '0' : '-1'}" aria-label="Shop ${look.title}">
+            <img src="${look.image}" alt="${look.title}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+            <span class="curated-trending-looks__image-label">LOOK ${String(index + 1).padStart(2, '0')}</span>
+          </a>
+          <div class="curated-trending-looks__details">
+            <span class="curated-trending-looks__number">${String(index + 1).padStart(2, '0')} <i></i> ${String(curatedTrendingLooks.length).padStart(2, '0')}</span>
+            <h3>${look.title}</h3>
+            <p>${look.caption}</p>
+            <a class="curated-trending-looks__shop" href="${look.href}">Shop the look <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        `;
+        track.appendChild(slide);
+      });
+
+      const count = carousel.querySelector('.curated-trending-looks__count');
+      const progress = carousel.querySelector('.curated-trending-looks__progress span');
+      const arrows = Array.from(carousel.querySelectorAll('.curated-trending-looks__arrow'));
+      let currentSlide = 0;
+      const setSlide = (slideNumber) => {
+        currentSlide = (slideNumber + curatedTrendingLooks.length) % curatedTrendingLooks.length;
+        track.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+        track.querySelectorAll('.curated-trending-looks__slide').forEach((slide, index) => {
+          const active = index === currentSlide;
+          slide.setAttribute('aria-hidden', String(!active));
+          slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
+        });
+        count.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(curatedTrendingLooks.length).padStart(2, '0')}`;
+        progress.style.transform = `scaleX(${(currentSlide + 1) / curatedTrendingLooks.length})`;
+      };
+
+      carousel.querySelectorAll('.curated-trending-looks__arrow').forEach((button) => {
+        button.addEventListener('click', () => {
+          const direction = Number(button.dataset.direction || 1);
+          setSlide(currentSlide + direction);
+        });
+      });
+
+      const viewport = carousel.querySelector('.curated-trending-looks__viewport');
+      let touchStartX = 0;
+      viewport.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0]?.clientX || 0;
+      }, { passive: true });
+      viewport.addEventListener('touchend', (event) => {
+        const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+        if (Math.abs(distance) > 45) setSlide(currentSlide + (distance < 0 ? 1 : -1));
+      }, { passive: true });
+      carousel.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') setSlide(currentSlide - 1);
+        if (event.key === 'ArrowRight') setSlide(currentSlide + 1);
+      });
+      setSlide(0);
+
+      originalSlider.insertAdjacentElement('afterend', carousel);
+      originalSlider.classList.add('curated-trending-looks__original');
+    }
+
+  };
+
   const setupShopByCategorySection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Category');
@@ -652,6 +742,7 @@
     if (!section || section.dataset.womenCategoriesReady === 'true') return;
 
     section.dataset.womenCategoriesReady = 'true';
+    section.id = 'shop-by-category';
     section.classList.add('women-category-section');
 
     const makeCard = (item) => `
@@ -931,101 +1022,6 @@
     });
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
-  };
-
-  const setupCuratedTrendingLooks = () => {
-    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
-      .find((item) => {
-        const label = item.textContent.replace(/\s+/g, ' ').trim();
-        return label === 'In High Demand' || label === 'Curated Trending Looks';
-      });
-    if (!heading) return;
-
-    if (heading.textContent.replace(/\s+/g, ' ').trim() === 'In High Demand') {
-      heading.textContent = 'Curated Trending Looks';
-    }
-
-    let host = heading.closest('section') || heading.parentElement?.parentElement;
-    for (let depth = 0; host && depth < 4 && !host.querySelector('.slick-slider'); depth += 1) {
-      host = host.parentElement;
-    }
-
-    const originalSlider = host?.querySelector('.slick-slider');
-    if (!host || !originalSlider || host.querySelector('.curated-trending-looks')) return;
-
-    const carousel = document.createElement('div');
-    carousel.className = 'curated-trending-looks';
-    carousel.innerHTML = `
-      <div class="curated-trending-looks__eyebrow">THE LOOKBOOK</div>
-      <div class="curated-trending-looks__viewport" role="region" aria-label="Curated trending looks carousel" aria-roledescription="carousel">
-        <div class="curated-trending-looks__track"></div>
-      </div>
-      <div class="curated-trending-looks__footer">
-        <div class="curated-trending-looks__progress" aria-hidden="true"><span></span></div>
-        <div class="curated-trending-looks__navigation">
-          <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous look">&lsaquo;</button>
-          <span class="curated-trending-looks__count" aria-live="polite">01 / 10</span>
-          <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next look">&rsaquo;</button>
-        </div>
-      </div>
-    `;
-
-    const track = carousel.querySelector('.curated-trending-looks__track');
-    curatedTrendingLooks.forEach((look, index) => {
-      const slide = document.createElement('article');
-      slide.className = 'curated-trending-looks__slide';
-      slide.setAttribute('aria-roledescription', 'slide');
-      slide.innerHTML = `
-        <a class="curated-trending-looks__visual" href="${look.href}" tabindex="${index === 0 ? '0' : '-1'}" aria-label="Shop ${look.title}">
-          <img src="${look.image}" alt="${look.title}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
-          <span class="curated-trending-looks__image-label">LOOK ${String(index + 1).padStart(2, '0')}</span>
-        </a>
-        <div class="curated-trending-looks__details">
-          <span class="curated-trending-looks__number">${String(index + 1).padStart(2, '0')} <i></i> ${String(curatedTrendingLooks.length).padStart(2, '0')}</span>
-          <h3>${look.title}</h3>
-          <p>${look.caption}</p>
-          <a class="curated-trending-looks__shop" href="${look.href}">Shop the look <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      `;
-      track.appendChild(slide);
-    });
-
-    const count = carousel.querySelector('.curated-trending-looks__count');
-    const progress = carousel.querySelector('.curated-trending-looks__progress span');
-    let currentSlide = 0;
-    const setSlide = (slideNumber) => {
-      currentSlide = (slideNumber + curatedTrendingLooks.length) % curatedTrendingLooks.length;
-      track.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
-      track.querySelectorAll('.curated-trending-looks__slide').forEach((slide, index) => {
-        const active = index === currentSlide;
-        slide.setAttribute('aria-hidden', String(!active));
-        slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
-      });
-      count.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(curatedTrendingLooks.length).padStart(2, '0')}`;
-      progress.style.transform = `scaleX(${(currentSlide + 1) / curatedTrendingLooks.length})`;
-    };
-
-    carousel.querySelectorAll('.curated-trending-looks__arrow').forEach((button) => {
-      button.addEventListener('click', () => setSlide(currentSlide + Number(button.dataset.direction || 1)));
-    });
-
-    const viewport = carousel.querySelector('.curated-trending-looks__viewport');
-    let touchStartX = 0;
-    viewport.addEventListener('touchstart', (event) => {
-      touchStartX = event.changedTouches[0]?.clientX || 0;
-    }, { passive: true });
-    viewport.addEventListener('touchend', (event) => {
-      const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
-      if (Math.abs(distance) > 45) setSlide(currentSlide + (distance < 0 ? 1 : -1));
-    }, { passive: true });
-    carousel.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') setSlide(currentSlide - 1);
-      if (event.key === 'ArrowRight') setSlide(currentSlide + 1);
-    });
-
-    setSlide(0);
-    originalSlider.insertAdjacentElement('afterend', carousel);
-    originalSlider.classList.add('curated-trending-looks__original');
   };
 
   const cleanPageLinks = () => {
@@ -1449,6 +1445,7 @@
       if (!originals.length) return;
 
       const desktopQuery = window.matchMedia('(min-width: 768px)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       const cloneSets = [];
       const appendCloneSet = () => {
         const cloneGroup = document.createDocumentFragment();
@@ -1479,6 +1476,7 @@
       let suppressClick = false;
       let pointerStartX = 0;
       let pointerStartPosition = 0;
+      let hovered = false;
       let keyboardFocus = false;
       let keyboardMode = false;
       let inViewport = (() => {
@@ -1487,6 +1485,7 @@
       })();
       let desktopMode = desktopQuery.matches;
       let marqueeReady = !desktopMode;
+      let reducedMotionLogged = false;
 
       const measure = () => {
         track.style.transform = 'none';
@@ -1542,8 +1541,8 @@
         previousScrollLeft = viewport.scrollLeft;
       };
 
-      const canAnimate = () => inViewport && !document.hidden && marqueeReady &&
-        !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden && marqueeReady &&
+        !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
 
       const stopAnimation = () => {
         if (!animationFrame) return;
@@ -1591,6 +1590,7 @@
         desktopMode = desktopQuery.matches;
         marqueeReady = !desktopMode;
         if (desktopMode) {
+          hovered = viewport.matches(':hover');
           measure();
           const pageLoaded = document.readyState === 'complete'
             ? Promise.resolve()
@@ -1602,7 +1602,12 @@
             marqueeReady = true;
             updateAnimation();
           });
+          if (reducedMotion.matches && !reducedMotionLogged) {
+            console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
+            reducedMotionLogged = true;
+          }
         } else {
+          hovered = false;
           track.style.transform = '';
           position = viewport.scrollLeft || setWidth;
           measure();
@@ -1682,6 +1687,17 @@
         suppressClick = false;
       }, true);
 
+      viewport.addEventListener('pointerenter', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        hovered = true;
+        pauseForInteraction();
+      });
+      viewport.addEventListener('pointerleave', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        hovered = false;
+        resumeAfterInteraction();
+      });
+
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Tab') keyboardMode = true;
       });
@@ -1728,15 +1744,26 @@
         }
         pointerDown = false;
         viewport.classList.remove('kr-reviews__dragging');
-        resumeAfterInteraction();
+        hovered = viewport.matches(':hover') && desktopMode;
+        if (hovered) updateAnimation();
+        else resumeAfterInteraction();
       });
       window.addEventListener('blur', () => {
         pointerDown = false;
         viewport.classList.remove('kr-reviews__dragging');
+        hovered = false;
         keyboardFocus = false;
         resumeAfterInteraction();
       });
       window.addEventListener('focus', () => {
+        hovered = viewport.matches(':hover') && desktopMode;
+        updateAnimation();
+      });
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', () => {
+        if (reducedMotion.matches && desktopMode && !reducedMotionLogged) {
+          console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
+          reducedMotionLogged = true;
+        }
         updateAnimation();
       });
       if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', setMode);
@@ -1770,12 +1797,12 @@
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();
-    syncHeaderToCategories();
     cleanImageSearch();
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
     setupNewArrivalsDesktopCarousel();
+    setupNewArrivalsCollectionLinks();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();

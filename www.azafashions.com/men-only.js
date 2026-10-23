@@ -2042,6 +2042,13 @@
     (visitSection || reviews).insertAdjacentElement('afterend', section);
   };
 
+  const cleanVisitStoreCaptions = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'visit our store');
+    const section = heading?.parentElement?.parentElement;
+    section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
+  };
+
   const cleanMenPage = () => {
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
@@ -2064,6 +2071,7 @@
     cleanEditorialSection();
     cleanCelebrityClosetSection();
     cleanInsiderAccessSection();
+    cleanVisitStoreCaptions();
     setupUpdatesSignup();
   };
 

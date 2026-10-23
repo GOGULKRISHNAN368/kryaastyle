@@ -578,6 +578,45 @@
   overflow: hidden;
 }
 
+@media (min-width: 768px) {
+  .kr-reviews {
+    grid-template-columns: clamp(300px, 30%, 480px) minmax(0, 1fr);
+    min-height: 380px;
+  }
+
+  .kr-reviews__heading {
+    width: calc(100% - 32px);
+    font-size: clamp(34px, 3vw, 40px);
+  }
+
+  .kr-reviews__track {
+    will-change: transform;
+  }
+
+  .kr-reviews__viewport {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .kr-reviews__viewport.kr-reviews__dragging {
+    cursor: grabbing;
+  }
+
+  .kr-reviews__card,
+  .kr-reviews__visual img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+}
+
+@media (min-width: 1440px) {
+  .kr-reviews {
+    min-height: 400px;
+  }
+}
+
 @media (max-width: 767px) {
   .kr-reviews {
     display: flex;

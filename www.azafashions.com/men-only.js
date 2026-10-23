@@ -813,17 +813,25 @@
       const originals = Array.from(track.querySelectorAll('.kr-reviews__card'));
       if (!originals.length) return;
 
-      const cloneGroup = document.createDocumentFragment();
-      originals.forEach((card) => {
-        const clone = card.cloneNode(true);
-        clone.setAttribute('aria-hidden', 'true');
-        clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((item) => {
-          item.setAttribute('tabindex', '-1');
+      const desktopQuery = window.matchMedia('(min-width: 768px)');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const cloneSets = [];
+      const appendCloneSet = () => {
+        const cloneGroup = document.createDocumentFragment();
+        originals.forEach((card) => {
+          const clone = card.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((item) => {
+            item.setAttribute('tabindex', '-1');
+          });
+          clone.setAttribute('tabindex', '-1');
+          cloneGroup.appendChild(clone);
         });
-        clone.setAttribute('tabindex', '-1');
-        cloneGroup.appendChild(clone);
-      });
-      track.appendChild(cloneGroup);
+        const firstClone = cloneGroup.firstElementChild;
+        track.appendChild(cloneGroup);
+        cloneSets.push(firstClone);
+      };
+      appendCloneSet();
 
       let setWidth = 0;
       let position = 0;
@@ -840,10 +848,16 @@
       let hovered = false;
       let keyboardFocus = false;
       let keyboardMode = false;
-      let inViewport = false;
-      let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let inViewport = (() => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.bottom > 0 && bounds.top < window.innerHeight;
+      })();
+      let desktopMode = desktopQuery.matches;
+      let marqueeReady = !desktopMode;
+      let reducedMotionLogged = false;
 
       const measure = () => {
+        track.style.transform = 'none';
         const first = originals[0];
         const firstClone = track.children[originals.length];
         if (!first || !firstClone) return;
@@ -851,18 +865,35 @@
         if (measuredWidth <= 0) return;
         const oldWidth = setWidth;
         setWidth = measuredWidth;
-        if (oldWidth === 0) {
-          position = setWidth;
-          viewport.scrollLeft = position;
-        } else if (Math.abs(oldWidth - setWidth) > 0.5) {
-          position = setWidth + ((position - oldWidth) % setWidth + setWidth) % setWidth;
-          viewport.scrollLeft = position;
+        if (desktopMode) {
+          while (track.scrollWidth < viewport.clientWidth * 2) appendCloneSet();
+          const maxOffset = setWidth;
+          position = maxOffset ? ((position % maxOffset) + maxOffset) % maxOffset : 0;
+          track.style.transform = `translate3d(-${position}px, 0, 0)`;
+        } else {
+          while (cloneSets.length > 1) {
+            const extraSet = cloneSets.pop();
+            let node = extraSet;
+            for (let index = 0; index < originals.length && node; index += 1) {
+              const next = node.nextElementSibling;
+              node.remove();
+              node = next;
+            }
+          }
+          if (oldWidth === 0) {
+            position = setWidth;
+            viewport.scrollLeft = position;
+          } else if (Math.abs(oldWidth - setWidth) > 0.5) {
+            position = setWidth + ((position - oldWidth) % setWidth + setWidth) % setWidth;
+            viewport.scrollLeft = position;
+          }
+          previousScrollLeft = viewport.scrollLeft;
         }
-        previousScrollLeft = viewport.scrollLeft;
       };
 
       const normalize = (value) => {
         if (!setWidth) return Math.max(0, value);
+        if (desktopMode) return ((value % setWidth) + setWidth) % setWidth;
         while (value < 0) value += setWidth;
         while (value >= setWidth * 2) value -= setWidth;
         return value;
@@ -870,12 +901,16 @@
 
       const setPosition = (value) => {
         position = normalize(value);
+        if (desktopMode) {
+          track.style.transform = `translate3d(-${position}px, 0, 0)`;
+          return;
+        }
         viewport.scrollLeft = position;
         position = viewport.scrollLeft;
         previousScrollLeft = viewport.scrollLeft;
       };
 
-      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden &&
+      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden && marqueeReady &&
         !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
 
       const stopAnimation = () => {
@@ -891,7 +926,10 @@
           lastFrameTime = 0;
           return;
         }
-        if (lastFrameTime) setPosition(position + Math.min(time - lastFrameTime, 50) * 0.035);
+        if (lastFrameTime) {
+          const speed = desktopMode ? 40 : 0.035;
+          setPosition(position + (desktopMode ? (time - lastFrameTime) / 1000 * speed : Math.min(time - lastFrameTime, 50) * speed));
+        }
         lastFrameTime = time;
         animationFrame = requestAnimationFrame(animate);
       };
@@ -917,11 +955,40 @@
         updateAnimation();
       };
 
-      measure();
-      viewport.scrollLeft = position;
-      previousScrollLeft = viewport.scrollLeft;
+      const setMode = () => {
+        desktopMode = desktopQuery.matches;
+        marqueeReady = !desktopMode;
+        if (desktopMode) {
+          hovered = viewport.matches(':hover');
+          measure();
+          const pageLoaded = document.readyState === 'complete'
+            ? Promise.resolve()
+            : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+          const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+          Promise.all([pageLoaded, fontsReady]).then(() => {
+            marqueeReady = true;
+            updateAnimation();
+          });
+          if (reducedMotion.matches && !reducedMotionLogged) {
+            console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
+            reducedMotionLogged = true;
+          }
+        } else {
+          hovered = false;
+          track.style.transform = '';
+          position = viewport.scrollLeft || setWidth;
+          measure();
+          viewport.scrollLeft = position;
+          previousScrollLeft = viewport.scrollLeft;
+          marqueeReady = true;
+        }
+        updateAnimation();
+      };
+
+      setMode();
 
       viewport.addEventListener('scroll', () => {
+        if (desktopMode) return;
         const current = viewport.scrollLeft;
         if (setWidth && !pointerDown && current <= 0 && current < previousScrollLeft) {
           setPosition(setWidth + current);
@@ -952,6 +1019,8 @@
         keyboardMode = false;
         keyboardFocus = false;
         pauseForInteraction();
+        if (desktopMode && viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+        viewport.classList.toggle('kr-reviews__dragging', desktopMode);
       });
 
       viewport.addEventListener('pointermove', (event) => {
@@ -965,6 +1034,7 @@
       const endPointerInteraction = () => {
         if (!pointerDown) return;
         pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
         if (dragged) {
           suppressClick = true;
           window.setTimeout(() => { suppressClick = false; }, 200);
@@ -975,6 +1045,8 @@
 
       viewport.addEventListener('pointerup', endPointerInteraction);
       viewport.addEventListener('pointercancel', endPointerInteraction);
+      window.addEventListener('pointerup', endPointerInteraction);
+      window.addEventListener('pointercancel', endPointerInteraction);
       viewport.addEventListener('click', (event) => {
         if (!suppressClick) return;
         event.preventDefault();
@@ -1032,8 +1104,44 @@
         inViewport = true;
       }
 
-      document.addEventListener('visibilitychange', updateAnimation);
-      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', updateAnimation);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          updateAnimation();
+          return;
+        }
+        pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
+        hovered = viewport.matches(':hover') && desktopMode;
+        if (hovered) updateAnimation();
+        else resumeAfterInteraction();
+      });
+      window.addEventListener('blur', () => {
+        pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
+        hovered = false;
+        keyboardFocus = false;
+        resumeAfterInteraction();
+      });
+      window.addEventListener('focus', () => {
+        hovered = viewport.matches(':hover') && desktopMode;
+        updateAnimation();
+      });
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', () => {
+        if (reducedMotion.matches && desktopMode && !reducedMotionLogged) {
+          console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
+          reducedMotionLogged = true;
+        }
+        updateAnimation();
+      });
+      if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', setMode);
+      else desktopQuery.addListener(setMode);
+      if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver(() => {
+          measure();
+          updateAnimation();
+        });
+        resizeObserver.observe(viewport);
+      }
       window.addEventListener('resize', () => {
         measure();
         updateAnimation();

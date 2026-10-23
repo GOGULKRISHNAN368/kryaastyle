@@ -26,17 +26,17 @@
       href: 'category.html?edit=sangeet'
     },
     {
-      title: 'Reception',
+      title: 'Reception & Cocktail',
       image: '../images/Reception.png',
       href: 'category.html?edit=reception'
     },
     {
-      title: 'Festival',
+      title: 'Festive',
       image: '../images/festival.png',
       href: 'category.html?edit=festival'
     },
     {
-      title: 'Casual',
+      title: 'Casuals',
       image: '../images/Casuals.png',
       href: 'category.html?edit=casual'
     },
@@ -512,6 +512,50 @@
     setPage(Number(carousel.dataset.currentPage || 0));
   };
 
+
+  const setupNewArrivalsDesktopCarousel = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'New Arrivals');
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    const slider = section?.querySelector('.slick-slider');
+    const track = slider?.querySelector('.slick-track');
+    if (!section || !slider || !track || slider.dataset.newArrivalsDesktopReady === 'true') return;
+
+    const slides = Array.from(slider.querySelectorAll('.slick-slide'))
+      .filter((slide) => !slide.classList.contains('slick-cloned'));
+    const previous = slider.querySelector('.slick-prev');
+    const next = slider.querySelector('.slick-next');
+    const list = slider.querySelector('.slick-list');
+    const firstSlide = slides[0];
+    if (!slides.length || !previous || !next || !list || !firstSlide) return;
+
+    const listWidth = list.getBoundingClientRect().width;
+    const slideWidth = firstSlide.getBoundingClientRect().width;
+    const visibleSlides = Math.max(1, Math.round(listWidth / slideWidth));
+    const lastSlideIndex = Math.max(0, slides.length - visibleSlides);
+    let currentSlide = 0;
+
+    const setSlide = (slideIndex) => {
+      currentSlide = Math.max(0, Math.min(lastSlideIndex, slideIndex));
+      track.style.transition = 'left .45s ease';
+      track.style.left = `${-currentSlide * (100 / visibleSlides)}%`;
+      previous.classList.toggle('slick-disabled', currentSlide === 0);
+      next.classList.toggle('slick-disabled', currentSlide === lastSlideIndex);
+    };
+
+    const move = (direction) => (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setSlide(currentSlide + direction);
+    };
+
+    previous.addEventListener('click', move(-1), true);
+    next.addEventListener('click', move(1), true);
+    slider.dataset.newArrivalsDesktopReady = 'true';
+    setSlide(0);
+  };
   const setupShopByOccasionSection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop by Occasion');
@@ -1359,6 +1403,7 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsDesktopCarousel();
     setupNewArrivalsCollectionLinks();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();

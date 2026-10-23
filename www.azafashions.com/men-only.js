@@ -802,6 +802,247 @@
     });
   };
 
+  const setupKryaaReviews = () => {
+    document.querySelectorAll('.kr-reviews').forEach((section) => {
+      if (section.dataset.krReviewsReady === 'true') return;
+
+      const viewport = section.querySelector('.kr-reviews__viewport');
+      const track = section.querySelector('.kr-reviews__track');
+      if (!viewport || !track) return;
+
+      const originals = Array.from(track.querySelectorAll('.kr-reviews__card'));
+      if (!originals.length) return;
+
+      const cloneGroup = document.createDocumentFragment();
+      originals.forEach((card) => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((item) => {
+          item.setAttribute('tabindex', '-1');
+        });
+        clone.setAttribute('tabindex', '-1');
+        cloneGroup.appendChild(clone);
+      });
+      track.appendChild(cloneGroup);
+
+      let setWidth = 0;
+      let position = 0;
+      let previousScrollLeft = 0;
+      let animationFrame = 0;
+      let lastFrameTime = 0;
+      let resumeAt = 0;
+      let resumeTimer = 0;
+      let pointerDown = false;
+      let dragged = false;
+      let suppressClick = false;
+      let pointerStartX = 0;
+      let pointerStartPosition = 0;
+      let hovered = false;
+      let keyboardFocus = false;
+      let keyboardMode = false;
+      let inViewport = false;
+      let reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      const measure = () => {
+        const first = originals[0];
+        const firstClone = track.children[originals.length];
+        if (!first || !firstClone) return;
+        const measuredWidth = firstClone.getBoundingClientRect().left - first.getBoundingClientRect().left;
+        if (measuredWidth <= 0) return;
+        const oldWidth = setWidth;
+        setWidth = measuredWidth;
+        if (oldWidth === 0) {
+          position = setWidth;
+          viewport.scrollLeft = position;
+        } else if (Math.abs(oldWidth - setWidth) > 0.5) {
+          position = setWidth + ((position - oldWidth) % setWidth + setWidth) % setWidth;
+          viewport.scrollLeft = position;
+        }
+        previousScrollLeft = viewport.scrollLeft;
+      };
+
+      const normalize = (value) => {
+        if (!setWidth) return Math.max(0, value);
+        while (value < 0) value += setWidth;
+        while (value >= setWidth * 2) value -= setWidth;
+        return value;
+      };
+
+      const setPosition = (value) => {
+        position = normalize(value);
+        viewport.scrollLeft = position;
+        position = viewport.scrollLeft;
+        previousScrollLeft = viewport.scrollLeft;
+      };
+
+      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden &&
+        !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+
+      const stopAnimation = () => {
+        if (!animationFrame) return;
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        lastFrameTime = 0;
+      };
+
+      const animate = (time) => {
+        animationFrame = 0;
+        if (!canAnimate()) {
+          lastFrameTime = 0;
+          return;
+        }
+        if (lastFrameTime) setPosition(position + Math.min(time - lastFrameTime, 50) * 0.035);
+        lastFrameTime = time;
+        animationFrame = requestAnimationFrame(animate);
+      };
+
+      const updateAnimation = () => {
+        if (canAnimate()) {
+          if (!animationFrame) animationFrame = requestAnimationFrame(animate);
+        } else {
+          stopAnimation();
+        }
+      };
+
+      const resumeAfterInteraction = () => {
+        window.clearTimeout(resumeTimer);
+        resumeAt = performance.now() + 1500;
+        resumeTimer = window.setTimeout(updateAnimation, 1510);
+        updateAnimation();
+      };
+
+      const pauseForInteraction = () => {
+        window.clearTimeout(resumeTimer);
+        resumeAt = Number.POSITIVE_INFINITY;
+        updateAnimation();
+      };
+
+      measure();
+      viewport.scrollLeft = position;
+      previousScrollLeft = viewport.scrollLeft;
+
+      viewport.addEventListener('scroll', () => {
+        const current = viewport.scrollLeft;
+        if (setWidth && !pointerDown && current <= 0 && current < previousScrollLeft) {
+          setPosition(setWidth + current);
+          return;
+        }
+        if (setWidth && !pointerDown && current >= viewport.scrollWidth - viewport.clientWidth - 1 && current > previousScrollLeft) {
+          setPosition(current - setWidth);
+          return;
+        }
+        position = current;
+        previousScrollLeft = current;
+      }, { passive: true });
+
+      viewport.addEventListener('wheel', (event) => {
+        const delta = event.shiftKey && Math.abs(event.deltaX) < 0.5 ? event.deltaY : event.deltaX;
+        if (Math.abs(delta) < 0.5) return;
+        event.preventDefault();
+        setPosition(position + delta);
+        resumeAfterInteraction();
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        pointerDown = true;
+        pointerStartX = event.clientX;
+        pointerStartPosition = position;
+        dragged = false;
+        keyboardMode = false;
+        keyboardFocus = false;
+        pauseForInteraction();
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!pointerDown) return;
+        if (Math.abs(event.clientX - pointerStartX) > 4) dragged = true;
+        if (!dragged) return;
+        event.preventDefault();
+        setPosition(pointerStartPosition - (event.clientX - pointerStartX));
+      });
+
+      const endPointerInteraction = () => {
+        if (!pointerDown) return;
+        pointerDown = false;
+        if (dragged) {
+          suppressClick = true;
+          window.setTimeout(() => { suppressClick = false; }, 200);
+        }
+        dragged = false;
+        resumeAfterInteraction();
+      };
+
+      viewport.addEventListener('pointerup', endPointerInteraction);
+      viewport.addEventListener('pointercancel', endPointerInteraction);
+      viewport.addEventListener('click', (event) => {
+        if (!suppressClick) return;
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      }, true);
+
+      viewport.addEventListener('pointerenter', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        hovered = true;
+        pauseForInteraction();
+      });
+      viewport.addEventListener('pointerleave', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        hovered = false;
+        resumeAfterInteraction();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') keyboardMode = true;
+      });
+      section.addEventListener('pointerdown', () => {
+        keyboardMode = false;
+        keyboardFocus = false;
+        updateAnimation();
+      });
+      section.addEventListener('keydown', (event) => {
+        keyboardMode = true;
+        if (event.target.closest('.kr-reviews__viewport') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+          event.preventDefault();
+          setPosition(position + (event.key === 'ArrowRight' ? 80 : -80));
+          resumeAfterInteraction();
+        }
+      });
+      section.addEventListener('focusin', () => {
+        if (!keyboardMode) return;
+        keyboardFocus = true;
+        pauseForInteraction();
+      });
+      section.addEventListener('focusout', (event) => {
+        if (!section.contains(event.relatedTarget)) {
+          keyboardFocus = false;
+          resumeAfterInteraction();
+        }
+      });
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          inViewport = entries.some((entry) => entry.isIntersecting);
+          updateAnimation();
+        });
+        section.__krReviewsIntersectionObserver = observer;
+        observer.observe(section);
+      } else {
+        inViewport = true;
+      }
+
+      document.addEventListener('visibilitychange', updateAnimation);
+      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', updateAnimation);
+      window.addEventListener('resize', () => {
+        measure();
+        updateAnimation();
+      });
+      section.dataset.krReviewsReady = 'true';
+      updateAnimation();
+    });
+  };
+
   const cleanEditorialSection = () => {
     document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
       if (heading.textContent.replace(/\s+/g, ' ').trim() !== 'Kryaa Editorials') return;
@@ -827,6 +1068,13 @@
 
   cleanNextData();
   cleanMenPage();
+
+  const initializeKryaaReviews = () => window.setTimeout(setupKryaaReviews, 0);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeKryaaReviews, { once: true });
+  } else {
+    initializeKryaaReviews();
+  }
 
   const observer = new MutationObserver(cleanMenPage);
   observer.observe(document.documentElement, { childList: true, subtree: true });

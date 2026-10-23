@@ -479,7 +479,7 @@
   padding: 28px 20px 24px;
   overflow: hidden;
   border-radius: 22px;
-  background: #fff7f1;
+  background: #fff;
   color: #292522;
 }
 
@@ -530,192 +530,33 @@
   will-change: transform;
 }
 
-.kr-lookbook__post {
-  flex: 0 0 20%;
-  min-width: 0;
-  padding: 16px;
-  border: 1px solid #eee4dc;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(57, 39, 27, .07);
-}
-
-.kr-lookbook__creator {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 42px;
-  margin-bottom: 12px;
-}
-
-.kr-lookbook__avatar {
-  position: relative;
-  display: grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
-  place-items: center;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #eee1d5;
-  color: #6d5141;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.kr-lookbook__avatar img,
-.kr-lookbook__initials {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.kr-lookbook__avatar img {
-  object-fit: cover;
-}
-
-.kr-lookbook__initials {
-  display: grid;
-  place-items: center;
-}
-
-.kr-lookbook__initials[hidden],
-.kr-lookbook__avatar img[hidden] {
-  display: none;
-}
-
-.kr-lookbook__creator-copy {
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.kr-lookbook__creator-name {
-  overflow: hidden;
-  font-size: 14px;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.kr-lookbook__followers {
-  color: #82766f;
-  font-size: 11px;
-}
-
-.kr-lookbook__collage {
-  position: relative;
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #fff;
-}
-
-.kr-lookbook__tile {
-  width: 100%;
-  overflow: hidden;
-  background: #fff;
-}
-
-.kr-lookbook__tile-link,
-.kr-lookbook__tile img {
-  display: block;
-  width: 100%;
-}
-
-.kr-lookbook__tile img {
-  height: auto;
-  max-width: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: #fff;
-}
-
-.kr-lookbook__tile--missing {
-  min-height: 180px;
-  background: #fff;
-}
-
 .kr-lookbook__arrow {
   position: absolute;
   z-index: 1;
   top: 50%;
   display: grid;
-  width: 38px;
-  height: 38px;
-  padding: 9px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
   place-items: center;
   transform: translateY(-50%);
-  border: 1px solid rgba(80, 60, 45, .12);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .92);
-  color: #39302a;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #262626;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
 }
 
-.kr-lookbook__arrow svg,
-.kr-lookbook__action svg {
+.kr-lookbook__arrow svg {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 28px;
+  height: 28px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 1.8;
+  stroke-width: 2;
 }
-
-.kr-lookbook__arrow--prev { left: 10px; }
-.kr-lookbook__arrow--next { right: 10px; }
-
-.kr-lookbook__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  padding-top: 13px;
-}
-
-.kr-lookbook__post-copy { min-width: 0; }
-
-.kr-lookbook__post-title {
-  color: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.kr-lookbook__description {
-  margin: 4px 0 0;
-  color: #756b64;
-  font-size: 12px;
-  line-height: 1.45;
-}
-
-.kr-lookbook__actions {
-  display: flex;
-  flex: 0 0 auto;
-  gap: 8px;
-}
-
-.kr-lookbook__action {
-  display: grid;
-  width: 34px;
-  height: 34px;
-  padding: 7px;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: #51443b;
-  cursor: pointer;
-}
-
-.kr-lookbook__like--active { color: #b64d48; }
-.kr-lookbook__like--active svg { fill: currentColor; }
 
 .kr-lookbook__dots {
   display: flex;
@@ -763,21 +604,219 @@
 
 @media (max-width: 767px) {
   .kr-lookbook {
-    width: calc(100% - 24px);
+    width: calc(100% - 16px);
     margin: 28px auto;
-    padding: 22px 12px 18px;
+    padding: 22px 0 18px;
     border-radius: 18px;
   }
 
   .kr-lookbook__intro { margin-bottom: 16px; }
   .kr-lookbook__heading { font-size: 28px; }
   .kr-lookbook__subtitle { margin-top: 5px; font-size: 13px; }
-  .kr-lookbook__post { padding: 12px; border-radius: 15px; }
-  .kr-lookbook__creator { margin-bottom: 9px; }
-  .kr-lookbook__arrow { width: 34px; height: 34px; }
-  .kr-lookbook__footer { gap: 8px; padding-top: 10px; }
-  .kr-lookbook__description { font-size: 11px; }
-  .kr-lookbook__action { width: 30px; height: 30px; padding: 6px; }
+
+  .kr-lookbook__slider { width: 100%; max-width: none; }
+  .kr-lookbook__viewport { border-radius: 12px; }
+  .kr-lookbook__post {
+    display: flex;
+    flex: 0 0 20%;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid #eee4dc;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(57, 39, 27, .07);
+  }
+
+  .kr-lookbook__ig-header,
+  .kr-lookbook__ig-actions,
+  .kr-lookbook__ig-details { min-width: 0; background: #fff; }
+
+  .kr-lookbook__ig-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 58px;
+    padding: 8px 12px;
+    color: #292522;
+  }
+
+  .kr-lookbook__ig-avatar {
+    position: relative;
+    display: grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    padding: 2px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e6c77a, #ce7990, #ee9a52);
+  }
+
+  .kr-lookbook__ig-avatar::before {
+    position: absolute;
+    inset: 2px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    content: "";
+  }
+
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    display: grid;
+    position: absolute;
+    inset: 4px;
+    place-items: center;
+    border-radius: 50%;
+    background: #f2e7dc;
+    color: #65564a;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .kr-lookbook__ig-identity {
+    display: grid;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 1px;
+  }
+
+  .kr-lookbook__ig-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .kr-lookbook__ig-name svg { flex: 0 0 auto; width: 14px; height: 14px; fill: #0095f6; }
+  .kr-lookbook__ig-followers { color: #777; font-size: 12.5px; white-space: nowrap; }
+
+  .kr-lookbook__ig-follow,
+  .kr-lookbook__ig-more {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #0095f6;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .kr-lookbook__ig-more { width: 24px; color: #4a4643; }
+  .kr-lookbook__ig-more svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .kr-lookbook__ig-image {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .kr-lookbook__mobile-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+  }
+
+  .kr-lookbook__arrow {
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    color: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .55));
+  }
+
+  .kr-lookbook__arrow--prev { left: 4px; }
+  .kr-lookbook__arrow--next { right: 4px; }
+
+  .kr-lookbook__ig-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 6px 12px;
+  }
+
+  .kr-lookbook__ig-action-group { display: flex; align-items: center; gap: 16px; }
+  .kr-lookbook__ig-icon {
+    display: grid;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #292522;
+    cursor: pointer;
+  }
+  .kr-lookbook__ig-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+  .kr-lookbook__ig-like[aria-pressed="true"] { color: #d6294b; animation: kr-lookbook-like-pop 220ms ease-out; }
+  .kr-lookbook__ig-like[aria-pressed="true"] svg,
+  .kr-lookbook__ig-save[aria-pressed="true"] svg { fill: currentColor; }
+  .kr-lookbook__ig-save[aria-pressed="true"] { color: #292522; }
+
+  .kr-lookbook__ig-details {
+    flex: 0 0 auto;
+    padding: 0 14px 14px;
+    color: #292522;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .kr-lookbook__ig-details p { margin: 0; }
+  .kr-lookbook__ig-likes { margin-bottom: 4px !important; font-weight: 700; }
+  .kr-lookbook__ig-caption {
+    position: relative;
+    display: -webkit-box;
+    max-height: 2.8em;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .kr-lookbook__ig-caption::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-left: 24px;
+    background: linear-gradient(90deg, transparent, #fff 35%);
+    content: "... more";
+    color: #777;
+  }
+  .kr-lookbook__ig-comments {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    text-decoration: none;
+  }
+  .kr-lookbook__ig-time { margin-top: 5px !important; color: #999; font-size: 11px; }
+
+  .kr-lookbook__ig-card a:focus-visible,
+  .kr-lookbook__ig-card button:focus-visible { outline: 2px solid #262626; outline-offset: 2px; }
+  .kr-lookbook__arrow:focus-visible { outline: none !important; }
+  .kr-lookbook__arrow:focus-visible svg { border-bottom: 2px solid currentColor; }
 }
 
 @media (min-width: 768px) {
@@ -804,9 +843,10 @@
 
   .kr-lookbook__desktop-card {
     position: absolute;
-    display: block;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
-    padding: 6px;
+    padding: 0;
     transform: translateX(-50%);
     border: 0;
     border-radius: 8px;
@@ -814,6 +854,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
     transition: left 500ms ease, top 500ms ease, width 500ms ease, height 500ms ease, opacity 500ms ease;
     cursor: pointer;
+    font-size: 14px;
   }
 
   .kr-lookbook__desktop-card--teleport {
@@ -828,6 +869,114 @@
     background: #fff;
   }
 
+  .kr-lookbook__ig-header,
+  .kr-lookbook__ig-actions,
+  .kr-lookbook__ig-details {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    min-width: 0;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-header {
+    display: flex;
+    align-items: center;
+    gap: .55em;
+    height: 3.72em;
+    padding: .45em .85em;
+    color: #292522;
+  }
+
+  .kr-lookbook__ig-avatar {
+    position: relative;
+    display: grid;
+    flex: 0 0 2.45em;
+    width: 2.45em;
+    height: 2.45em;
+    padding: 2px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e6c77a, #ce7990, #ee9a52);
+  }
+
+  .kr-lookbook__ig-avatar::before {
+    position: absolute;
+    inset: 2px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    content: "";
+  }
+
+  .kr-lookbook__ig-avatar img,
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    position: absolute;
+    inset: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    border-radius: 50%;
+  }
+
+  .kr-lookbook__ig-avatar img { object-fit: cover; }
+
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    display: grid;
+    place-items: center;
+    background: #f2e7dc;
+    color: #65564a;
+    font-size: .72em;
+    font-weight: 600;
+  }
+
+  .kr-lookbook__ig-identity {
+    display: grid;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: .05em;
+  }
+
+  .kr-lookbook__ig-name {
+    display: flex;
+    align-items: center;
+    gap: .28em;
+    overflow: hidden;
+    font-size: 1em;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .kr-lookbook__ig-name svg { width: .95em; height: .95em; flex: 0 0 auto; fill: #0095f6; }
+  .kr-lookbook__ig-followers { color: #777; font-size: .82em; white-space: nowrap; }
+
+  .kr-lookbook__ig-follow,
+  .kr-lookbook__ig-more {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #0095f6;
+    font-size: .9em;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .kr-lookbook__ig-more { width: 1.6em; color: #4a4643; }
+  .kr-lookbook__ig-more svg { width: 1.2em; height: 1.2em; fill: currentColor; }
+
+  .kr-lookbook__ig-image {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-image .kr-lookbook__desktop-image-link { height: 100%; }
+
   .kr-lookbook__desktop-image-link img {
     display: block;
     width: 100%;
@@ -837,82 +986,29 @@
     background: #fff;
   }
 
-  .kr-lookbook__desktop-card--missing {
-    background: #fff;
-  }
-
-  .kr-lookbook__shop-all {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    display: inline-flex;
+  .kr-lookbook__ig-actions {
+    display: flex;
     align-items: center;
-    gap: 7px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    background: #fff;
-    color: #292522;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .16);
-    font-size: 13px;
-    line-height: 1;
-    text-decoration: none;
-    white-space: nowrap;
+    justify-content: space-between;
+    height: 3.14em;
+    padding: .35em .85em;
   }
 
-  .kr-lookbook__shop-all svg {
-    display: block;
-    width: 16px;
-    height: 16px;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.6;
-  }
+  .kr-lookbook__ig-action-group { display: flex; align-items: center; gap: .72em; }
 
-  .kr-lookbook__desktop-card[data-position="0"] .kr-lookbook__shop-all {
-    gap: 8px;
-    padding: 10px 18px;
-    font-size: 16px;
-  }
-
-  .kr-lookbook__desktop-card[data-position="0"] .kr-lookbook__shop-all svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .kr-lookbook__desktop-arrow {
-    position: absolute;
-    z-index: 5;
-    top: calc(var(--kr-lookbook-center-height, 465px) / 2);
+  .kr-lookbook__ig-icon {
     display: grid;
-    width: 40px;
-    height: 40px;
-    padding: 10px;
-    transform: translateY(-50%);
+    width: 1.72em;
+    height: 1.72em;
+    padding: .1em;
     place-items: center;
-    border: 1px solid #ddd7d1;
-    border-radius: 50%;
-    background: #fff;
-    color: #77716c;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+    border: 0;
+    background: transparent;
+    color: #292522;
     cursor: pointer;
-    transition: transform 180ms ease;
   }
 
-  .kr-lookbook__desktop-arrow:hover {
-    transform: translateY(-50%) scale(1.06);
-  }
-
-  .kr-lookbook__desktop-arrow:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
-  }
-
-  .kr-lookbook__desktop-arrow--prev { left: 0; }
-  .kr-lookbook__desktop-arrow--next { right: 0; }
-
-  .kr-lookbook__desktop-arrow svg {
+  .kr-lookbook__ig-icon svg {
     display: block;
     width: 100%;
     height: 100%;
@@ -920,17 +1016,98 @@
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 1.8;
+    stroke-width: 1.7;
   }
 
-  .kr-lookbook__desktop-caption {
-    min-height: 20px;
-    margin: 10px 0 0;
-    color: #766b64;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    transition: opacity 220ms ease;
+  .kr-lookbook__ig-like[aria-pressed="true"] { color: #d6294b; animation: kr-lookbook-like-pop 220ms ease-out; }
+  .kr-lookbook__ig-like[aria-pressed="true"] svg,
+  .kr-lookbook__ig-save[aria-pressed="true"] svg { fill: currentColor; }
+  .kr-lookbook__ig-save[aria-pressed="true"] { color: #292522; }
+
+  .kr-lookbook__ig-details {
+    height: 7.15em;
+    padding: .05em .9em .45em;
+    overflow: hidden;
+    color: #292522;
+    font-size: .91em;
+    line-height: 1.35;
+  }
+
+  .kr-lookbook__ig-details p { margin: 0; }
+  .kr-lookbook__ig-likes { font-weight: 700; }
+  .kr-lookbook__ig-caption {
+    display: -webkit-box;
+    margin-top: .3em !important;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .kr-lookbook__ig-comments {
+    display: block;
+    margin-top: .25em;
+    color: #888;
+    text-decoration: none;
+  }
+  .kr-lookbook__ig-time { margin-top: .25em !important; color: #999; font-size: .78em; }
+
+  .kr-lookbook__desktop-card[data-position="-2"] .kr-lookbook__ig-details,
+  .kr-lookbook__desktop-card[data-position="2"] .kr-lookbook__ig-details { display: none; }
+
+  .kr-lookbook__desktop-card a:focus-visible,
+  .kr-lookbook__desktop-card button:focus-visible {
+    outline: 2px solid #0095f6;
+    outline-offset: 2px;
+  }
+
+  @keyframes kr-lookbook-like-pop {
+    50% { transform: scale(1.22); }
+  }
+
+  .kr-lookbook__desktop-card--missing {
+    background: #fff;
+  }
+
+  .kr-lookbook__desktop-arrow {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    transform: translateY(-50%);
+    place-items: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 180ms ease, color 180ms ease;
+  }
+
+  .kr-lookbook__desktop-arrow--prev { left: 2px; }
+  .kr-lookbook__desktop-arrow--next { right: 2px; }
+  .kr-lookbook__desktop-arrow--prev:hover { transform: translateY(-50%) translateX(-3px); color: #fff; }
+  .kr-lookbook__desktop-arrow--next:hover { transform: translateY(-50%) translateX(3px); color: #fff; }
+  .kr-lookbook__desktop-arrow:hover svg { filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .75)); }
+
+  .kr-lookbook__desktop-arrow:focus-visible { outline: none; }
+  .kr-lookbook__desktop-arrow:focus-visible svg {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .kr-lookbook__desktop-arrow svg {
+    display: block;
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .55));
   }
 
   .kr-lookbook__dots[hidden] {
@@ -941,9 +1118,15 @@
 @media (min-width: 768px) and (prefers-reduced-motion: reduce) {
   .kr-lookbook__desktop-card,
   .kr-lookbook__desktop-arrow,
-  .kr-lookbook__desktop-caption {
+  .kr-lookbook__ig-like {
     transition: none;
+    animation: none !important;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kr-lookbook__track { transition: none; }
+  .kr-lookbook__ig-like { animation: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {

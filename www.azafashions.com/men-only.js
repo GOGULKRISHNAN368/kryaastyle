@@ -1048,7 +1048,8 @@
         imageFile: 'Ethnic1.avif',
         alt: 'Ethnic wear look by Kavya Lakshmi',
         title: 'Festive Glow | Ethnic Wear',
-        description: 'Comfortable for festive evenings and family functions.'
+        description: 'Comfortable for festive evenings and family functions.',
+        likes: 1248, comments: 48, timestamp: '2 HOURS AGO', categoryHref: '#'
       },
       {
         name: 'Meenakshi Sundaram',
@@ -1057,7 +1058,8 @@
         imageFile: 'Kurta1.avif',
         alt: 'Kurta set look by Meenakshi Sundaram',
         title: 'Everyday Chic | Kurta Sets',
-        description: 'Light, easy outfits for office and casual days.'
+        description: 'Light, easy outfits for office and casual days.',
+        likes: 986, comments: 31, timestamp: '5 HOURS AGO', categoryHref: '#'
       },
       {
         name: 'Thenmozhi Rajan',
@@ -1066,7 +1068,8 @@
         imageFile: 'salwar1.avif',
         alt: 'Salwar suit look by Thenmozhi Rajan',
         title: 'Evening Elegance | Salwar Suits',
-        description: 'Statement sets for receptions and festive nights.'
+        description: 'Statement sets for receptions and festive nights.',
+        likes: 2031, comments: 72, timestamp: '1 DAY AGO', categoryHref: '#'
       },
       {
         name: 'Aarthi Karthik',
@@ -1075,7 +1078,8 @@
         imageFile: 'Saree_Img1.avif',
         alt: 'Saree look by Aarthi Karthik',
         title: 'Sparkle in Style | Saree',
-        description: 'Rich drapes for weddings, cocktails and evening receptions.'
+        description: 'Rich drapes for weddings, cocktails and evening receptions.',
+        likes: 1574, comments: 56, timestamp: '2 DAYS AGO', categoryHref: '#'
       },
       {
         name: 'Priya Dharshini',
@@ -1084,7 +1088,8 @@
         imageFile: 'top1.avif',
         alt: 'Casual top look by Priya Dharshini',
         title: 'Chic Tops | Casual Wear',
-        description: 'Fresh, easy tops for brunch, college and city days.'
+        description: 'Fresh, easy tops for brunch, college and city days.',
+        likes: 1812, comments: 64, timestamp: '3 DAYS AGO', categoryHref: '#'
       }
     ];
     const imageAspect = 591 / 625;
@@ -1101,7 +1106,10 @@
       : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>';
     const heartIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.2-8.8 10.2S3.2 14 3.2 8.8A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.8 2.3Z"></path></svg>';
     const shareIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.1"></path></svg>';
-    const bagIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>';
+    const commentIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5a7.5 7.5 0 1 1 17-3Z"></path></svg>';
+    const bookmarkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17l-6-4-6 4v-17Z"></path></svg>';
+    const verifiedIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2 9.8 2l1.9-.1.8 1.7 1.6 1-.3 1.9.6 1.8-1.3 1.4-.5 1.9-1.9.4-1.5 1.2-1.7-.8-1.9.1-.8-1.7-1.6-1 .3-1.9-.6-1.8 1.3-1.4.5-1.9 1.9-.4L8 1.2Z"/><path d="m5.3 8 1.7 1.7 3.7-3.8" fill="none" stroke="#fff" stroke-width="1.3"/></svg>';
+    const moreIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>';
     document.querySelectorAll('.kr-lookbook').forEach((section) => {
       if (section.dataset.krLookbookReady === 'true') return;
       const slider = section.querySelector('.kr-lookbook__slider');
@@ -1118,45 +1126,34 @@
       let pointerStart = null;
       let pointerDragged = false;
       let suppressClickUntil = 0;
-      let caption = null;
       let resizeObserver = null;
 
-      const createMobileSlide = (post, postIndex) => {
-        const safeName = escapeHtml(post.name);
-        const safeInitials = escapeHtml(post.initials);
-        const safeTitle = escapeHtml(post.title);
-        const safeFollowers = escapeHtml(post.followers);
-        const safeDescription = escapeHtml(post.description);
-        const safeImageFile = escapeHtml(post.imageFile);
-        const safeAlt = escapeHtml(post.alt);
-        const loading = postIndex === 0 ? '' : ' loading="lazy"';
-        const avatar = '<span class="kr-lookbook__avatar"><img data-lookbook-avatar src="../images/lookbook/avatar' +
-          (postIndex + 1) + '.jpg" alt="" aria-hidden="true"' + loading +
-          '><span class="kr-lookbook__initials" aria-hidden="true">' + safeInitials + '</span></span>';
-        const image = '<div class="kr-lookbook__collage"><div class="kr-lookbook__tile"><a href="#" class="kr-lookbook__tile-link" tabindex="-1" aria-label="' +
-          safeTitle + '"><img data-lookbook-image src="../images/Insta_Img/' + safeImageFile + '" alt="' + safeAlt + '"' + loading + '></a></div>' +
-          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--prev" data-post-action="prev" aria-label="Previous post">' + arrowIcon('prev') + '</button>' +
-          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--next" data-post-action="next" aria-label="Next post">' + arrowIcon('next') + '</button></div>';
-
-        return '<article class="kr-lookbook__post" role="group" aria-roledescription="slide" aria-label="Post ' +
-          (postIndex + 1) + ' of ' + posts.length + ': ' + safeName + '" data-post-index="' + postIndex + '">' +
-          '<header class="kr-lookbook__creator">' + avatar + '<span class="kr-lookbook__creator-copy"><span class="kr-lookbook__creator-name">' +
-          safeName + '</span><span class="kr-lookbook__followers">' + safeFollowers + '</span></span></header>' +
-          image +
-          '<footer class="kr-lookbook__footer"><div class="kr-lookbook__post-copy"><a class="kr-lookbook__post-title" href="#">' +
-          safeTitle + '</a><p class="kr-lookbook__description">' + safeDescription + '</p></div>' +
-          '<div class="kr-lookbook__actions"><button type="button" class="kr-lookbook__action kr-lookbook__like" data-like aria-label="Like" aria-pressed="false">' +
-          heartIcon + '</button><button type="button" class="kr-lookbook__action" data-share aria-label="Share">' + shareIcon + '</button></div></footer></article>';
+      const createInstagramCard = (post, index, desktop) => {
+        const loading = index === 0 ? '' : ' loading="lazy"';
+        const name = escapeHtml(post.name);
+        const initials = escapeHtml(post.initials);
+        const followers = escapeHtml(post.followers);
+        const title = escapeHtml(post.title);
+        const description = escapeHtml(post.description);
+        const category = escapeHtml(post.categoryHref);
+        const cardClass = desktop ? 'kr-lookbook__desktop-card' : 'kr-lookbook__post';
+        const indexAttribute = desktop ? 'data-desktop-index' : 'data-post-index';
+        const image = desktop
+          ? '<a class="kr-lookbook__desktop-image-link" data-desktop-card-link href="#" aria-label="Open ' + title + '"><img data-desktop-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '></a>'
+          : '<img class="kr-lookbook__mobile-image" data-lookbook-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '>';
+        const mobileControls = desktop ? '' : '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--prev" data-post-action="prev" aria-label="Previous post">' + arrowIcon('prev') + '</button>' +
+          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--next" data-post-action="next" aria-label="Next post">' + arrowIcon('next') + '</button>';
+        return '<article class="' + cardClass + ' kr-lookbook__ig-card" ' + indexAttribute + '="' + index + '" role="group" aria-roledescription="slide" aria-label="' +
+          (index + 1) + ' of ' + posts.length + ': ' + name + '"><header class="kr-lookbook__ig-header"><span class="kr-lookbook__ig-avatar"><span class="kr-lookbook__initials" aria-hidden="true">' + initials + '</span></span>' +
+          '<span class="kr-lookbook__ig-identity"><span class="kr-lookbook__ig-name">' + name + verifiedIcon + '</span><span class="kr-lookbook__ig-followers">' + followers + '</span></span>' +
+          '<a class="kr-lookbook__ig-follow" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Follow">Follow</a><a class="kr-lookbook__ig-more" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="More options">' + moreIcon + '</a></header>' +
+          '<div class="kr-lookbook__ig-image">' + image + mobileControls + '</div>' +
+          '<div class="kr-lookbook__ig-actions"><span class="kr-lookbook__ig-action-group"><button type="button" class="kr-lookbook__ig-icon kr-lookbook__ig-like" data-like aria-label="Like" aria-pressed="false">' + heartIcon + '</button><a class="kr-lookbook__ig-icon" data-comment href="' + category + '" aria-label="Comment">' + commentIcon + '</a><button type="button" class="kr-lookbook__ig-icon" data-share aria-label="Share">' + shareIcon + '</button></span><button type="button" class="kr-lookbook__ig-icon kr-lookbook__ig-save" data-save aria-label="Save" aria-pressed="false">' + bookmarkIcon + '</button></div>' +
+          '<div class="kr-lookbook__ig-details"><p class="kr-lookbook__ig-likes" data-like-count>' + Number(post.likes).toLocaleString('en-US') + ' likes</p><p class="kr-lookbook__ig-caption"><strong>' + name + '</strong> ' + title + ' ' + description + '</p><a class="kr-lookbook__ig-comments" data-comment href="' + category + '">View all ' + post.comments + ' comments</a><p class="kr-lookbook__ig-time">' + escapeHtml(post.timestamp) + '</p></div></article>';
       };
 
-      const createDesktopSlide = (post, index) => {
-        const loading = index === activeIndex || Math.abs(((index - activeIndex + posts.length) % posts.length + posts.length / 2) % posts.length - posts.length / 2) <= 1
-          ? '' : ' loading="lazy"';
-        return '<article class="kr-lookbook__desktop-card" data-desktop-index="' + index + '" role="group" aria-roledescription="slide" aria-label="' +
-          (index + 1) + ' of ' + posts.length + ': ' + escapeHtml(post.name) + '"><a class="kr-lookbook__desktop-image-link" data-desktop-card-link href="#" aria-label="Open ' +
-          escapeHtml(post.title) + '"><img data-desktop-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '></a>' +
-          '<a class="kr-lookbook__shop-all" data-shop-all href="#" aria-label="Shop all ' + escapeHtml(post.title.split('|').pop().trim()) + ' looks">' + bagIcon + '<span>Shop All</span></a></article>';
-      };
+      const createMobileSlide = (post, index) => createInstagramCard(post, index, false);
+      const createDesktopSlide = (post, index) => createInstagramCard(post, index, true);
 
       const renderDots = () => {
         dots.innerHTML = posts.map((post, index) =>
@@ -1173,9 +1170,12 @@
         const availableForCards = rowWidth;
         const gap = 14;
         const scaleTotal = 0.54 * 2 + 0.76 * 2 + 1;
-        const centerHeight = Math.min(465, Math.max(120, (availableForCards - gap * 4) / (imageAspect * scaleTotal)));
+        const totalGaps = gap * 4;
+        const centerImageHeight = Math.min(430, Math.max(120, (availableForCards - totalGaps) / (imageAspect * scaleTotal)));
+        const cardChromeHeight = 187;
+        const centerHeight = centerImageHeight + cardChromeHeight;
         slider.style.setProperty('--kr-lookbook-center-height', centerHeight + 'px');
-        const totalWidth = imageAspect * centerHeight * scaleTotal + gap * 4;
+        const totalWidth = imageAspect * centerImageHeight * scaleTotal + totalGaps;
         let cursor = (rowWidth - totalWidth) / 2;
         const orderedPositions = [];
         for (let relative = -2; relative <= 2; relative += 1) {
@@ -1197,7 +1197,7 @@
           const card = cards.find((item) => Number(item.dataset.desktopIndex) === index);
           if (!card) return;
           const height = centerHeight * scale;
-          const width = height * imageAspect;
+          const width = centerImageHeight * imageAspect * scale;
           card.style.left = (cursor + width / 2) + 'px';
           card.style.top = ((centerHeight - height) / 2) + 'px';
           card.style.width = width + 'px';
@@ -1205,6 +1205,7 @@
           card.style.opacity = relative === 0 ? '1' : '0.92';
           card.style.zIndex = String(3 - Math.abs(relative));
           card.dataset.position = String(relative);
+          card.style.fontSize = (14 * scale) + 'px';
           card.setAttribute('aria-hidden', 'false');
           const image = card.querySelector('[data-desktop-image]');
           if (image) {
@@ -1214,11 +1215,15 @@
           cursor += width + gap;
         });
 
-        if (caption) {
-          caption.style.opacity = '0';
-          caption.textContent = posts[activeIndex].name + ' · ' + posts[activeIndex].followers;
-          window.requestAnimationFrame(() => { caption.style.opacity = '1'; });
+        const centerCard = cards.find((card) => Number(card.dataset.desktopIndex) === activeIndex);
+        if (centerCard) {
+          const image = centerCard.querySelector('.kr-lookbook__ig-image');
+          const previousArrow = slider.querySelector('.kr-lookbook__desktop-arrow--prev');
+          const nextArrow = slider.querySelector('.kr-lookbook__desktop-arrow--next');
+          if (image && previousArrow) image.appendChild(previousArrow);
+          if (image && nextArrow) image.appendChild(nextArrow);
         }
+
       };
 
       const setActive = (requestedIndex, direction = 0) => {
@@ -1243,23 +1248,9 @@
         section.querySelectorAll('[data-lookbook-image], [data-desktop-image]').forEach((image) => {
           image.addEventListener('error', () => {
             image.hidden = true;
-            const frame = image.closest('.kr-lookbook__tile, .kr-lookbook__desktop-card');
-            frame.classList.add(frame.matches('.kr-lookbook__desktop-card') ? 'kr-lookbook__desktop-card--missing' : 'kr-lookbook__tile--missing');
+            const frame = image.closest('.kr-lookbook__ig-image');
+            if (frame) frame.classList.add('kr-lookbook__ig-image--missing');
           }, { once: true });
-        });
-        section.querySelectorAll('[data-lookbook-avatar]').forEach((image) => {
-          const initials = image.nextElementSibling;
-          const showInitials = () => {
-            image.hidden = true;
-            initials.hidden = false;
-          };
-          const showAvatar = () => { initials.hidden = true; };
-          image.addEventListener('error', showInitials, { once: true });
-          image.addEventListener('load', showAvatar, { once: true });
-          if (image.complete) {
-            if (image.naturalWidth) showAvatar();
-            else showInitials();
-          }
         });
       };
 
@@ -1280,14 +1271,9 @@
           track.innerHTML = posts.map(createDesktopSlide).join('');
           slider.insertAdjacentHTML('afterbegin', '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--prev" data-desktop-nav="prev" aria-label="Previous look">' + arrowIcon('prev') + '</button>' +
             '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--next" data-desktop-nav="next" aria-label="Next look">' + arrowIcon('next') + '</button>');
-          caption = document.createElement('p');
-          caption.className = 'kr-lookbook__desktop-caption';
-          caption.setAttribute('aria-live', 'polite');
-          viewport.insertAdjacentElement('afterend', caption);
           showImageFallbacks();
           layoutDesktop();
         } else {
-          caption = null;
           slider.classList.remove('kr-lookbook__slider--desktop');
           viewport.classList.remove('kr-lookbook__viewport--desktop');
           track.classList.remove('kr-lookbook__track--desktop');
@@ -1335,9 +1321,9 @@
         }
         const desktopLink = event.target.closest('[data-desktop-card-link]');
         if (desktopMode && desktopLink) {
+          event.preventDefault();
           const index = Number(desktopLink.closest('[data-desktop-index]').dataset.desktopIndex);
           if (index !== activeIndex) {
-            event.preventDefault();
             const delta = (index - activeIndex + posts.length) % posts.length;
             setActive(index, delta === 1 ? 1 : delta === posts.length - 1 ? -1 : 0);
           }
@@ -1348,11 +1334,28 @@
           const isLiked = likeButton.getAttribute('aria-pressed') !== 'true';
           likeButton.setAttribute('aria-pressed', String(isLiked));
           likeButton.classList.toggle('kr-lookbook__like--active', isLiked);
+          const card = likeButton.closest('.kr-lookbook__ig-card');
+          if (card) {
+            const cardIndex = Number(card.dataset.desktopIndex ?? card.dataset.postIndex);
+            const post = posts[cardIndex];
+            const count = card.querySelector('[data-like-count]');
+            const updatedLikes = post.likes + (isLiked ? 1 : -1);
+            count.textContent = updatedLikes.toLocaleString('en-US') + ' likes';
+          }
+          return;
+        }
+        const saveButton = event.target.closest('[data-save]');
+        if (saveButton) {
+          const saved = saveButton.getAttribute('aria-pressed') !== 'true';
+          saveButton.setAttribute('aria-pressed', String(saved));
+          saveButton.classList.toggle('kr-lookbook__save--active', saved);
           return;
         }
         const shareButton = event.target.closest('[data-share]');
         if (!shareButton) return;
-        const shareData = { title: posts[activeIndex].title, url: window.location.href };
+        const shareCard = shareButton.closest('[data-desktop-index], [data-post-index]');
+        const shareIndex = shareCard ? Number(shareCard.dataset.desktopIndex ?? shareCard.dataset.postIndex) : activeIndex;
+        const shareData = { title: posts[shareIndex].title, url: window.location.href };
         if (navigator.share) {
           try {
             await navigator.share(shareData);
@@ -1381,7 +1384,7 @@
       });
       viewport.addEventListener('pointerdown', (event) => {
         if (desktopMode) {
-          if (event.target.closest('[data-desktop-nav], [data-shop-all]') || (event.pointerType === 'mouse' && event.button !== 0)) return;
+          if (event.target.closest('[data-desktop-nav], .kr-lookbook__ig-follow, .kr-lookbook__ig-more, [data-comment], [data-share], [data-like], [data-save]') || (event.pointerType === 'mouse' && event.button !== 0)) return;
           pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
           pointerDragged = false;
           if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);

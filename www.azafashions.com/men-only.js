@@ -14,6 +14,19 @@
     '../image/newarrival10.jpg'
   ];
 
+  const newArrivalHoverImages = [
+    '../image/newarrival1-cloth.jpg',
+    '../image/newarrival2-cloth.jpg',
+    '../image/newarrival3-cloth.jpg',
+    '../image/newarrival4-cloth.jpg',
+    '../image/newarrival5-cloth.webp',
+    '../image/newarrival6-cloth.jpg',
+    '../image/newarrival7-cloth.jpg',
+    '../image/newarrival8-cloth.jpg',
+    '../image/newarrival9-cloth.jpg',
+    '../image/newarrival10-cloth.jpg'
+  ];
+
   const shopByOccasionCards = [
     {
       title: 'Wedding',
@@ -228,12 +241,68 @@
       if (label !== 'New Arrivals' && label !== 'Designers In The Spotlight') return;
 
       const section = heading.closest('section') || heading.parentElement?.parentElement;
-      const images = Array.from(section?.querySelectorAll('img') || []);
+      const images = Array.from(section?.querySelectorAll('img') || [])
+        .filter((image) => !image.classList.contains('kryaa-new-arrivals-hover-image'));
       images.slice(0, newArrivalImages.length).forEach((image, index) => {
         image.src = newArrivalImages[index];
         image.removeAttribute('srcset');
       });
     });
+  };
+
+  const setupNewArrivalsImageHover = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => {
+        const label = item.textContent.replace(/\s+/g, ' ').trim();
+        return label === 'New Arrivals' || label === 'Designers In The Spotlight';
+      });
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    if (!section) return;
+
+    section.classList.add('kryaa-new-arrivals-hover-section');
+    section.querySelectorAll('img').forEach((image) => {
+      if (image.classList.contains('kryaa-new-arrivals-hover-image')) return;
+      const match = image.getAttribute('src')?.match(/newarrival(\d+)\.jpg(?:$|[?#])/i);
+      const hoverImage = match ? newArrivalHoverImages[Number(match[1]) - 1] : null;
+      const frame = image.parentElement;
+      if (!hoverImage || !frame || frame.querySelector('.kryaa-new-arrivals-hover-image')) return;
+
+      frame.classList.add('kryaa-new-arrivals-hover-frame');
+      const alternate = document.createElement('img');
+      alternate.className = 'kryaa-new-arrivals-hover-image';
+      alternate.src = hoverImage;
+      alternate.alt = '';
+      alternate.setAttribute('aria-hidden', 'true');
+      alternate.loading = 'lazy';
+      alternate.decoding = 'async';
+      alternate.addEventListener('error', () => alternate.remove(), { once: true });
+      frame.appendChild(alternate);
+    });
+
+    if (document.getElementById('new-arrivals-hover-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'new-arrivals-hover-styles';
+    style.textContent = `
+      .kryaa-new-arrivals-hover-frame { position: relative !important; }
+      .kryaa-new-arrivals-hover-image {
+        position: absolute !important;
+        z-index: 2;
+        inset: 0;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s ease;
+      }
+      .kryaa-new-arrivals-hover-frame:hover .kryaa-new-arrivals-hover-image,
+      .kryaa-new-arrivals-hover-frame:focus-within .kryaa-new-arrivals-hover-image { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) {
+        .kryaa-new-arrivals-hover-image { transition: none; }
+      }
+    `;
+    document.head.appendChild(style);
   };
 
   const setupNewArrivalsCollectionLinks = () => {
@@ -1102,6 +1171,42 @@
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
   };
 
+  const linkCuratedTilesToProducts = () => {
+    document.querySelectorAll('.kr-curated__tile').forEach((tile) => {
+      tile.href = 'category.html';
+    });
+  };
+
+  const sectionHeadingLabels = new Set([
+    'Shop By Category',
+    'New Arrivals',
+    'Shop by Occasion',
+    'Curated Trending Looks',
+    'Curated By Kryaa',
+    'Must-Own Designers',
+    'Editor’s Picks',
+    'Celebrity Closet',
+    'Over 5,000+5-starreviews',
+    'Visit Our Store',
+    'Get Insider Access',
+    'Make your own style'
+  ]);
+
+  const plainCenteredSectionHeadingLabels = new Set(['Kryaa Diaries', 'JOIN WITH US']);
+
+  const styleSectionHeadings = () => {
+    document.querySelectorAll('main h2').forEach((heading) => {
+      const label = heading.textContent.replace(/\s+/g, ' ').trim();
+      if (plainCenteredSectionHeadingLabels.has(label)) {
+        heading.classList.remove('kr-section-title');
+        heading.classList.add('kr-section-title--plain');
+      } else if (sectionHeadingLabels.has(label)) {
+        heading.classList.remove('kr-section-title--plain');
+        heading.classList.add('kr-section-title');
+      }
+    });
+  };
+
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -1945,11 +2050,14 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsImageHover();
     setupNewArrivalsDesktopCarousel();
     setupNewArrivalsCollectionLinks();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
+    linkCuratedTilesToProducts();
+    styleSectionHeadings();
     setupCuratedTrendingLooks();
     setupOwnStyleSection();
     cleanPageLinks();

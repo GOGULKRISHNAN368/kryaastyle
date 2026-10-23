@@ -26,17 +26,17 @@
       href: 'aza-curates/sangeet/3748.html'
     },
     {
-      title: 'Reception',
+      title: 'Reception & Cocktail',
       image: '../images/Reception.png',
       href: 'aza-curates/reception/3750.html'
     },
     {
-      title: 'Festival',
+      title: 'Festive',
       image: '../images/festival.png',
       href: 'aza-curates/mehendi/3747.html'
     },
     {
-      title: 'Casual',
+      title: 'Casuals',
       image: '../images/Casuals.png',
       href: 'aza-curates/roka/3746.html'
     },
@@ -70,13 +70,12 @@
       image: '../image/kryaa-luxe-green.png',
       alt: 'Original fashion editorial portrait of a woman wearing an emerald green embroidered saree'
     }
-
   ];
 
   const curatedTrendingLooks = [
     { title: 'Black Kurta Set', caption: 'A timeless statement in deep black, made for evenings that call for understated impact.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068555339Black%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
     { title: 'Gold Bandhgala Set', caption: 'A refined bandhgala brings a polished finish to celebrations after sundown.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068439819Gold%20Bandhgala%20Set.jpg', href: 'collection/men/bandhgalas' },
-    { title: 'Ivory Jacket Kurta Set', caption: 'Soft ivory layers create an easy statement for the seasonâ€™s special occasions.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Ivory Jacket Kurta Set', caption: 'Soft ivory layers create an easy statement for the season\'s special occasions.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
     { title: 'Cream Nehru Jacket Set', caption: 'A clean, modern take on occasion dressing with a quietly dressed-up feel.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068141747Cream%20Nehru%20Jacket%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
     { title: 'Beige Kurta Set', caption: 'Warm neutrals and relaxed tailoring make this an effortless celebration look.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067993159Beige%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
     { title: 'Ivory Embroidered Bundi Set', caption: 'Intricate embroidery adds just the right note of detail to a classic silhouette.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067901613Ivory%20Embroidered%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
@@ -122,11 +121,6 @@
           });
           dataChanged = true;
         }
-        if (heading === 'In High Demand') {
-          section.sectionHeadingText = 'Curated Trending Looks';
-          section.sectionDescription = 'A considered edit of the looks trending now.';
-          dataChanged = true;
-        }
       });
 
       if (!dataChanged) return;
@@ -143,6 +137,31 @@
     document.querySelectorAll('header li').forEach((item) => {
       const label = item.textContent.replace(/\s+/g, ' ').trim();
       if (unwantedLabels.has(label)) item.remove();
+    });
+  };
+
+  const syncHeaderToCategories = () => {
+    document.querySelectorAll('header ul').forEach((list) => {
+      const items = Array.from(list.querySelectorAll(':scope > li'));
+      const hasMenNavigation = items.some((item) => {
+        const href = item.querySelector('a')?.getAttribute('href') || '';
+        return /collection\/men\//i.test(href) || /men\/category\/accessories\/footwear/i.test(href);
+      });
+      if (!hasMenNavigation) return;
+
+      list.classList.add('kryaa-category-header-list');
+
+      shopByCategoryCards.forEach((category, index) => {
+        const item = items[index];
+        const link = item?.querySelector('a');
+        if (!item || !link) return;
+
+        link.setAttribute('href', category.href);
+        const label = link.querySelector('div, span') || link;
+        label.textContent = category.title;
+      });
+
+      items.slice(shopByCategoryCards.length).forEach((item) => item.remove());
     });
   };
 
@@ -165,21 +184,23 @@
     secondSlide.classList.add('kryaa-inclusive-slide');
     secondSlide.dataset.index = '1';
     secondSlide.setAttribute('aria-hidden', 'true');
+
     const image = secondSlide.querySelector('img');
     const source = secondSlide.querySelector('source');
-    const imagePath = '../images/Inclusive%20Comfort%20Fashion%20Collection%20(1).png';
     if (image) {
-      image.src = imagePath;
+      image.src = '../images/Inclusive%20Comfort%20Fashion%20Collection%20(1).png';
       image.alt = 'Inclusive Comfort Fashion Collection';
       image.removeAttribute('srcset');
       image.removeAttribute('fetchpriority');
     }
     if (source) source.srcset = '../images/Designed%20for%20Every%20Story.png';
+
     const link = secondSlide.querySelector('a');
     if (link) {
       link.href = 'collection/men';
       link.setAttribute('aria-label', 'Shop the Inclusive Comfort Fashion collection');
     }
+
     track.appendChild(secondSlide);
     hero.classList.add('kryaa-hero-carousel');
     track.dataset.kryaaSlide = '0';
@@ -196,11 +217,13 @@
         slide.setAttribute('aria-hidden', String(!isActive));
       });
     };
+
     hero.querySelectorAll('.slick-arrow').forEach((arrow) => {
       arrow.addEventListener('click', () => {
         update(Number(track.dataset.kryaaSlide || 0) + (arrow.classList.contains('slick-prev') ? -1 : 1));
       });
     });
+
     let timer = window.setInterval(() => update(Number(track.dataset.kryaaSlide || 0) + 1), 3000);
     hero.addEventListener('mouseenter', () => window.clearInterval(timer));
     hero.addEventListener('mouseleave', () => {
@@ -445,11 +468,11 @@
       controls = document.createElement('div');
       controls.className = 'new-arrivals-mobile-controls';
       controls.innerHTML = `
-        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">â€¹</button>
+        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">‹</button>
         <div class="new-arrivals-mobile-progress" aria-hidden="true">
           <span class="new-arrivals-mobile-progress-thumb"></span>
         </div>
-        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">â€º</button>
+        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">›</button>
       `;
       host.appendChild(controls);
     }
@@ -495,6 +518,50 @@
 
     carousel.__setNewArrivalsPage = setPage;
     setPage(Number(carousel.dataset.currentPage || 0));
+  };
+
+  const setupNewArrivalsDesktopCarousel = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'New Arrivals');
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    const slider = section?.querySelector('.slick-slider');
+    const track = slider?.querySelector('.slick-track');
+    if (!section || !slider || !track || slider.dataset.newArrivalsDesktopReady === 'true') return;
+
+    const slides = Array.from(slider.querySelectorAll('.slick-slide'))
+      .filter((slide) => !slide.classList.contains('slick-cloned'));
+    const previous = slider.querySelector('.slick-prev');
+    const next = slider.querySelector('.slick-next');
+    const list = slider.querySelector('.slick-list');
+    const firstSlide = slides[0];
+    if (!slides.length || !previous || !next || !list || !firstSlide) return;
+
+    const listWidth = list.getBoundingClientRect().width;
+    const slideWidth = firstSlide.getBoundingClientRect().width;
+    const visibleSlides = Math.max(1, Math.round(listWidth / slideWidth));
+    const lastSlideIndex = Math.max(0, slides.length - visibleSlides);
+    let currentSlide = 0;
+
+    const setSlide = (slideIndex) => {
+      currentSlide = Math.max(0, Math.min(lastSlideIndex, slideIndex));
+      track.style.transition = 'left .45s ease';
+      track.style.left = `${-currentSlide * (100 / visibleSlides)}%`;
+      previous.classList.toggle('slick-disabled', currentSlide === 0);
+      next.classList.toggle('slick-disabled', currentSlide === lastSlideIndex);
+    };
+
+    const move = (direction) => (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setSlide(currentSlide + direction);
+    };
+
+    previous.addEventListener('click', move(-1), true);
+    next.addEventListener('click', move(1), true);
+    slider.dataset.newArrivalsDesktopReady = 'true';
+    setSlide(0);
   };
 
   const setupShopByOccasionSection = () => {
@@ -864,104 +931,101 @@
     });
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
-
   };
 
   const setupCuratedTrendingLooks = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
-      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'In High Demand' || item.textContent.replace(/\s+/g, ' ').trim() === 'Curated Trending Looks');
+      .find((item) => {
+        const label = item.textContent.replace(/\s+/g, ' ').trim();
+        return label === 'In High Demand' || label === 'Curated Trending Looks';
+      });
     if (!heading) return;
 
-    const label = heading.textContent.replace(/\s+/g, ' ').trim();
-    if (label === 'In High Demand') heading.textContent = 'Curated Trending Looks';
+    if (heading.textContent.replace(/\s+/g, ' ').trim() === 'In High Demand') {
+      heading.textContent = 'Curated Trending Looks';
+    }
 
     let host = heading.closest('section') || heading.parentElement?.parentElement;
     for (let depth = 0; host && depth < 4 && !host.querySelector('.slick-slider'); depth += 1) {
       host = host.parentElement;
     }
-    const originalSlider = host?.querySelector('.slick-slider');
-    if (!host || !originalSlider) return;
 
-    let carousel = host.querySelector('.curated-trending-looks');
-    if (!carousel) {
-      carousel = document.createElement('div');
-      carousel.className = 'curated-trending-looks';
-      carousel.innerHTML = `
-        <div class="curated-trending-looks__eyebrow">THE LOOKBOOK</div>
-        <div class="curated-trending-looks__viewport" role="region" aria-label="Curated trending looks carousel" aria-roledescription="carousel">
-          <div class="curated-trending-looks__track"></div>
+    const originalSlider = host?.querySelector('.slick-slider');
+    if (!host || !originalSlider || host.querySelector('.curated-trending-looks')) return;
+
+    const carousel = document.createElement('div');
+    carousel.className = 'curated-trending-looks';
+    carousel.innerHTML = `
+      <div class="curated-trending-looks__eyebrow">THE LOOKBOOK</div>
+      <div class="curated-trending-looks__viewport" role="region" aria-label="Curated trending looks carousel" aria-roledescription="carousel">
+        <div class="curated-trending-looks__track"></div>
+      </div>
+      <div class="curated-trending-looks__footer">
+        <div class="curated-trending-looks__progress" aria-hidden="true"><span></span></div>
+        <div class="curated-trending-looks__navigation">
+          <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous look">&lsaquo;</button>
+          <span class="curated-trending-looks__count" aria-live="polite">01 / 10</span>
+          <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next look">&rsaquo;</button>
         </div>
-        <div class="curated-trending-looks__footer">
-          <div class="curated-trending-looks__progress" aria-hidden="true"><span></span></div>
-          <div class="curated-trending-looks__navigation">
-            <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous look">&lsaquo;</button>
-            <span class="curated-trending-looks__count" aria-live="polite">01 / 10</span>
-            <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next look">&rsaquo;</button>
-          </div>
+      </div>
+    `;
+
+    const track = carousel.querySelector('.curated-trending-looks__track');
+    curatedTrendingLooks.forEach((look, index) => {
+      const slide = document.createElement('article');
+      slide.className = 'curated-trending-looks__slide';
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.innerHTML = `
+        <a class="curated-trending-looks__visual" href="${look.href}" tabindex="${index === 0 ? '0' : '-1'}" aria-label="Shop ${look.title}">
+          <img src="${look.image}" alt="${look.title}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+          <span class="curated-trending-looks__image-label">LOOK ${String(index + 1).padStart(2, '0')}</span>
+        </a>
+        <div class="curated-trending-looks__details">
+          <span class="curated-trending-looks__number">${String(index + 1).padStart(2, '0')} <i></i> ${String(curatedTrendingLooks.length).padStart(2, '0')}</span>
+          <h3>${look.title}</h3>
+          <p>${look.caption}</p>
+          <a class="curated-trending-looks__shop" href="${look.href}">Shop the look <span aria-hidden="true">&rarr;</span></a>
         </div>
       `;
+      track.appendChild(slide);
+    });
 
-      const track = carousel.querySelector('.curated-trending-looks__track');
-      curatedTrendingLooks.forEach((look, index) => {
-        const slide = document.createElement('article');
-        slide.className = 'curated-trending-looks__slide';
-        slide.setAttribute('aria-roledescription', 'slide');
-        slide.innerHTML = `
-          <a class="curated-trending-looks__visual" href="${look.href}" tabindex="${index === 0 ? '0' : '-1'}" aria-label="Shop ${look.title}">
-            <img src="${look.image}" alt="${look.title}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
-            <span class="curated-trending-looks__image-label">LOOK ${String(index + 1).padStart(2, '0')}</span>
-          </a>
-          <div class="curated-trending-looks__details">
-            <span class="curated-trending-looks__number">${String(index + 1).padStart(2, '0')} <i></i> ${String(curatedTrendingLooks.length).padStart(2, '0')}</span>
-            <h3>${look.title}</h3>
-            <p>${look.caption}</p>
-            <a class="curated-trending-looks__shop" href="${look.href}">Shop the look <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        `;
-        track.appendChild(slide);
+    const count = carousel.querySelector('.curated-trending-looks__count');
+    const progress = carousel.querySelector('.curated-trending-looks__progress span');
+    let currentSlide = 0;
+    const setSlide = (slideNumber) => {
+      currentSlide = (slideNumber + curatedTrendingLooks.length) % curatedTrendingLooks.length;
+      track.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+      track.querySelectorAll('.curated-trending-looks__slide').forEach((slide, index) => {
+        const active = index === currentSlide;
+        slide.setAttribute('aria-hidden', String(!active));
+        slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
       });
+      count.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(curatedTrendingLooks.length).padStart(2, '0')}`;
+      progress.style.transform = `scaleX(${(currentSlide + 1) / curatedTrendingLooks.length})`;
+    };
 
-      const count = carousel.querySelector('.curated-trending-looks__count');
-      const progress = carousel.querySelector('.curated-trending-looks__progress span');
-      const arrows = Array.from(carousel.querySelectorAll('.curated-trending-looks__arrow'));
-      let currentSlide = 0;
-      const setSlide = (slideNumber) => {
-        currentSlide = (slideNumber + curatedTrendingLooks.length) % curatedTrendingLooks.length;
-        track.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
-        track.querySelectorAll('.curated-trending-looks__slide').forEach((slide, index) => {
-          const active = index === currentSlide;
-          slide.setAttribute('aria-hidden', String(!active));
-          slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
-        });
-        count.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(curatedTrendingLooks.length).padStart(2, '0')}`;
-        progress.style.transform = `scaleX(${(currentSlide + 1) / curatedTrendingLooks.length})`;
-      };
+    carousel.querySelectorAll('.curated-trending-looks__arrow').forEach((button) => {
+      button.addEventListener('click', () => setSlide(currentSlide + Number(button.dataset.direction || 1)));
+    });
 
-      carousel.querySelectorAll('.curated-trending-looks__arrow').forEach((button) => {
-        button.addEventListener('click', () => {
-          const direction = Number(button.dataset.direction || 1);
-          setSlide(currentSlide + direction);
-        });
-      });
+    const viewport = carousel.querySelector('.curated-trending-looks__viewport');
+    let touchStartX = 0;
+    viewport.addEventListener('touchstart', (event) => {
+      touchStartX = event.changedTouches[0]?.clientX || 0;
+    }, { passive: true });
+    viewport.addEventListener('touchend', (event) => {
+      const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+      if (Math.abs(distance) > 45) setSlide(currentSlide + (distance < 0 ? 1 : -1));
+    }, { passive: true });
+    carousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') setSlide(currentSlide - 1);
+      if (event.key === 'ArrowRight') setSlide(currentSlide + 1);
+    });
 
-      const viewport = carousel.querySelector('.curated-trending-looks__viewport');
-      let touchStartX = 0;
-      viewport.addEventListener('touchstart', (event) => {
-        touchStartX = event.changedTouches[0]?.clientX || 0;
-      }, { passive: true });
-      viewport.addEventListener('touchend', (event) => {
-        const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
-        if (Math.abs(distance) > 45) setSlide(currentSlide + (distance < 0 ? 1 : -1));
-      }, { passive: true });
-      carousel.addEventListener('keydown', (event) => {
-        if (event.key === 'ArrowLeft') setSlide(currentSlide - 1);
-        if (event.key === 'ArrowRight') setSlide(currentSlide + 1);
-      });
-      setSlide(0);
-
-      originalSlider.insertAdjacentElement('afterend', carousel);
-      originalSlider.classList.add('curated-trending-looks__original');
-    }
+    setSlide(0);
+    originalSlider.insertAdjacentElement('afterend', carousel);
+    originalSlider.classList.add('curated-trending-looks__original');
   };
 
   const cleanPageLinks = () => {
@@ -972,6 +1036,326 @@
 
       const item = link.closest('li') || link;
       item.remove();
+    });
+  };
+
+  const setupKryaaReviews = () => {
+    document.querySelectorAll('.kr-reviews').forEach((section) => {
+      if (section.dataset.krReviewsReady === 'true') return;
+
+      const viewport = section.querySelector('.kr-reviews__viewport');
+      const track = section.querySelector('.kr-reviews__track');
+      if (!viewport || !track) return;
+
+      const originals = Array.from(track.querySelectorAll('.kr-reviews__card'));
+      if (!originals.length) return;
+
+      const desktopQuery = window.matchMedia('(min-width: 768px)');
+      const cloneSets = [];
+      const appendCloneSet = () => {
+        const cloneGroup = document.createDocumentFragment();
+        originals.forEach((card) => {
+          const clone = card.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach((item) => {
+            item.setAttribute('tabindex', '-1');
+          });
+          clone.setAttribute('tabindex', '-1');
+          cloneGroup.appendChild(clone);
+        });
+        const firstClone = cloneGroup.firstElementChild;
+        track.appendChild(cloneGroup);
+        cloneSets.push(firstClone);
+      };
+      appendCloneSet();
+
+      let setWidth = 0;
+      let position = 0;
+      let previousScrollLeft = 0;
+      let animationFrame = 0;
+      let lastFrameTime = 0;
+      let resumeAt = 0;
+      let resumeTimer = 0;
+      let pointerDown = false;
+      let dragged = false;
+      let suppressClick = false;
+      let pointerStartX = 0;
+      let pointerStartPosition = 0;
+      let keyboardFocus = false;
+      let keyboardMode = false;
+      let inViewport = (() => {
+        const bounds = section.getBoundingClientRect();
+        return bounds.bottom > 0 && bounds.top < window.innerHeight;
+      })();
+      let desktopMode = desktopQuery.matches;
+      let marqueeReady = !desktopMode;
+
+      const measure = () => {
+        track.style.transform = 'none';
+        const first = originals[0];
+        const firstClone = track.children[originals.length];
+        if (!first || !firstClone) return;
+        const measuredWidth = firstClone.getBoundingClientRect().left - first.getBoundingClientRect().left;
+        if (measuredWidth <= 0) return;
+        const oldWidth = setWidth;
+        setWidth = measuredWidth;
+        if (desktopMode) {
+          while (track.scrollWidth < viewport.clientWidth * 2) appendCloneSet();
+          const maxOffset = setWidth;
+          position = maxOffset ? ((position % maxOffset) + maxOffset) % maxOffset : 0;
+          track.style.transform = `translate3d(-${position}px, 0, 0)`;
+        } else {
+          while (cloneSets.length > 1) {
+            const extraSet = cloneSets.pop();
+            let node = extraSet;
+            for (let index = 0; index < originals.length && node; index += 1) {
+              const next = node.nextElementSibling;
+              node.remove();
+              node = next;
+            }
+          }
+          if (oldWidth === 0) {
+            position = setWidth;
+            viewport.scrollLeft = position;
+          } else if (Math.abs(oldWidth - setWidth) > 0.5) {
+            position = setWidth + ((position - oldWidth) % setWidth + setWidth) % setWidth;
+            viewport.scrollLeft = position;
+          }
+          previousScrollLeft = viewport.scrollLeft;
+        }
+      };
+
+      const normalize = (value) => {
+        if (!setWidth) return Math.max(0, value);
+        if (desktopMode) return ((value % setWidth) + setWidth) % setWidth;
+        while (value < 0) value += setWidth;
+        while (value >= setWidth * 2) value -= setWidth;
+        return value;
+      };
+
+      const setPosition = (value) => {
+        position = normalize(value);
+        if (desktopMode) {
+          track.style.transform = `translate3d(-${position}px, 0, 0)`;
+          return;
+        }
+        viewport.scrollLeft = position;
+        position = viewport.scrollLeft;
+        previousScrollLeft = viewport.scrollLeft;
+      };
+
+      const canAnimate = () => inViewport && !document.hidden && marqueeReady &&
+        !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+
+      const stopAnimation = () => {
+        if (!animationFrame) return;
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        lastFrameTime = 0;
+      };
+
+      const animate = (time) => {
+        animationFrame = 0;
+        if (!canAnimate()) {
+          lastFrameTime = 0;
+          return;
+        }
+        if (lastFrameTime) {
+          const speed = desktopMode ? 40 : 0.035;
+          setPosition(position + (desktopMode ? (time - lastFrameTime) / 1000 * speed : Math.min(time - lastFrameTime, 50) * speed));
+        }
+        lastFrameTime = time;
+        animationFrame = requestAnimationFrame(animate);
+      };
+
+      const updateAnimation = () => {
+        if (canAnimate()) {
+          if (!animationFrame) animationFrame = requestAnimationFrame(animate);
+        } else {
+          stopAnimation();
+        }
+      };
+
+      const resumeAfterInteraction = () => {
+        window.clearTimeout(resumeTimer);
+        resumeAt = performance.now() + 1500;
+        resumeTimer = window.setTimeout(updateAnimation, 1510);
+        updateAnimation();
+      };
+
+      const pauseForInteraction = () => {
+        window.clearTimeout(resumeTimer);
+        resumeAt = Number.POSITIVE_INFINITY;
+        updateAnimation();
+      };
+
+      const setMode = () => {
+        desktopMode = desktopQuery.matches;
+        marqueeReady = !desktopMode;
+        if (desktopMode) {
+          measure();
+          const pageLoaded = document.readyState === 'complete'
+            ? Promise.resolve()
+            : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+          const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+          Promise.all([pageLoaded, fontsReady]).then(() => {
+            if (!desktopMode) return;
+            measure();
+            marqueeReady = true;
+            updateAnimation();
+          });
+        } else {
+          track.style.transform = '';
+          position = viewport.scrollLeft || setWidth;
+          measure();
+          viewport.scrollLeft = position;
+          previousScrollLeft = viewport.scrollLeft;
+          marqueeReady = true;
+        }
+        updateAnimation();
+      };
+
+      setMode();
+
+      viewport.addEventListener('scroll', () => {
+        if (desktopMode) return;
+        const current = viewport.scrollLeft;
+        if (setWidth && !pointerDown && current <= 0 && current < previousScrollLeft) {
+          setPosition(setWidth + current);
+          return;
+        }
+        if (setWidth && !pointerDown && current >= viewport.scrollWidth - viewport.clientWidth - 1 && current > previousScrollLeft) {
+          setPosition(current - setWidth);
+          return;
+        }
+        position = current;
+        previousScrollLeft = current;
+      }, { passive: true });
+
+      viewport.addEventListener('wheel', (event) => {
+        const delta = event.shiftKey && Math.abs(event.deltaX) < 0.5 ? event.deltaY : event.deltaX;
+        if (Math.abs(delta) < 0.5) return;
+        event.preventDefault();
+        setPosition(position + delta);
+        resumeAfterInteraction();
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        pointerDown = true;
+        pointerStartX = event.clientX;
+        pointerStartPosition = position;
+        dragged = false;
+        keyboardMode = false;
+        keyboardFocus = false;
+        pauseForInteraction();
+        if (desktopMode && viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+        viewport.classList.toggle('kr-reviews__dragging', desktopMode);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!pointerDown) return;
+        if (Math.abs(event.clientX - pointerStartX) > 4) dragged = true;
+        if (!dragged) return;
+        event.preventDefault();
+        setPosition(pointerStartPosition - (event.clientX - pointerStartX));
+      });
+
+      const endPointerInteraction = () => {
+        if (!pointerDown) return;
+        pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
+        if (dragged) {
+          suppressClick = true;
+          window.setTimeout(() => { suppressClick = false; }, 200);
+        }
+        dragged = false;
+        resumeAfterInteraction();
+      };
+
+      viewport.addEventListener('pointerup', endPointerInteraction);
+      viewport.addEventListener('pointercancel', endPointerInteraction);
+      window.addEventListener('pointerup', endPointerInteraction);
+      window.addEventListener('pointercancel', endPointerInteraction);
+      viewport.addEventListener('click', (event) => {
+        if (!suppressClick) return;
+        event.preventDefault();
+        event.stopPropagation();
+        suppressClick = false;
+      }, true);
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') keyboardMode = true;
+      });
+      section.addEventListener('pointerdown', () => {
+        keyboardMode = false;
+        keyboardFocus = false;
+        updateAnimation();
+      });
+      section.addEventListener('keydown', (event) => {
+        keyboardMode = true;
+        if (event.target.closest('.kr-reviews__viewport') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+          event.preventDefault();
+          setPosition(position + (event.key === 'ArrowRight' ? 80 : -80));
+          resumeAfterInteraction();
+        }
+      });
+      section.addEventListener('focusin', () => {
+        if (!keyboardMode) return;
+        keyboardFocus = true;
+        pauseForInteraction();
+      });
+      section.addEventListener('focusout', (event) => {
+        if (!section.contains(event.relatedTarget)) {
+          keyboardFocus = false;
+          resumeAfterInteraction();
+        }
+      });
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          inViewport = entries.some((entry) => entry.isIntersecting);
+          updateAnimation();
+        });
+        section.__krReviewsIntersectionObserver = observer;
+        observer.observe(section);
+      } else {
+        inViewport = true;
+      }
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          updateAnimation();
+          return;
+        }
+        pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
+        resumeAfterInteraction();
+      });
+      window.addEventListener('blur', () => {
+        pointerDown = false;
+        viewport.classList.remove('kr-reviews__dragging');
+        keyboardFocus = false;
+        resumeAfterInteraction();
+      });
+      window.addEventListener('focus', () => {
+        updateAnimation();
+      });
+      if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', setMode);
+      else desktopQuery.addListener(setMode);
+      if ('ResizeObserver' in window) {
+        const resizeObserver = new ResizeObserver(() => {
+          measure();
+          updateAnimation();
+        });
+        resizeObserver.observe(viewport);
+      }
+      window.addEventListener('resize', () => {
+        measure();
+        updateAnimation();
+      });
+      section.dataset.krReviewsReady = 'true';
+      updateAnimation();
     });
   };
 
@@ -988,10 +1372,12 @@
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();
+    syncHeaderToCategories();
     cleanImageSearch();
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsDesktopCarousel();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
@@ -1002,6 +1388,13 @@
 
   cleanNextData();
   cleanMenPage();
+
+  const initializeKryaaReviews = () => window.setTimeout(setupKryaaReviews, 0);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeKryaaReviews, { once: true });
+  } else {
+    initializeKryaaReviews();
+  }
 
   const observer = new MutationObserver(cleanMenPage);
   observer.observe(document.documentElement, { childList: true, subtree: true });

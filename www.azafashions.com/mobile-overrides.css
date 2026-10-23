@@ -591,6 +591,32 @@
 
   .kr-reviews__track {
     will-change: transform;
+    gap: 14px;
+  }
+
+  .kr-reviews__card {
+    width: 230px;
+    flex-basis: 230px;
+    padding: 16px 18px;
+    border-radius: 10px;
+  }
+
+  .kr-reviews__stars {
+    font-size: 12px;
+  }
+
+  .kr-reviews__name {
+    font-size: 15px;
+  }
+
+  .kr-reviews__title {
+    font-size: 13px;
+  }
+
+  .kr-reviews__quote {
+    font-size: 12.5px;
+    line-height: 1.55;
+    -webkit-line-clamp: 5;
   }
 
   .kr-reviews__viewport {

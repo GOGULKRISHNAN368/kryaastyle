@@ -966,6 +966,8 @@
             : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
           const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
           Promise.all([pageLoaded, fontsReady]).then(() => {
+            if (!desktopMode) return;
+            measure();
             marqueeReady = true;
             updateAnimation();
           });

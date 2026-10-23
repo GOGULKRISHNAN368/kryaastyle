@@ -140,6 +140,31 @@
     });
   };
 
+  const syncHeaderToCategories = () => {
+    document.querySelectorAll('header ul').forEach((list) => {
+      const items = Array.from(list.querySelectorAll(':scope > li'));
+      const hasMenNavigation = items.some((item) => {
+        const href = item.querySelector('a')?.getAttribute('href') || '';
+        return /collection\/men\//i.test(href) || /men\/category\/accessories\/footwear/i.test(href);
+      });
+      if (!hasMenNavigation) return;
+
+      list.classList.add('kryaa-category-header-list');
+
+      shopByCategoryCards.forEach((category, index) => {
+        const item = items[index];
+        const link = item?.querySelector('a');
+        if (!item || !link) return;
+
+        link.setAttribute('href', category.href);
+        const label = link.querySelector('div, span') || link;
+        label.textContent = category.title;
+      });
+
+      items.slice(shopByCategoryCards.length).forEach((item) => item.remove());
+    });
+  };
+
   const cleanImageSearch = () => {
     document.querySelectorAll('#imageSearchIO_deskNav').forEach((input) => {
       const section = input.closest('section');
@@ -493,6 +518,50 @@
 
     carousel.__setNewArrivalsPage = setPage;
     setPage(Number(carousel.dataset.currentPage || 0));
+  };
+
+  const setupNewArrivalsDesktopCarousel = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) return;
+
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'New Arrivals');
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    const slider = section?.querySelector('.slick-slider');
+    const track = slider?.querySelector('.slick-track');
+    if (!section || !slider || !track || slider.dataset.newArrivalsDesktopReady === 'true') return;
+
+    const slides = Array.from(slider.querySelectorAll('.slick-slide'))
+      .filter((slide) => !slide.classList.contains('slick-cloned'));
+    const previous = slider.querySelector('.slick-prev');
+    const next = slider.querySelector('.slick-next');
+    const list = slider.querySelector('.slick-list');
+    const firstSlide = slides[0];
+    if (!slides.length || !previous || !next || !list || !firstSlide) return;
+
+    const listWidth = list.getBoundingClientRect().width;
+    const slideWidth = firstSlide.getBoundingClientRect().width;
+    const visibleSlides = Math.max(1, Math.round(listWidth / slideWidth));
+    const lastSlideIndex = Math.max(0, slides.length - visibleSlides);
+    let currentSlide = 0;
+
+    const setSlide = (slideIndex) => {
+      currentSlide = Math.max(0, Math.min(lastSlideIndex, slideIndex));
+      track.style.transition = 'left .45s ease';
+      track.style.left = `${-currentSlide * (100 / visibleSlides)}%`;
+      previous.classList.toggle('slick-disabled', currentSlide === 0);
+      next.classList.toggle('slick-disabled', currentSlide === lastSlideIndex);
+    };
+
+    const move = (direction) => (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setSlide(currentSlide + direction);
+    };
+
+    previous.addEventListener('click', move(-1), true);
+    next.addEventListener('click', move(1), true);
+    slider.dataset.newArrivalsDesktopReady = 'true';
+    setSlide(0);
   };
 
   const setupShopByOccasionSection = () => {
@@ -982,7 +1051,6 @@
       if (!originals.length) return;
 
       const desktopQuery = window.matchMedia('(min-width: 768px)');
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       const cloneSets = [];
       const appendCloneSet = () => {
         const cloneGroup = document.createDocumentFragment();
@@ -1013,7 +1081,6 @@
       let suppressClick = false;
       let pointerStartX = 0;
       let pointerStartPosition = 0;
-      let hovered = false;
       let keyboardFocus = false;
       let keyboardMode = false;
       let inViewport = (() => {
@@ -1022,7 +1089,6 @@
       })();
       let desktopMode = desktopQuery.matches;
       let marqueeReady = !desktopMode;
-      let reducedMotionLogged = false;
 
       const measure = () => {
         track.style.transform = 'none';
@@ -1078,8 +1144,8 @@
         previousScrollLeft = viewport.scrollLeft;
       };
 
-      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden && marqueeReady &&
-        !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+      const canAnimate = () => inViewport && !document.hidden && marqueeReady &&
+        !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
 
       const stopAnimation = () => {
         if (!animationFrame) return;
@@ -1127,7 +1193,6 @@
         desktopMode = desktopQuery.matches;
         marqueeReady = !desktopMode;
         if (desktopMode) {
-          hovered = viewport.matches(':hover');
           measure();
           const pageLoaded = document.readyState === 'complete'
             ? Promise.resolve()
@@ -1139,12 +1204,7 @@
             marqueeReady = true;
             updateAnimation();
           });
-          if (reducedMotion.matches && !reducedMotionLogged) {
-            console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
-            reducedMotionLogged = true;
-          }
         } else {
-          hovered = false;
           track.style.transform = '';
           position = viewport.scrollLeft || setWidth;
           measure();
@@ -1224,17 +1284,6 @@
         suppressClick = false;
       }, true);
 
-      viewport.addEventListener('pointerenter', (event) => {
-        if (event.pointerType !== 'mouse') return;
-        hovered = true;
-        pauseForInteraction();
-      });
-      viewport.addEventListener('pointerleave', (event) => {
-        if (event.pointerType !== 'mouse') return;
-        hovered = false;
-        resumeAfterInteraction();
-      });
-
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Tab') keyboardMode = true;
       });
@@ -1281,26 +1330,15 @@
         }
         pointerDown = false;
         viewport.classList.remove('kr-reviews__dragging');
-        hovered = viewport.matches(':hover') && desktopMode;
-        if (hovered) updateAnimation();
-        else resumeAfterInteraction();
+        resumeAfterInteraction();
       });
       window.addEventListener('blur', () => {
         pointerDown = false;
         viewport.classList.remove('kr-reviews__dragging');
-        hovered = false;
         keyboardFocus = false;
         resumeAfterInteraction();
       });
       window.addEventListener('focus', () => {
-        hovered = viewport.matches(':hover') && desktopMode;
-        updateAnimation();
-      });
-      if (reducedMotion.addEventListener) reducedMotion.addEventListener('change', () => {
-        if (reducedMotion.matches && desktopMode && !reducedMotionLogged) {
-          console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
-          reducedMotionLogged = true;
-        }
         updateAnimation();
       });
       if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', setMode);
@@ -1331,15 +1369,19 @@
   };
 
   const cleanMenPage = () => {
+    setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();
+    syncHeaderToCategories();
     cleanImageSearch();
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsDesktopCarousel();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
+    setupCuratedTrendingLooks();
     cleanPageLinks();
     cleanEditorialSection();
   };

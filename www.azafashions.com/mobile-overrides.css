@@ -1,36 +1,36 @@
 /* Banner and mobile layout refinements for the Kryaa storefront. */
-.wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) .slick-arrow {
+.wrapperContainer:has(img[src*="banner-desktop"]) .slick-arrow {
   display: none !important;
 }
 
 /* Two-slide homepage hero, including the inclusive comfort campaign. */
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-list { overflow: hidden; }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-track {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-list { overflow: hidden; }
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-track {
   position: relative;
   left: 0 !important;
   width: 200% !important;
   transform: translate3d(0, 0, 0) !important;
   transition: transform .55s ease;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-track[data-kryaa-slide="1"] {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-track[data-kryaa-slide="1"] {
   transform: translate3d(-50%, 0, 0) !important;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-slide {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-slide {
   flex: 0 0 50% !important;
   width: 50% !important;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-arrow {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-arrow {
   display: flex !important;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture {
   background: #f2f0ec;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture img {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture img {
   object-fit: contain !important;
   object-position: center center !important;
 }
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture::before,
-.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture::after {
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture::before,
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture::after {
   content: none !important;
 }
 
@@ -108,7 +108,7 @@
 }
 
 @media (min-width: 768px) {
-  .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) a > div[style*="aspect-ratio"] > div.absolute {
+  .wrapperContainer:has(img[src*="banner-desktop"]) a > div[style*="aspect-ratio"] > div.absolute {
     display: none !important;
   }
 }
@@ -775,5 +775,11 @@
     width: 62vw;
     flex-basis: 62vw;
     padding: 12px 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  header nav .kryaa-category-header-list {
+    transform: translateX(calc(-1 * clamp(60px, 5vw, 110px)));
   }
 }

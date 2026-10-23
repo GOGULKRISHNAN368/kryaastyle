@@ -741,6 +741,72 @@
 
   };
 
+  const setupOwnStyleSection = () => {
+    if (document.getElementById('kr-own-style')) return;
+    const curated = document.querySelector('.curated-trending-looks');
+    if (!curated) return;
+    const curatedSection = curated.closest('.bg-sectionBG') || curated;
+
+    const section = document.createElement('section');
+    section.id = 'kr-own-style';
+    section.className = 'kr-own';
+    section.setAttribute('aria-labelledby', 'kr-own-heading');
+    section.innerHTML = `
+      <h2 class="kr-own__heading __className_f37194" id="kr-own-heading">Make your own style</h2>
+      <div class="kr-own__collage" aria-label="Kryaa custom style collection">
+        <div class="kr-own__tile kr-own__tile--video">
+          <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
+          <video class="kr-own__video" muted loop playsinline preload="metadata" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
+            <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="kr-own__tile kr-own__tile--own1"><img src="../images/unstiched_img/img1.png" alt="Kryaa fabric and outfit styling details" width="564" height="401" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own2"><img src="../images/unstiched_img/img2.png" alt="Kryaa outfit viewed from behind" width="558" height="632" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own3"><img src="../images/unstiched_img/img%203.png" alt="Kryaa outfit styled for a special occasion" width="566" height="673" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="kr-own__content">
+        <p class="kr-own__eyebrow">A LOOK THAT IS YOURS</p>
+        <span class="kr-own__divider" aria-hidden="true"></span>
+        <p class="kr-own__tagline">Made personal. Made for you.</p>
+        <p class="kr-own__description">Bring your vision to life with thoughtful details, beautiful fabrics and a fit made around your style.</p>
+        <div class="kr-own__actions">
+          <a class="kr-own__button kr-own__button--secondary" href="collection/women/sarees.html">EXPLORE THE COLLECTION</a>
+        </div>
+      </div>
+    `;
+    curatedSection.insertAdjacentElement('afterend', section);
+
+    const video = section.querySelector('.kr-own__video');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pauseVideo = () => {
+      video.pause();
+      section.classList.remove('kr-own--playing');
+    };
+    const playVideo = () => {
+      if (reduceMotion.matches) return;
+      video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
+        section.classList.remove('kr-own--playing');
+      });
+    };
+
+    const applyMotionPreference = () => {
+      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
+      if (reduceMotion.matches) pauseVideo();
+    };
+    applyMotionPreference();
+    reduceMotion.addEventListener?.('change', applyMotionPreference);
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio >= .4 && !reduceMotion.matches) playVideo();
+          else pauseVideo();
+        });
+      }, { threshold: [.0, .4, 1] });
+      visibilityObserver.observe(section);
+    }
+  };
+
   const setupShopByCategorySection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Category');
@@ -938,18 +1004,24 @@
     section.setAttribute('aria-label', 'Kryaa Luxe collection');
     section.innerHTML = `
       <div class="kryaa-luxe-banner">
-        <div class="kryaa-luxe-copy">
-          <p class="kryaa-luxe-eyebrow">THE KRYAA EDIT</p>
-          <h2>KRYAA LUXE</h2>
-          <span class="kryaa-luxe-rule" aria-hidden="true"></span>
-          <p class="kryaa-luxe-description">Elegance curated,<br>luxury redefined</p>
-          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">SHOP NOW</a>
+        <div class="kr-luxe__panel">
+          <img class="kr-luxe__logo" src="../image/logo.png" alt="Kryaa Style" width="50" height="18" decoding="async">
+          <h2 class="kr-luxe__heading __className_f37194">KRYAA STYLE</h2>
+          <span class="kr-luxe__divider" aria-hidden="true"></span>
+          <p class="kr-luxe__tagline __className_f37194">Elegance curated, luxury redefined</p>
+          <p class="kr-luxe__description">Handcrafted lehengas, sarees and festive sets, embroidered with care and styled for every celebration.</p>
+          <ul class="kr-luxe__highlights" aria-label="Kryaa Luxe collection highlights">
+            <li>HANDCRAFTED</li><li>FESTIVE EDIT</li><li>WEDDING READY</li>
+          </ul>
+          <div class="kr-luxe__actions">
+            <a class="kr-luxe__button kr-luxe__button--primary" href="collection/women/sarees.html">SHOP NOW</a>
+          </div>
         </div>
         <div class="kryaa-luxe-media">
           <a class="kryaa-luxe-image-link" href="collection/women/sarees.html" aria-label="Shop the Kryaa Luxe collection">
             <span class="kryaa-luxe-image-track">
               ${kryaaLuxeSlides.map((slide, index) => `
-                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} draggable="false">
+                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} draggable="false">
               `).join('')}
             </span>
           </a>
@@ -1879,6 +1951,7 @@
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
     setupCuratedTrendingLooks();
+    setupOwnStyleSection();
     cleanPageLinks();
     cleanEditorialSection();
     cleanCelebrityClosetSection();

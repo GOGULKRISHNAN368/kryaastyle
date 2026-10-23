@@ -57,6 +57,21 @@
     { title: 'Anarkali Suits', image: '../image/Anarkali%20Suits.png', href: 'collection/women/anarkali-suits.html' }
   ];
 
+  const kryaaLuxeSlides = [
+    {
+      image: '../image/kryaa-luxe-red.png',
+      alt: 'Original fashion editorial portrait of a woman wearing a ruby red embroidered lehenga'
+    },
+    {
+      image: '../image/kryaa-luxe-blue.png',
+      alt: 'Original fashion editorial portrait of a woman wearing a midnight blue couture gown'
+    },
+    {
+      image: '../image/kryaa-luxe-green.png',
+      alt: 'Original fashion editorial portrait of a woman wearing an emerald green embroidered saree'
+    }
+  ];
+
   const unwantedLabels = new Set([
     'Women',
     'Kids',
@@ -527,7 +542,7 @@
           width: min(160px, 100%);
           aspect-ratio: 1;
           overflow: hidden;
-          border: 2px solid #fff;
+          border: 1px solid #b8b8b8;
           border-radius: 999px;
           background: #f7f7f7;
           box-shadow: 0 5px 10px rgb(0 0 0 / 10%);
@@ -653,6 +668,108 @@
     }, { passive: true });
   };
 
+  const setupKryaaLuxeBanner = () => {
+    const categorySection = document.querySelector('.women-category-section');
+    if (!categorySection || document.getElementById('kryaa-luxe-banner')) return;
+
+    const section = document.createElement('section');
+    section.id = 'kryaa-luxe-banner';
+    section.className = 'kryaa-luxe-section';
+    section.setAttribute('aria-label', 'Kryaa Luxe collection');
+    section.innerHTML = `
+      <div class="kryaa-luxe-banner">
+        <div class="kryaa-luxe-copy">
+          <p class="kryaa-luxe-eyebrow">THE KRYAA EDIT</p>
+          <h2>KRYAA LUXE</h2>
+          <span class="kryaa-luxe-rule" aria-hidden="true"></span>
+          <p class="kryaa-luxe-description">Elegance curated,<br>luxury redefined</p>
+          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">SHOP NOW</a>
+        </div>
+        <div class="kryaa-luxe-media">
+          <a class="kryaa-luxe-image-link" href="collection/women/sarees.html" aria-label="Shop the Kryaa Luxe collection">
+            <span class="kryaa-luxe-image-track">
+              ${kryaaLuxeSlides.map((slide, index) => `
+                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} draggable="false">
+              `).join('')}
+            </span>
+          </a>
+          <div class="kryaa-luxe-dots" aria-label="Kryaa Luxe slides">
+            ${kryaaLuxeSlides.map((_, index) => `<button type="button" class="kryaa-luxe-dot${index === 0 ? ' is-active' : ''}" aria-label="Show Kryaa Luxe image ${index + 1}" aria-current="${index === 0 ? 'true' : 'false'}"></button>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    categorySection.insertAdjacentElement('afterend', section);
+
+    const imageTrack = section.querySelector('.kryaa-luxe-image-track');
+    const imageLink = section.querySelector('.kryaa-luxe-image-link');
+    const dots = Array.from(section.querySelectorAll('.kryaa-luxe-dot'));
+    let currentSlide = 0;
+    let timer;
+
+    const setSlide = (index) => {
+      currentSlide = (index + kryaaLuxeSlides.length) % kryaaLuxeSlides.length;
+
+      imageTrack.style.transform = `translate3d(-${currentSlide * (100 / kryaaLuxeSlides.length)}%, 0, 0)`;
+
+      dots.forEach((dot, dotIndex) => {
+        const active = dotIndex === currentSlide;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-current', active ? 'true' : 'false');
+      });
+    };
+
+    const startRotation = () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => setSlide(currentSlide + 1), 3000);
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        setSlide(index);
+        startRotation();
+      });
+    });
+
+    section.addEventListener('mouseenter', () => window.clearInterval(timer));
+    section.addEventListener('mouseleave', startRotation);
+    section.addEventListener('focusin', () => window.clearInterval(timer));
+    section.addEventListener('focusout', startRotation);
+
+    let touchStartX = 0;
+    let mouseStartX = 0;
+    let suppressClick = false;
+    imageLink.addEventListener('touchstart', (event) => {
+      touchStartX = event.changedTouches[0]?.clientX || 0;
+    }, { passive: true });
+    imageLink.addEventListener('touchend', (event) => {
+      const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+      if (Math.abs(distance) < 40) return;
+      suppressClick = true;
+      setSlide(currentSlide + (distance < 0 ? 1 : -1));
+      startRotation();
+    }, { passive: true });
+
+    imageLink.addEventListener('mousedown', (event) => {
+      mouseStartX = event.clientX;
+    });
+    imageLink.addEventListener('mouseup', (event) => {
+      const distance = event.clientX - mouseStartX;
+      if (Math.abs(distance) < 40) return;
+      suppressClick = true;
+      setSlide(currentSlide + (distance < 0 ? 1 : -1));
+      startRotation();
+    });
+    imageLink.addEventListener('click', (event) => {
+      if (!suppressClick) return;
+      event.preventDefault();
+      suppressClick = false;
+    });
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
+  };
+
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -681,6 +798,7 @@
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
     setupShopByCategorySection();
+    setupKryaaLuxeBanner();
     setupShopByOccasionSection();
     cleanPageLinks();
     cleanEditorialSection();

@@ -153,6 +153,228 @@
     box-sizing: border-box;
   }
 
+}
+
+.kryaa-luxe-section {
+  width: min(1360px, calc(100% - 48px));
+  margin: clamp(24px, 4vw, 58px) auto clamp(28px, 5vw, 72px);
+}
+
+.kryaa-luxe-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  aspect-ratio: 2.45 / 1;
+  overflow: hidden;
+  background: #f1f2f3;
+}
+
+.kryaa-luxe-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: clamp(28px, 5vw, 88px);
+  color: #0e3044;
+  text-align: center;
+}
+
+.kryaa-luxe-eyebrow {
+  margin: 0 0 12px;
+  color: #647482;
+  font-size: clamp(10px, 0.9vw, 14px);
+  letter-spacing: .22em;
+  line-height: 1.2;
+}
+
+.kryaa-luxe-copy h2 {
+  margin: 0;
+  font-size: clamp(30px, 3.25vw, 64px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+  line-height: 1.05;
+}
+
+.kryaa-luxe-rule {
+  display: block;
+  width: min(210px, 55%);
+  height: 1px;
+  margin: clamp(17px, 2vw, 30px) 0 clamp(18px, 2vw, 32px);
+  background: #72818a;
+}
+
+.kryaa-luxe-description {
+  margin: 0;
+  color: #61717c;
+  font-size: clamp(16px, 1.8vw, 31px);
+  line-height: 1.35;
+}
+
+.kryaa-luxe-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 154px;
+  min-height: 52px;
+  margin-top: clamp(24px, 3vw, 46px);
+  padding: 10px 22px;
+  border: 1px solid #0e3044;
+  color: #0e3044;
+  font-size: clamp(13px, 1.2vw, 18px);
+  letter-spacing: .02em;
+  text-decoration: none;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.kryaa-luxe-cta:hover,
+.kryaa-luxe-cta:focus-visible {
+  background: #0e3044;
+  color: #fff;
+}
+
+.kryaa-luxe-media,
+.kryaa-luxe-image-link {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.kryaa-luxe-media {
+  position: relative;
+}
+
+.kryaa-luxe-image-link {
+  display: block;
+  overflow: hidden;
+}
+
+.kryaa-luxe-image-track {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  transition: transform .55s cubic-bezier(.22, .61, .36, 1);
+}
+
+.kryaa-luxe-slide {
+  display: block;
+  flex: 0 0 33.333333%;
+  width: 33.333333%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 12%;
+  transition: transform .5s ease;
+}
+
+.kryaa-luxe-image-link:hover .kryaa-luxe-slide {
+  transform: scale(1.025);
+}
+
+.kryaa-luxe-dots {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  bottom: 14px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.kryaa-luxe-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid #68737a;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+}
+
+.kryaa-luxe-dot.is-active {
+  background: #0e3044;
+}
+
+.women-category-circle {
+  border: 1px solid #b8b8b8;
+}
+
+@media (max-width: 767px) {
+  .kryaa-luxe-section {
+    width: calc(100% - 32px);
+    margin: 28px auto 38px;
+  }
+
+  .kryaa-luxe-banner {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    aspect-ratio: 1.34 / 1;
+  }
+
+  .kryaa-luxe-copy {
+    padding: 18px 10px;
+  }
+
+  .kryaa-luxe-eyebrow {
+    margin-bottom: 8px;
+    font-size: 8px;
+    letter-spacing: .14em;
+  }
+
+  .kryaa-luxe-copy h2 {
+    font-size: clamp(21px, 6.6vw, 30px);
+    letter-spacing: -.045em;
+  }
+
+  .kryaa-luxe-rule {
+    width: 62%;
+    margin: 13px 0 14px;
+  }
+
+  .kryaa-luxe-description {
+    font-size: clamp(12px, 3.5vw, 16px);
+    line-height: 1.35;
+  }
+
+  .kryaa-luxe-cta {
+    min-width: 0;
+    min-height: 38px;
+    margin-top: 18px;
+    padding: 7px 13px;
+    font-size: 11px;
+  }
+
+  .kryaa-luxe-slide {
+    object-position: center 14%;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .kryaa-luxe-dots {
+    gap: 8px;
+    bottom: 9px;
+  }
+
+  .kryaa-luxe-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kryaa-luxe-image,
+  .kryaa-luxe-cta {
+    transition: none;
+  }
+}
+
+@media (max-width: 767px) {
   .kryaa-reviews-section .slick-list,
   .wrapperContainer:has(a[href="reviews-and-ratings.html"]) .slick-list {
     overflow-x: auto !important;

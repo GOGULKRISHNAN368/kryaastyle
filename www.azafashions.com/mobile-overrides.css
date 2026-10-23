@@ -135,6 +135,57 @@
   .curated-trending-looks__track,
   .curated-trending-looks__progress span { transition: none; }
 }
+
+/* Visit Our Store: image-only cards with a compact touch carousel on phones. */
+.kryaa-visit-store-section .slick-slide a > div.pt-3 { display: none !important; }
+
+@media (max-width: 767px) {
+  .kryaa-visit-store-section > .flex {
+    align-items: center;
+    padding-inline: 16px !important;
+  }
+
+  .kryaa-visit-store-section .slick-arrow { display: none !important; }
+
+  .kryaa-visit-store-section .slick-list {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0 12px 10px !important;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    touch-action: pan-x;
+  }
+
+  .kryaa-visit-store-section .slick-list::-webkit-scrollbar { display: none; }
+
+  .kryaa-visit-store-section .slick-track {
+    display: flex !important;
+    width: max-content !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+
+  .kryaa-visit-store-section .slick-slide {
+    flex: 0 0 calc((100vw - 42px) / 2) !important;
+    width: calc((100vw - 42px) / 2) !important;
+    scroll-snap-align: start;
+  }
+
+  .kryaa-visit-store-section .slick-slide > div,
+  .kryaa-visit-store-section .slick-slide .px-3 { height: 100%; }
+
+  .kryaa-visit-store-section .slick-slide .px-3 { padding-inline: 4px !important; }
+
+  .kryaa-visit-store-section .slick-slide a > div.relative[style*="aspect-ratio"] {
+    aspect-ratio: 4 / 5 !important;
+    border-radius: 14px !important;
+  }
+
+  .kryaa-visit-store-section .slick-slide img {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
 @media (min-width: 768px) {
   .shop-by-occasion-card:nth-child(3) img {
     object-fit: cover;

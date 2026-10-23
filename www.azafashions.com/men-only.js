@@ -162,6 +162,26 @@
     const style = document.createElement('style');
     style.id = 'new-arrivals-mobile-styles';
     style.textContent = `
+      .new-arrivals-mobile-section {
+        margin-inline: auto;
+      }
+
+      .new-arrivals-centered-heading {
+        display: flex !important;
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+
+      .new-arrivals-centered-heading > * {
+        text-align: center !important;
+      }
+
+      .new-arrivals-mobile-section .new-arrivals-mobile-original,
+      .new-arrivals-mobile-section .new-arrivals-mobile-grid-carousel {
+        margin-inline: auto;
+      }
+
       .new-arrivals-mobile-controls {
         display: none;
       }
@@ -291,6 +311,7 @@
     if (!section || !slider) return;
 
     section.classList.add('new-arrivals-mobile-section');
+    heading.parentElement?.classList.add('new-arrivals-centered-heading');
     slider.classList.add('new-arrivals-mobile-original');
 
     const host = slider.parentElement;

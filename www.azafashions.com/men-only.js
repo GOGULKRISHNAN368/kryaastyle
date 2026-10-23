@@ -154,7 +154,7 @@
 
   const setupHeroCarousel = () => {
     const hero = Array.from(document.querySelectorAll('.slick-slider'))
-      .find((slider) => slider.querySelector('img[src*="banner-desktop.jpg"]'));
+      .find((slider) => slider.querySelector('img[src*="banner-desktop"]'));
     const track = hero?.querySelector('.slick-track');
     const firstSlide = track?.querySelector('.slick-slide');
     if (!hero || !track || !firstSlide || hero.classList.contains('kryaa-hero-carousel')) return;

@@ -48,16 +48,16 @@
   ];
 
   const curatedTrendingLooks = [
-    { title: 'Black Kurta Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068555339Black%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Gold Bandhgala Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068439819Gold%20Bandhgala%20Set.jpg', href: 'collection/men/bandhgalas' },
-    { title: 'Ivory Jacket Kurta Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Cream Nehru Jacket Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068141747Cream%20Nehru%20Jacket%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Beige Kurta Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067993159Beige%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Ivory Embroidered Bundi Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067901613Ivory%20Embroidered%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Jacket Kurta Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067765481Green%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Silk Bundi Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067591654Green%20Silk%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Bundi Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067448148Green%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Olive Green Sherwani Set', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790061621555Olive%20Green%20Sherwani%20Set.jpg', href: 'collection/men/sherwanis' }
+    { title: 'Black Kurta Set', caption: 'A timeless statement in deep black, made for evenings that call for understated impact.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068555339Black%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
+    { title: 'Gold Bandhgala Set', caption: 'A refined bandhgala brings a polished finish to celebrations after sundown.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068439819Gold%20Bandhgala%20Set.jpg', href: 'collection/men/bandhgalas' },
+    { title: 'Ivory Jacket Kurta Set', caption: 'Soft ivory layers create an easy statement for the season’s special occasions.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Cream Nehru Jacket Set', caption: 'A clean, modern take on occasion dressing with a quietly dressed-up feel.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068141747Cream%20Nehru%20Jacket%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Beige Kurta Set', caption: 'Warm neutrals and relaxed tailoring make this an effortless celebration look.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067993159Beige%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
+    { title: 'Ivory Embroidered Bundi Set', caption: 'Intricate embroidery adds just the right note of detail to a classic silhouette.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067901613Ivory%20Embroidered%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Green Jacket Kurta Set', caption: 'A fresh shade of green gives traditional layers a confident new mood.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067765481Green%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Green Silk Bundi Set', caption: 'Lustrous silk and rich colour bring a little occasion-ready drama.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067591654Green%20Silk%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Green Bundi Set', caption: 'A versatile layered look that moves easily from daytime gatherings to dinner.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067448148Green%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
+    { title: 'Olive Green Sherwani Set', caption: 'A distinctive olive sherwani for moments worth dressing up for.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790061621555Olive%20Green%20Sherwani%20Set.jpg', href: 'collection/men/sherwanis' }
   ];
 
   const unwantedLabels = new Set([
@@ -495,66 +495,80 @@
       carousel = document.createElement('div');
       carousel.className = 'curated-trending-looks';
       carousel.innerHTML = `
-        <div class="curated-trending-looks__intro">
-          <p>A considered edit of the looks trending now.</p>
-          <div class="curated-trending-looks__controls">
-            <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous looks">‹</button>
-            <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next looks">›</button>
+        <div class="curated-trending-looks__eyebrow">THE LOOKBOOK</div>
+        <div class="curated-trending-looks__viewport" role="region" aria-label="Curated trending looks carousel" aria-roledescription="carousel">
+          <div class="curated-trending-looks__track"></div>
+        </div>
+        <div class="curated-trending-looks__footer">
+          <div class="curated-trending-looks__progress" aria-hidden="true"><span></span></div>
+          <div class="curated-trending-looks__navigation">
+            <button type="button" class="curated-trending-looks__arrow" data-direction="-1" aria-label="Previous look">&lsaquo;</button>
+            <span class="curated-trending-looks__count" aria-live="polite">01 / 10</span>
+            <button type="button" class="curated-trending-looks__arrow" data-direction="1" aria-label="Next look">&rsaquo;</button>
           </div>
         </div>
-        <div class="curated-trending-looks__track" role="region" aria-label="Curated trending looks carousel"></div>
       `;
 
       const track = carousel.querySelector('.curated-trending-looks__track');
-      curatedTrendingLooks.forEach((look) => {
-        const card = document.createElement('a');
-        card.className = 'curated-trending-looks__card';
-        card.href = look.href;
-        card.innerHTML = `<div class="curated-trending-looks__image-wrap"><img src="${look.image}" alt="${look.title}" loading="lazy" decoding="async"></div><span>${look.title}</span>`;
-        track.appendChild(card);
+      curatedTrendingLooks.forEach((look, index) => {
+        const slide = document.createElement('article');
+        slide.className = 'curated-trending-looks__slide';
+        slide.setAttribute('aria-roledescription', 'slide');
+        slide.innerHTML = `
+          <a class="curated-trending-looks__visual" href="${look.href}" tabindex="${index === 0 ? '0' : '-1'}" aria-label="Shop ${look.title}">
+            <img src="${look.image}" alt="${look.title}" loading="${index === 0 ? 'eager' : 'lazy'}" decoding="async">
+            <span class="curated-trending-looks__image-label">LOOK ${String(index + 1).padStart(2, '0')}</span>
+          </a>
+          <div class="curated-trending-looks__details">
+            <span class="curated-trending-looks__number">${String(index + 1).padStart(2, '0')} <i></i> ${String(curatedTrendingLooks.length).padStart(2, '0')}</span>
+            <h3>${look.title}</h3>
+            <p>${look.caption}</p>
+            <a class="curated-trending-looks__shop" href="${look.href}">Shop the look <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        `;
+        track.appendChild(slide);
       });
+
+      const count = carousel.querySelector('.curated-trending-looks__count');
+      const progress = carousel.querySelector('.curated-trending-looks__progress span');
+      const arrows = Array.from(carousel.querySelectorAll('.curated-trending-looks__arrow'));
+      let currentSlide = 0;
+      const setSlide = (slideNumber) => {
+        currentSlide = (slideNumber + curatedTrendingLooks.length) % curatedTrendingLooks.length;
+        track.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
+        track.querySelectorAll('.curated-trending-looks__slide').forEach((slide, index) => {
+          const active = index === currentSlide;
+          slide.setAttribute('aria-hidden', String(!active));
+          slide.querySelectorAll('a').forEach((link) => { link.tabIndex = active ? 0 : -1; });
+        });
+        count.textContent = `${String(currentSlide + 1).padStart(2, '0')} / ${String(curatedTrendingLooks.length).padStart(2, '0')}`;
+        progress.style.transform = `scaleX(${(currentSlide + 1) / curatedTrendingLooks.length})`;
+      };
 
       carousel.querySelectorAll('.curated-trending-looks__arrow').forEach((button) => {
         button.addEventListener('click', () => {
           const direction = Number(button.dataset.direction || 1);
-          const track = carousel.querySelector('.curated-trending-looks__track');
-          track.scrollBy({ left: direction * track.clientWidth * 0.82, behavior: 'smooth' });
+          setSlide(currentSlide + direction);
         });
       });
 
+      const viewport = carousel.querySelector('.curated-trending-looks__viewport');
+      let touchStartX = 0;
+      viewport.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0]?.clientX || 0;
+      }, { passive: true });
+      viewport.addEventListener('touchend', (event) => {
+        const distance = (event.changedTouches[0]?.clientX || 0) - touchStartX;
+        if (Math.abs(distance) > 45) setSlide(currentSlide + (distance < 0 ? 1 : -1));
+      }, { passive: true });
+      carousel.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') setSlide(currentSlide - 1);
+        if (event.key === 'ArrowRight') setSlide(currentSlide + 1);
+      });
+      setSlide(0);
+
       originalSlider.insertAdjacentElement('afterend', carousel);
       originalSlider.classList.add('curated-trending-looks__original');
-
-      if (!document.getElementById('curated-trending-looks-styles')) {
-        const style = document.createElement('style');
-        style.id = 'curated-trending-looks-styles';
-        style.textContent = `
-          .curated-trending-looks { margin: 0 auto; padding: 4px 24px 14px; max-width: 1440px; }
-          .curated-trending-looks__original { display: none !important; }
-          .curated-trending-looks__intro { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: 0 0 14px; }
-          .curated-trending-looks__intro p { margin: 0; color: #6b625c; font-size: 14px; letter-spacing: .02em; }
-          .curated-trending-looks__controls { display: flex; gap: 8px; }
-          .curated-trending-looks__arrow { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #d8d3cf; border-radius: 50%; background: #fff; color: #252321; font-size: 24px; line-height: 1; cursor: pointer; }
-          .curated-trending-looks__track { display: flex; gap: 16px; overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-          .curated-trending-looks__track::-webkit-scrollbar { display: none; }
-          .curated-trending-looks__card { flex: 0 0 calc((100% - 64px) / 5); min-width: 0; color: inherit; text-decoration: none; scroll-snap-align: start; }
-          .curated-trending-looks__image-wrap { overflow: hidden; background: #f2efeb; aspect-ratio: 3 / 4; }
-          .curated-trending-looks__card img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
-          .curated-trending-looks__card:hover img { transform: scale(1.035); }
-          .curated-trending-looks__card > span { display: block; padding: 11px 2px 4px; font-size: 14px; line-height: 1.3; }
-          @media (max-width: 900px) { .curated-trending-looks__card { flex-basis: calc((100% - 32px) / 3); } }
-          @media (max-width: 767px) {
-            .curated-trending-looks { padding: 0 16px 8px; }
-            .curated-trending-looks__intro { margin-bottom: 10px; }
-            .curated-trending-looks__intro p { font-size: 12px; }
-            .curated-trending-looks__controls { display: none; }
-            .curated-trending-looks__track { gap: 10px; margin-right: -16px; padding-right: 16px; }
-            .curated-trending-looks__card { flex-basis: 68%; }
-            .curated-trending-looks__card > span { padding-top: 8px; font-size: 13px; }
-          }
-        `;
-        document.head.appendChild(style);
-      }
     }
   };
 

@@ -48,17 +48,16 @@
   ];
 
   const curatedTrendingLooks = [
-    { title: 'Black Kurta Set', caption: 'A timeless statement in deep black, made for evenings that call for understated impact.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068555339Black%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Gold Bandhgala Set', caption: 'A refined bandhgala brings a polished finish to celebrations after sundown.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068439819Gold%20Bandhgala%20Set.jpg', href: 'collection/men/bandhgalas' },
-    { title: 'Ivory Jacket Kurta Set', caption: 'Soft ivory layers create an easy statement for the seasonâ€™s special occasions.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068293238Ivory%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Cream Nehru Jacket Set', caption: 'A clean, modern take on occasion dressing with a quietly dressed-up feel.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790068141747Cream%20Nehru%20Jacket%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Beige Kurta Set', caption: 'Warm neutrals and relaxed tailoring make this an effortless celebration look.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067993159Beige%20Kurta%20Set.jpg', href: 'collection/men/kurta-sets' },
-    { title: 'Ivory Embroidered Bundi Set', caption: 'Intricate embroidery adds just the right note of detail to a classic silhouette.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067901613Ivory%20Embroidered%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Jacket Kurta Set', caption: 'A fresh shade of green gives traditional layers a confident new mood.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067765481Green%20Jacket%20Kurta%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Silk Bundi Set', caption: 'Lustrous silk and rich colour bring a little occasion-ready drama.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067591654Green%20Silk%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Green Bundi Set', caption: 'A versatile layered look that moves easily from daytime gatherings to dinner.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790067448148Green%20Bundi%20Set.jpg', href: 'collection/men/nehru-jacket-and-sets' },
-    { title: 'Olive Green Sherwani Set', caption: 'A distinctive olive sherwani for moments worth dressing up for.', image: '../static3.azafashions.com/tr_w-450/uploads/instagram_style/1790061621555Olive%20Green%20Sherwani%20Set.jpg', href: 'collection/men/sherwanis' }
-
+    { title: 'Midnight Garden Suit Set', caption: 'A richly embroidered black suit set for elegant evening celebrations.', image: '../image/newarrival1.jpg', href: 'category.html?category=chudi' },
+    { title: 'Ruby Heirloom Gown', caption: 'A dramatic ruby silhouette with fine detailing for a memorable occasion.', image: '../image/newarrival2.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Emerald Garden Anarkali', caption: 'Deep emerald embroidery and a graceful flare bring this look to life.', image: '../image/newarrival3.jpg', href: 'category.html?category=anarkali-suits' },
+    { title: 'Sapphire Embroidered Gown', caption: 'A midnight blue statement with delicate embroidery and a fluid finish.', image: '../image/newarrival4.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Golden Hour Celebration Suit', caption: 'A warm golden look designed for festive gatherings and special moments.', image: '../image/newarrival5.jpg', href: 'category.html?category=salwar-suits' },
+    { title: 'Teal Blossom Anarkali', caption: 'A teal embroidered silhouette with soft movement and timeless detail.', image: '../image/newarrival6.jpg', href: 'category.html?category=anarkali-suits' },
+    { title: 'Lavender Dream Gown', caption: 'Light lavender layers and delicate embellishment create an ethereal finish.', image: '../image/newarrival7.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Coral Garden Occasion Look', caption: 'A fresh coral palette with floral detailing for daytime celebrations.', image: '../image/newarrival8.jpg', href: 'category.html?category=full-frocks' },
+    { title: 'Ivory Lumière Embroidered Look', caption: 'Soft ivory embroidery brings understated elegance to occasion dressing.', image: '../image/newarrival9.jpg', href: 'category.html?category=kurti-sets' },
+    { title: 'Plum Royale Anarkali', caption: 'A rich plum tone and intricate finish make this a striking celebration look.', image: '../image/newarrival10.jpg', href: 'category.html?category=anarkali-suits' }
   ];
 
   const shopByCategoryCards = [

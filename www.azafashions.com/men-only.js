@@ -1886,8 +1886,73 @@
     setupUpdatesSignup();
   };
 
+  const replaceSiteFooter = () => {
+    const legacyFooter = document.querySelector('footer.footer');
+    if (!legacyFooter || document.querySelector('.kr-shopper-footer')) return;
+
+    const footer = document.createElement('footer');
+    footer.className = 'kr-shopper-footer';
+    footer.setAttribute('aria-label', 'Kryaa Style footer');
+    footer.innerHTML = `
+      <div class="kr-shopper-footer__inner">
+        <div class="kr-shopper-footer__top">
+          <section class="kr-shopper-footer__brand" aria-label="Kryaa Style">
+            <a class="kr-shopper-footer__wordmark" href="index.html"><img src="../image/logo.png" alt="Kryaa Style"></a>
+            <p>Discover designer Indian occasionwear, curated for every celebration.</p>
+            <div class="kr-shopper-footer__social" aria-label="Follow Kryaa Style">
+              <a href="https://www.instagram.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+              <a href="https://www.facebook.com/AzaFashions" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
+              <a href="https://in.pinterest.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Pinterest">P</a>
+              <a href="https://www.youtube.com/@azafashions" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+            </div>
+          </section>
+          <section>
+            <h2>SHOP</h2>
+            <ul>
+              <li><a href="collection/men/kurta-sets.html">Kurta Sets</a></li>
+              <li><a href="collection/men/sherwanis.html">Sherwanis</a></li>
+              <li><a href="collection/men/nehru-jacket-and-sets.html">Nehru Jackets</a></li>
+              <li><a href="collection/men/bandhgalas.html">Bandhgalas</a></li>
+              <li><a href="collection/men/kurtas.html">Kurtas</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>CUSTOMER CARE</h2>
+            <ul>
+              <li><a href="contact-us">Contact Us</a></li>
+              <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+              <li><a href="return-policy.html">Returns &amp; Exchanges</a></li>
+              <li><a href="faq.html">FAQs</a></li>
+              <li><a href="store-locator.html">Find a Store</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ABOUT KRYAA</h2>
+            <ul>
+              <li><a href="about-aza.html">About Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="events.html">In-Store Events</a></li>
+              <li><a href="important-information.html">Important Information</a></li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            </ul>
+          </section>
+        </div>
+        <div class="kr-shopper-footer__divider"></div>
+        <div class="kr-shopper-footer__bottom">
+          <span>© ${new Date().getFullYear()} Kryaa Style. All rights reserved.</span>
+          <nav class="kr-shopper-footer__policies" aria-label="Footer policies">
+            <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="return-policy.html">Returns</a>
+          </nav>
+        </div>
+      </div>`;
+    legacyFooter.replaceWith(footer);
+  };
+
   cleanNextData();
   cleanMenPage();
+  replaceSiteFooter();
 
   const initializeKryaaSections = () => window.setTimeout(() => {
     setupKryaaReviews();

@@ -2046,6 +2046,7 @@
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'visit our store');
     const section = heading?.parentElement?.parentElement;
+    section?.classList.add('kryaa-visit-store-section');
     section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
   };
 

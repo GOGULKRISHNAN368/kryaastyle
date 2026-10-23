@@ -108,7 +108,13 @@
       const filteredSections = sections.filter((section) => {
         const title = String(section.title || '').toLowerCase();
         const heading = String(section.sectionHeadingText || '').replace(/\s+/g, ' ').trim();
-        return title !== 'magazine' && heading !== 'Kryaa Editorials' && heading !== "What's Next?";
+        const normalizedHeading = heading.toLowerCase();
+        return title !== 'magazine' &&
+          title !== 'celebrity_style' &&
+          normalizedHeading !== 'kryaa editorials' &&
+          normalizedHeading !== "what's next?" &&
+          normalizedHeading !== 'celebrity closet' &&
+          normalizedHeading !== 'get insider access';
       });
 
       let dataChanged = filteredSections.length !== sections.length;
@@ -154,7 +160,7 @@
 
   const setupHeroCarousel = () => {
     const hero = Array.from(document.querySelectorAll('.slick-slider'))
-      .find((slider) => slider.querySelector('img[src*="banner-desktop.jpg"]'));
+      .find((slider) => slider.querySelector('img[src*="banner-desktop"]'));
     const track = hero?.querySelector('.slick-track');
     const firstSlide = track?.querySelector('.slick-slide');
     if (!hero || !track || !firstSlide || hero.classList.contains('kryaa-hero-carousel')) return;
@@ -1541,8 +1547,8 @@
         previousScrollLeft = viewport.scrollLeft;
       };
 
-      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden && marqueeReady &&
-        !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+      const canAnimate = () => !reducedMotion.matches && !document.hidden && marqueeReady &&
+        !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
 
       const stopAnimation = () => {
         if (!animationFrame) return;
@@ -1596,12 +1602,15 @@
             ? Promise.resolve()
             : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
           const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-          Promise.all([pageLoaded, fontsReady]).then(() => {
+          const startDesktopMarquee = () => {
             if (!desktopMode) return;
             measure();
+            if (!setWidth) return;
             marqueeReady = true;
             updateAnimation();
-          });
+          };
+          Promise.all([pageLoaded, fontsReady]).then(startDesktopMarquee);
+          window.setTimeout(startDesktopMarquee, 1200);
           if (reducedMotion.matches && !reducedMotionLogged) {
             console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
             reducedMotionLogged = true;
@@ -1690,12 +1699,12 @@
       viewport.addEventListener('pointerenter', (event) => {
         if (event.pointerType !== 'mouse') return;
         hovered = true;
-        pauseForInteraction();
+        updateAnimation();
       });
       viewport.addEventListener('pointerleave', (event) => {
         if (event.pointerType !== 'mouse') return;
         hovered = false;
-        resumeAfterInteraction();
+        updateAnimation();
       });
 
       document.addEventListener('keydown', (event) => {
@@ -1793,6 +1802,69 @@
     });
   };
 
+  const cleanCelebrityClosetSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      if (heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() !== 'celebrity closet') return;
+
+      const section = heading.closest('section') || heading.parentElement?.parentElement;
+      if (section) section.remove();
+    });
+  };
+
+  const cleanInsiderAccessSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      if (heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() !== 'get insider access') return;
+
+      const section = heading.closest('div[style*="men-desk.jpg"]') || heading.closest('section');
+      if (section) section.remove();
+    });
+  };
+
+  const setupUpdatesSignup = () => {
+    const reviews = document.querySelector('.kr-reviews');
+    if (!reviews || document.getElementById('kr-updates-signup')) return;
+
+    const visitHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((heading) => heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'visit our store');
+    const visitSection = visitHeading?.parentElement?.parentElement;
+
+    const section = document.createElement('section');
+    section.id = 'kr-updates-signup';
+    section.className = 'kr-updates-signup';
+    section.setAttribute('aria-labelledby', 'kr-updates-signup-heading');
+    section.innerHTML = `
+      <picture class="kr-updates-signup__media" aria-hidden="true">
+        <source media="(max-width: 767px)" srcset="../image/women-insider-access-banner-mobile.png">
+        <img src="../image/women-insider-access-banner.png" alt="" loading="lazy" decoding="async">
+      </picture>
+      <div class="kr-updates-signup__content">
+        <h2 id="kr-updates-signup-heading" class="kr-updates-signup__title">JOIN WITH US</h2>
+        <div class="kr-updates-signup__divider" aria-hidden="true"></div>
+        <p class="kr-updates-signup__headline">Stay in Style. Stay Updated.</p>
+        <p id="kr-updates-signup-description" class="kr-updates-signup__description">
+          <span class="kr-updates-signup__description-desktop">Join us for the latest updates, new arrivals, styling inspiration, and exclusive offers. Be the first to discover thoughtful edits, timeless silhouettes, and new stories from our world of style. Sign up today for early access to the pieces you will love next.</span>
+          <span class="kr-updates-signup__description-mobile">Discover new arrivals, exclusive offers and a little inspiration for your style.</span>
+        </p>
+        <form class="kr-updates-signup__form" aria-describedby="kr-updates-signup-description" novalidate>
+          <div class="kr-updates-signup__field">
+            <label class="kr-updates-signup__label" for="kr-updates-email">Email address</label>
+            <input id="kr-updates-email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required>
+          </div>
+          <button type="submit">SUBSCRIBE <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="kr-updates-signup__footer">
+          <span class="kr-updates-signup__footer-desktop">NEW ARRIVALS · EXCLUSIVE OFFERS · STYLE UPDATES</span>
+          <span class="kr-updates-signup__footer-mobile">NEW ARRIVALS · EXCLUSIVE OFFERS</span>
+        </p>
+      </div>
+    `;
+
+    section.querySelector('form')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+    (visitSection || reviews).insertAdjacentElement('afterend', section);
+  };
+
   const cleanMenPage = () => {
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
@@ -1809,6 +1881,9 @@
     setupCuratedTrendingLooks();
     cleanPageLinks();
     cleanEditorialSection();
+    cleanCelebrityClosetSection();
+    cleanInsiderAccessSection();
+    setupUpdatesSignup();
   };
 
   cleanNextData();

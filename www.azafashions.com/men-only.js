@@ -741,6 +741,72 @@
 
   };
 
+  const setupOwnStyleSection = () => {
+    if (document.getElementById('kr-own-style')) return;
+    const curated = document.querySelector('.curated-trending-looks');
+    if (!curated) return;
+    const curatedSection = curated.closest('.bg-sectionBG') || curated;
+
+    const section = document.createElement('section');
+    section.id = 'kr-own-style';
+    section.className = 'kr-own';
+    section.setAttribute('aria-labelledby', 'kr-own-heading');
+    section.innerHTML = `
+      <h2 class="kr-own__heading __className_f37194" id="kr-own-heading">Make your own style</h2>
+      <div class="kr-own__collage" aria-label="Kryaa custom style collection">
+        <div class="kr-own__tile kr-own__tile--video">
+          <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
+          <video class="kr-own__video" muted loop playsinline preload="metadata" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
+            <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="kr-own__tile kr-own__tile--own1"><img src="../images/unstiched_img/img1.png" alt="Kryaa fabric and outfit styling details" width="564" height="401" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own2"><img src="../images/unstiched_img/img2.png" alt="Kryaa outfit viewed from behind" width="558" height="632" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own3"><img src="../images/unstiched_img/img%203.png" alt="Kryaa outfit styled for a special occasion" width="566" height="673" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="kr-own__content">
+        <p class="kr-own__eyebrow">A LOOK THAT IS YOURS</p>
+        <span class="kr-own__divider" aria-hidden="true"></span>
+        <p class="kr-own__tagline">Made personal. Made for you.</p>
+        <p class="kr-own__description">Bring your vision to life with thoughtful details, beautiful fabrics and a fit made around your style.</p>
+        <div class="kr-own__actions">
+          <a class="kr-own__button kr-own__button--secondary" href="collection/women/sarees.html">EXPLORE THE COLLECTION</a>
+        </div>
+      </div>
+    `;
+    curatedSection.insertAdjacentElement('afterend', section);
+
+    const video = section.querySelector('.kr-own__video');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pauseVideo = () => {
+      video.pause();
+      section.classList.remove('kr-own--playing');
+    };
+    const playVideo = () => {
+      if (reduceMotion.matches) return;
+      video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
+        section.classList.remove('kr-own--playing');
+      });
+    };
+
+    const applyMotionPreference = () => {
+      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
+      if (reduceMotion.matches) pauseVideo();
+    };
+    applyMotionPreference();
+    reduceMotion.addEventListener?.('change', applyMotionPreference);
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio >= .4 && !reduceMotion.matches) playVideo();
+          else pauseVideo();
+        });
+      }, { threshold: [.0, .4, 1] });
+      visibilityObserver.observe(section);
+    }
+  };
+
   const setupShopByCategorySection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Category');
@@ -1885,6 +1951,7 @@
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
     setupCuratedTrendingLooks();
+    setupOwnStyleSection();
     cleanPageLinks();
     cleanEditorialSection();
     cleanCelebrityClosetSection();

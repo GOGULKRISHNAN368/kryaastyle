@@ -18,32 +18,32 @@
     {
       title: 'Wedding',
       image: '../images/Wedding.png',
-      href: 'aza-curates/sunkissed-summer-weddings/3401.html?category_uFilter=Men'
+      href: 'category.html?edit=wedding'
     },
     {
       title: 'Sangeet',
       image: '../images/sangeet.png',
-      href: 'aza-curates/sangeet/3748.html'
+      href: 'category.html?edit=sangeet'
     },
     {
       title: 'Reception',
       image: '../images/Reception.png',
-      href: 'aza-curates/reception/3750.html'
+      href: 'category.html?edit=reception'
     },
     {
       title: 'Festival',
       image: '../images/festival.png',
-      href: 'aza-curates/mehendi/3747.html'
+      href: 'category.html?edit=festival'
     },
     {
       title: 'Casual',
       image: '../images/Casuals.png',
-      href: 'aza-curates/roka/3746.html'
+      href: 'category.html?edit=casual'
     },
     {
       title: 'Office Wear',
       image: '../images/Office_Wear.png',
-      href: 'aza-curates/haldi-classics/3615.html'
+      href: 'category.html?edit=office-wear'
     }
   ];
 
@@ -62,13 +62,13 @@
   ];
 
   const shopByCategoryCards = [
-    { title: 'Chudi', image: '../image/chudi.png', href: 'collection/women/chudi.html' },
-    { title: 'Short Tops', image: '../image/Short%20Tops.png', href: 'collection/women/short-tops.html' },
-    { title: 'Full Frocks', image: '../image/FUll%20frocks.png', href: 'collection/women/full-frocks.html' },
-    { title: 'Kurti Sets', image: '../image/Kurti%20Sets.png', href: 'collection/women/kurti-sets.html' },
-    { title: 'Sarees', image: '../image/saree.png', href: 'collection/women/sarees.html' },
-    { title: 'Salwar Suits', image: '../image/Salwar%20Suits.png', href: 'collection/women/salwar-suits.html' },
-    { title: 'Anarkali Suits', image: '../image/Anarkali%20Suits.png', href: 'collection/women/anarkali-suits.html' }
+    { title: 'Chudi', image: '../image/category-chudi.png', href: 'category.html?category=chudi' },
+    { title: 'Short Tops', image: '../image/category-short-tops.png', href: 'category.html?category=short-tops' },
+    { title: 'Full Frocks', image: '../image/category-full-frocks.png', href: 'category.html?category=full-frocks' },
+    { title: 'Kurti Sets', image: '../image/category-kurti-sets.png', href: 'category.html?category=kurti-sets' },
+    { title: 'Sarees', image: '../image/category-sarees.png', href: 'category.html?category=sarees' },
+    { title: 'Salwar Suits', image: '../image/category-salwar-suits.png', href: 'category.html?category=salwar-suits' },
+    { title: 'Anarkali Suits', image: '../image/category-anarkali-suits.png', href: 'category.html?category=anarkali-suits' }
   ];
 
   const kryaaLuxeSlides = [
@@ -229,6 +229,22 @@
         image.removeAttribute('srcset');
       });
     });
+  };
+
+  const setupNewArrivalsCollectionLinks = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'New Arrivals');
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    if (!section || section.dataset.collectionLinksReady === 'true') return;
+
+    section.addEventListener('click', (event) => {
+      const card = event.target.closest('.slick-slide, .new-arrivals-mobile-grid-card');
+      if (!card || !section.contains(card)) return;
+      if (event.target.closest('button')) return;
+      event.preventDefault();
+      window.location.href = 'category.html?edit=new-arrivals';
+    });
+    section.dataset.collectionLinksReady = 'true';
   };
 
   const injectNewArrivalsMobileStyles = () => {
@@ -683,6 +699,7 @@
     if (!section || section.dataset.womenCategoriesReady === 'true') return;
 
     section.dataset.womenCategoriesReady = 'true';
+    section.id = 'shop-by-category';
     section.classList.add('women-category-section');
 
     const makeCard = (item) => `
@@ -1343,6 +1360,7 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsCollectionLinks();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();

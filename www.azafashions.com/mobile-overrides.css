@@ -1,8 +1,105 @@
 /* Banner and mobile layout refinements for the Kryaa storefront. */
-.wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) .slick-arrow {
+.wrapperContainer:has(img[src*="banner-desktop"]) .slick-arrow {
   display: none !important;
 }
 
+/* Two-slide homepage hero, including the inclusive comfort campaign. */
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-list { overflow: hidden; }
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-track {
+  position: relative;
+  left: 0 !important;
+  width: 200% !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: transform .55s ease;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-track[data-kryaa-slide="1"] {
+  transform: translate3d(-50%, 0, 0) !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-slide {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-hero-carousel .slick-arrow {
+  display: flex !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture {
+  background: #f2f0ec;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture img {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture::before,
+.wrapperContainer:has(img[src*="banner-desktop"]) .kryaa-inclusive-slide picture::after {
+  content: none !important;
+}
+
+/* Curated trending looks lookbook carousel. */
+.curated-trending-looks { width: 100%; max-width: 1440px; min-width: 0; margin: 0 auto; padding: 12px 24px 24px; color: #29231f; }
+.curated-trending-looks__original { display: none !important; }
+.curated-trending-looks__eyebrow { margin: 0 0 14px; color: #80634f; font-size: 11px; font-weight: 600; letter-spacing: .2em; text-align: center; }
+.curated-trending-looks__viewport { overflow: hidden; background: #f2efeb; }
+.curated-trending-looks__track { display: flex; width: 100%; min-width: 0; transition: transform .55s cubic-bezier(.22,.61,.36,1); will-change: transform; }
+.curated-trending-looks__slide { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr); align-items: stretch; flex: 0 0 100%; width: 100%; min-width: 0; }
+.curated-trending-looks__visual { position: relative; display: block; min-width: 0; overflow: hidden; aspect-ratio: 1.24 / 1; background: #e8e2dc; }
+.curated-trending-looks__visual img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.curated-trending-looks__image-label { position: absolute; right: 16px; bottom: 16px; padding: 8px 11px; background: rgb(255 255 255 / 88%); color: #3b3028; font-size: 10px; letter-spacing: .15em; }
+.curated-trending-looks__details { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(28px, 5vw, 76px); background: #f2efeb; }
+.curated-trending-looks__number { display: flex; align-items: center; gap: 12px; color: #80634f; font-size: 11px; letter-spacing: .18em; }
+.curated-trending-looks__number i { display: block; width: 34px; height: 1px; background: #b9a89a; }
+.curated-trending-looks__details h3 { max-width: 420px; margin: 18px 0 12px; color: #29231f; font-family: inherit; font-size: clamp(30px, 3.2vw, 52px); font-weight: 400; line-height: 1.05; }
+.curated-trending-looks__details p { max-width: 340px; margin: 0; color: #716860; font-size: 14px; line-height: 1.7; }
+.curated-trending-looks__shop { display: inline-flex; align-items: center; gap: 26px; margin-top: 30px; padding-bottom: 8px; border-bottom: 1px solid #80634f; color: #352b25; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+.curated-trending-looks__shop span { font-size: 19px; line-height: .7; transition: transform .2s ease; }
+.curated-trending-looks__shop:hover span { transform: translateX(4px); }
+.curated-trending-looks__footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 4px 0; }
+.curated-trending-looks__progress { width: min(230px, 34%); height: 2px; overflow: hidden; background: #d8d0c9; }
+.curated-trending-looks__progress span { display: block; width: 100%; height: 100%; background: #80634f; transform: scaleX(.1); transform-origin: left; transition: transform .35s ease; }
+.curated-trending-looks__navigation { display: flex; align-items: center; gap: 15px; }
+.curated-trending-looks__arrow { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #cfc6be; border-radius: 50%; background: transparent; color: #352b25; font-size: 25px; line-height: 1; cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease; }
+.curated-trending-looks__arrow:hover { border-color: #352b25; background: #352b25; color: #fff; }
+.curated-trending-looks__count { min-width: 54px; color: #5f554e; font-size: 11px; letter-spacing: .12em; text-align: center; }
+
+/* Let the image and copy stack once the available width gets tight. */
+.curated-trending-looks,
+.curated-trending-looks * { box-sizing: border-box; }
+.curated-trending-looks { min-width: 0; padding-inline: clamp(12px, 2.4vw, 32px); }
+.curated-trending-looks__viewport,
+.curated-trending-looks__track,
+.curated-trending-looks__slide,
+.curated-trending-looks__visual,
+.curated-trending-looks__details { min-width: 0; max-width: 100%; }
+.curated-trending-looks__slide { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); }
+.curated-trending-looks__details h3,
+.curated-trending-looks__details p { overflow-wrap: anywhere; }
+
+@media (max-width: 1100px) {
+  .curated-trending-looks__slide { grid-template-columns: minmax(0, 1fr); }
+  .curated-trending-looks__visual { max-height: 320px; aspect-ratio: 1.65 / 1; }
+  .curated-trending-looks__details { padding: clamp(16px, 2.5vw, 24px); }
+  .curated-trending-looks__details h3 { font-size: clamp(22px, 3vw, 30px); }
+}
+
+@media (max-width: 767px) {
+  .curated-trending-looks { padding: 4px 16px 8px; }
+  .curated-trending-looks__eyebrow { margin-bottom: 10px; font-size: 9px; }
+  .curated-trending-looks__slide { display: flex; flex-direction: column; }
+  .curated-trending-looks__visual { aspect-ratio: 4 / 4.8; }
+  .curated-trending-looks__image-label { right: 10px; bottom: 10px; padding: 7px 9px; }
+  .curated-trending-looks__details { padding: 22px 20px 24px; }
+  .curated-trending-looks__details h3 { margin: 12px 0 8px; font-size: clamp(27px, 8vw, 36px); }
+  .curated-trending-looks__details p { font-size: 13px; line-height: 1.55; }
+  .curated-trending-looks__shop { margin-top: 18px; font-size: 10px; }
+  .curated-trending-looks__footer { padding-top: 12px; }
+  .curated-trending-looks__progress { width: 32%; }
+  .curated-trending-looks__navigation { gap: 10px; }
+  .curated-trending-looks__arrow { width: 34px; height: 34px; font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curated-trending-looks__track,
+  .curated-trending-looks__progress span { transition: none; }
+}
 @media (min-width: 768px) {
   .shop-by-occasion-card:nth-child(3) img {
     object-fit: cover;
@@ -11,7 +108,7 @@
 }
 
 @media (min-width: 768px) {
-  .wrapperContainer:has(img[src*="banner-desktop-clean.jpg"]) a > div[style*="aspect-ratio"] > div.absolute {
+  .wrapperContainer:has(img[src*="banner-desktop"]) a > div[style*="aspect-ratio"] > div.absolute {
     display: none !important;
   }
 }
@@ -1153,5 +1250,11 @@
     width: 62vw;
     flex-basis: 62vw;
     padding: 12px 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  header nav .kryaa-category-header-list {
+    transform: translateX(calc(-1 * clamp(60px, 5vw, 110px)));
   }
 }

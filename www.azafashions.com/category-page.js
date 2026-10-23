@@ -12,16 +12,16 @@
   };
 
   const products = [
-    { name: 'Midnight Garden Embroidered Suit', designer: 'KRYAA EDIT', image: 'newarrival1.jpg', price: 8490, color: 'other', occasion: 'festive', tags: ['new', 'ready', 'sale'] },
-    { name: 'Ruby Heirloom Evening Gown', designer: 'KRYAA EDIT', image: 'newarrival2.jpg', price: 12990, color: 'red', occasion: 'evening', tags: ['new', 'try-on'] },
-    { name: 'Emerald Garden Anarkali', designer: 'KRYAA EDIT', image: 'newarrival3.jpg', price: 11490, color: 'green', occasion: 'celebration', tags: ['try-on', 'custom'] },
-    { name: 'Sapphire Embroidered Gown', designer: 'KRYAA EDIT', image: 'newarrival4.jpg', price: 13990, color: 'blue', occasion: 'evening', tags: ['new', 'try-on'] },
-    { name: 'Golden Hour Celebration Suit', designer: 'KRYAA EDIT', image: 'newarrival5.jpg', price: 9990, color: 'other', occasion: 'festive', tags: ['ready', 'sale'] },
-    { name: 'Teal Blossom Anarkali', designer: 'KRYAA EDIT', image: 'newarrival6.jpg', price: 10990, color: 'green', occasion: 'celebration', tags: ['new', 'custom'] },
-    { name: 'Lavender Dream Gown', designer: 'KRYAA EDIT', image: 'newarrival7.jpg', price: 12490, color: 'other', occasion: 'evening', tags: ['try-on'] },
-    { name: 'Coral Garden Occasionwear', designer: 'KRYAA EDIT', image: 'newarrival8.jpg', price: 11990, color: 'red', occasion: 'celebration', tags: ['new', 'ready'] },
-    { name: 'Ivory Lumière Embroidered Set', designer: 'KRYAA EDIT', image: 'newarrival9.jpg', price: 14990, color: 'light', occasion: 'evening', tags: ['try-on', 'custom'] },
-    { name: 'Plum Royale Anarkali', designer: 'KRYAA EDIT', image: 'newarrival10.jpg', price: 13490, color: 'other', occasion: 'festive', tags: ['new', 'sale'] }
+    { name: 'Midnight Garden Embroidered Suit', designer: 'KRYAA EDIT', image: 'newarrival1.jpg', hoverImage: 'newarrival1-cloth.jpg', price: 8490, color: 'other', occasion: 'festive', tags: ['new', 'ready', 'sale'] },
+    { name: 'Ruby Heirloom Evening Gown', designer: 'KRYAA EDIT', image: 'newarrival2.jpg', hoverImage: 'newarrival2-cloth.jpg', price: 12990, color: 'red', occasion: 'evening', tags: ['new', 'try-on'] },
+    { name: 'Emerald Garden Anarkali', designer: 'KRYAA EDIT', image: 'newarrival3.jpg', hoverImage: 'newarrival3-cloth.jpg', price: 11490, color: 'green', occasion: 'celebration', tags: ['try-on', 'custom'] },
+    { name: 'Sapphire Embroidered Gown', designer: 'KRYAA EDIT', image: 'newarrival4.jpg', hoverImage: 'newarrival4-cloth.jpg', price: 13990, color: 'blue', occasion: 'evening', tags: ['new', 'try-on'] },
+    { name: 'Golden Hour Celebration Suit', designer: 'KRYAA EDIT', image: 'newarrival5.jpg', hoverImage: 'newarrival5-cloth.webp', price: 9990, color: 'other', occasion: 'festive', tags: ['ready', 'sale'] },
+    { name: 'Teal Blossom Anarkali', designer: 'KRYAA EDIT', image: 'newarrival6.jpg', hoverImage: 'newarrival6-cloth.jpg', price: 10990, color: 'green', occasion: 'celebration', tags: ['new', 'custom'] },
+    { name: 'Lavender Dream Gown', designer: 'KRYAA EDIT', image: 'newarrival7.jpg', hoverImage: 'newarrival7-cloth.jpg', price: 12490, color: 'other', occasion: 'evening', tags: ['try-on'] },
+    { name: 'Coral Garden Occasionwear', designer: 'KRYAA EDIT', image: 'newarrival8.jpg', hoverImage: 'newarrival8-cloth.jpg', price: 11990, color: 'red', occasion: 'celebration', tags: ['new', 'ready'] },
+    { name: 'Ivory Lumière Embroidered Set', designer: 'KRYAA EDIT', image: 'newarrival9.jpg', hoverImage: 'newarrival9-cloth.jpg', price: 14990, color: 'light', occasion: 'evening', tags: ['try-on', 'custom'] },
+    { name: 'Plum Royale Anarkali', designer: 'KRYAA EDIT', image: 'newarrival10.jpg', hoverImage: 'newarrival10-cloth.jpg', price: 13490, color: 'other', occasion: 'festive', tags: ['new', 'sale'] }
   ];
   const categoryKey = new URLSearchParams(window.location.search).get('category') || '';
   const editKey = new URLSearchParams(window.location.search).get('edit') || '';
@@ -111,6 +111,7 @@
       card.innerHTML = `
         <div class="product-image-wrap">
           <img class="product-image" src="../image/${product.image}" alt="${product.name}" loading="lazy" tabindex="0" role="button" aria-label="Quick view: ${product.name}">
+          <img class="product-image product-image--hover" src="../image/${product.hoverImage}" alt="" loading="lazy" aria-hidden="true">
           <span class="product-badge">${product.tags.includes('new') ? 'NEW ARRIVAL' : product.tags.includes('sale') ? 'ON SALE' : 'KRYAA EDIT'}</span>
           <button class="wishlist" type="button" aria-label="Add ${product.name} to wishlist" aria-pressed="false">♡</button>
           <button class="quick-view" type="button">Quick view</button>
@@ -128,6 +129,8 @@
       });
       card.querySelector('.quick-view').addEventListener('click', () => showQuickView(product));
       const productImage = card.querySelector('.product-image');
+      const hoverImage = card.querySelector('.product-image--hover');
+      hoverImage.addEventListener('error', () => card.classList.add('product-card--without-hover-image'), { once: true });
       productImage.addEventListener('click', () => showQuickView(product));
       productImage.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') return;

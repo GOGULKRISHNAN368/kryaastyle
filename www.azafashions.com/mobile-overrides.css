@@ -1,4 +1,39 @@
 /* Banner and mobile layout refinements for the Kryaa storefront. */
+/* Replacement footer inspired by the Shoppers Stop information architecture. */
+.kr-shopper-footer { margin-top: 48px; background: #171717; color: #f8f6f2; font-family: Arial, Helvetica, sans-serif; }
+.kr-shopper-footer * { box-sizing: border-box; }
+.kr-shopper-footer a { color: inherit; text-decoration: none; }
+.kr-shopper-footer a:hover { color: #d7aa74; }
+.kr-shopper-footer__inner { width: min(1280px, calc(100% - 48px)); margin: 0 auto; padding: 52px 0 38px; }
+.kr-shopper-footer__top { display: grid; grid-template-columns: 1.15fr repeat(3, 1fr); gap: 32px; }
+.kr-shopper-footer__brand { max-width: 245px; }
+.kr-shopper-footer__wordmark { display: inline-block; width: 138px; margin-bottom: 16px; }
+.kr-shopper-footer__wordmark img { display: block; width: 100%; filter: brightness(0) invert(1); }
+.kr-shopper-footer__brand p { margin: 0; color: rgb(248 246 242 / 68%); font-size: 12px; line-height: 1.65; }
+.kr-shopper-footer h2 { margin: 0 0 17px; color: #d7aa74; font-size: 11px; font-weight: 700; letter-spacing: .14em; }
+.kr-shopper-footer ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.kr-shopper-footer li { color: rgb(248 246 242 / 75%); font-size: 12px; line-height: 1.4; }
+.kr-shopper-footer__social { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 25px; }
+.kr-shopper-footer__social a { display: grid; width: 31px; height: 31px; place-items: center; border: 1px solid rgb(255 255 255 / 33%); border-radius: 50%; color: #fff; font-size: 11px; font-weight: 700; }
+.kr-shopper-footer__social a:hover { border-color: #d7aa74; background: #d7aa74; color: #171717; }
+.kr-shopper-footer__divider { height: 1px; margin: 38px 0 20px; background: rgb(255 255 255 / 17%); }
+.kr-shopper-footer__bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: rgb(248 246 242 / 60%); font-size: 11px; }
+.kr-shopper-footer__policies { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }
+
+@media (max-width: 900px) {
+  .kr-shopper-footer { margin-top: 32px; }
+  .kr-shopper-footer__inner { width: min(100% - 40px, 560px); padding: 38px 0 25px; }
+  .kr-shopper-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 24px; }
+  .kr-shopper-footer__brand { grid-column: 1 / -1; max-width: 360px; }
+  .kr-shopper-footer__bottom { align-items: flex-start; flex-direction: column-reverse; }
+  .kr-shopper-footer__policies { justify-content: flex-start; }
+}
+
+@media (max-width: 520px) {
+  .kr-shopper-footer__inner { width: min(100% - 32px, 420px); }
+  .kr-shopper-footer__top { grid-template-columns: 1fr; gap: 29px; }
+}
+
 .wrapperContainer:has(img[src*="banner-desktop"]) .slick-arrow {
   display: none !important;
 }
@@ -471,6 +506,664 @@
   }
 }
 
+/* Kryaa creator lookbook */
+.kr-lookbook {
+  box-sizing: border-box;
+  width: min(100% - 32px, 1200px);
+  margin: 40px auto;
+  padding: 28px 20px 24px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: #fff;
+  color: #292522;
+}
+
+.kr-lookbook *,
+.kr-lookbook *::before,
+.kr-lookbook *::after {
+  box-sizing: border-box;
+}
+
+.kr-lookbook__intro {
+  margin: 0 auto 22px;
+  text-align: center;
+}
+
+.kr-lookbook__heading {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.15;
+  font-weight: 500;
+}
+
+.kr-lookbook__subtitle {
+  margin: 8px 0 0;
+  color: #766b64;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.kr-lookbook__slider {
+  position: relative;
+  width: min(100%, 520px);
+  margin: 0 auto;
+  outline-offset: 5px;
+}
+
+.kr-lookbook__viewport {
+  overflow: hidden;
+  border-radius: 18px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.kr-lookbook__track {
+  display: flex;
+  width: 500%;
+  transition: transform 420ms cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+
+.kr-lookbook__arrow {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #262626;
+  cursor: pointer;
+}
+
+.kr-lookbook__arrow svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.kr-lookbook__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.kr-lookbook__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #d8c9bc;
+  cursor: pointer;
+}
+
+.kr-lookbook__dot[aria-current="true"] {
+  width: 20px;
+  border-radius: 8px;
+  background: #a78368;
+}
+
+.kr-lookbook__toast {
+  position: fixed;
+  z-index: 100;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 14px;
+  transform: translateY(8px);
+  border-radius: 8px;
+  background: #302923;
+  color: white;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.kr-lookbook__toast[data-visible="true"] {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .kr-lookbook {
+    width: calc(100% - 16px);
+    margin: 28px auto;
+    padding: 22px 0 18px;
+    border-radius: 18px;
+  }
+
+  .kr-lookbook__intro { margin-bottom: 16px; }
+  .kr-lookbook__heading { font-size: 28px; }
+  .kr-lookbook__subtitle { margin-top: 5px; font-size: 13px; }
+
+  .kr-lookbook__slider { width: 100%; max-width: none; }
+  .kr-lookbook__viewport { border-radius: 12px; }
+  .kr-lookbook__post {
+    display: flex;
+    flex: 0 0 20%;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 1px solid #eee4dc;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(57, 39, 27, .07);
+  }
+
+  .kr-lookbook__ig-header,
+  .kr-lookbook__ig-actions,
+  .kr-lookbook__ig-details { min-width: 0; background: #fff; }
+
+  .kr-lookbook__ig-header {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    min-height: 58px;
+    padding: 8px 12px;
+    color: #292522;
+  }
+
+  .kr-lookbook__ig-avatar {
+    position: relative;
+    display: grid;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    padding: 2px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e6c77a, #ce7990, #ee9a52);
+  }
+
+  .kr-lookbook__ig-avatar::before {
+    position: absolute;
+    inset: 2px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    content: "";
+  }
+
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    display: grid;
+    position: absolute;
+    inset: 4px;
+    place-items: center;
+    border-radius: 50%;
+    background: #f2e7dc;
+    color: #65564a;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .kr-lookbook__ig-identity {
+    display: grid;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 1px;
+  }
+
+  .kr-lookbook__ig-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .kr-lookbook__ig-name svg { flex: 0 0 auto; width: 14px; height: 14px; fill: #0095f6; }
+  .kr-lookbook__ig-followers { color: #777; font-size: 12.5px; white-space: nowrap; }
+
+  .kr-lookbook__ig-follow,
+  .kr-lookbook__ig-more {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #0095f6;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .kr-lookbook__ig-more { width: 24px; color: #4a4643; }
+  .kr-lookbook__ig-more svg { width: 20px; height: 20px; fill: currentColor; }
+
+  .kr-lookbook__ig-image {
+    position: relative;
+    flex: 0 0 auto;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .kr-lookbook__mobile-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+  }
+
+  .kr-lookbook__arrow {
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    color: #fff;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .55));
+  }
+
+  .kr-lookbook__arrow--prev { left: 4px; }
+  .kr-lookbook__arrow--next { right: 4px; }
+
+  .kr-lookbook__ig-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    padding: 6px 12px;
+  }
+
+  .kr-lookbook__ig-action-group { display: flex; align-items: center; gap: 16px; }
+  .kr-lookbook__ig-icon {
+    display: grid;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #292522;
+    cursor: pointer;
+  }
+  .kr-lookbook__ig-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+  .kr-lookbook__ig-like[aria-pressed="true"] { color: #d6294b; animation: kr-lookbook-like-pop 220ms ease-out; }
+  .kr-lookbook__ig-like[aria-pressed="true"] svg,
+  .kr-lookbook__ig-save[aria-pressed="true"] svg { fill: currentColor; }
+  .kr-lookbook__ig-save[aria-pressed="true"] { color: #292522; }
+
+  .kr-lookbook__ig-details {
+    flex: 0 0 auto;
+    padding: 0 14px 14px;
+    color: #292522;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .kr-lookbook__ig-details p { margin: 0; }
+  .kr-lookbook__ig-likes { margin-bottom: 4px !important; font-weight: 700; }
+  .kr-lookbook__ig-caption {
+    position: relative;
+    display: -webkit-box;
+    max-height: 2.8em;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .kr-lookbook__ig-caption::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-left: 24px;
+    background: linear-gradient(90deg, transparent, #fff 35%);
+    content: "... more";
+    color: #777;
+  }
+  .kr-lookbook__ig-comments {
+    display: block;
+    margin-top: 5px;
+    color: #888;
+    text-decoration: none;
+  }
+  .kr-lookbook__ig-time { margin-top: 5px !important; color: #999; font-size: 11px; }
+
+  .kr-lookbook__ig-card a:focus-visible,
+  .kr-lookbook__ig-card button:focus-visible { outline: 2px solid #262626; outline-offset: 2px; }
+  .kr-lookbook__arrow:focus-visible { outline: none !important; }
+  .kr-lookbook__arrow:focus-visible svg { border-bottom: 2px solid currentColor; }
+}
+
+@media (min-width: 768px) {
+  .kr-lookbook__slider--desktop {
+    width: 100%;
+    max-width: none;
+  }
+
+  .kr-lookbook__viewport--desktop {
+    overflow: visible;
+    padding: 0 52px;
+    border-radius: 0;
+  }
+
+  .kr-lookbook__track--desktop {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: var(--kr-lookbook-center-height, 465px);
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .kr-lookbook__desktop-card {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
+    transform: translateX(-50%);
+    border: 0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .08);
+    transition: left 500ms ease, top 500ms ease, width 500ms ease, height 500ms ease, opacity 500ms ease;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .kr-lookbook__desktop-card--teleport {
+    transition: none !important;
+  }
+
+  .kr-lookbook__desktop-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-header,
+  .kr-lookbook__ig-actions,
+  .kr-lookbook__ig-details {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    min-width: 0;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-header {
+    display: flex;
+    align-items: center;
+    gap: .55em;
+    height: 3.72em;
+    padding: .45em .85em;
+    color: #292522;
+  }
+
+  .kr-lookbook__ig-avatar {
+    position: relative;
+    display: grid;
+    flex: 0 0 2.45em;
+    width: 2.45em;
+    height: 2.45em;
+    padding: 2px;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e6c77a, #ce7990, #ee9a52);
+  }
+
+  .kr-lookbook__ig-avatar::before {
+    position: absolute;
+    inset: 2px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    content: "";
+  }
+
+  .kr-lookbook__ig-avatar img,
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    position: absolute;
+    inset: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    border-radius: 50%;
+  }
+
+  .kr-lookbook__ig-avatar img { object-fit: cover; }
+
+  .kr-lookbook__ig-avatar .kr-lookbook__initials {
+    display: grid;
+    place-items: center;
+    background: #f2e7dc;
+    color: #65564a;
+    font-size: .72em;
+    font-weight: 600;
+  }
+
+  .kr-lookbook__ig-identity {
+    display: grid;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: .05em;
+  }
+
+  .kr-lookbook__ig-name {
+    display: flex;
+    align-items: center;
+    gap: .28em;
+    overflow: hidden;
+    font-size: 1em;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .kr-lookbook__ig-name svg { width: .95em; height: .95em; flex: 0 0 auto; fill: #0095f6; }
+  .kr-lookbook__ig-followers { color: #777; font-size: .82em; white-space: nowrap; }
+
+  .kr-lookbook__ig-follow,
+  .kr-lookbook__ig-more {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    color: #0095f6;
+    font-size: .9em;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .kr-lookbook__ig-more { width: 1.6em; color: #4a4643; }
+  .kr-lookbook__ig-more svg { width: 1.2em; height: 1.2em; fill: currentColor; }
+
+  .kr-lookbook__ig-image {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-image .kr-lookbook__desktop-image-link { height: 100%; }
+
+  .kr-lookbook__desktop-image-link img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    background: #fff;
+  }
+
+  .kr-lookbook__ig-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.14em;
+    padding: .35em .85em;
+  }
+
+  .kr-lookbook__ig-action-group { display: flex; align-items: center; gap: .72em; }
+
+  .kr-lookbook__ig-icon {
+    display: grid;
+    width: 1.72em;
+    height: 1.72em;
+    padding: .1em;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #292522;
+    cursor: pointer;
+  }
+
+  .kr-lookbook__ig-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+
+  .kr-lookbook__ig-like[aria-pressed="true"] { color: #d6294b; animation: kr-lookbook-like-pop 220ms ease-out; }
+  .kr-lookbook__ig-like[aria-pressed="true"] svg,
+  .kr-lookbook__ig-save[aria-pressed="true"] svg { fill: currentColor; }
+  .kr-lookbook__ig-save[aria-pressed="true"] { color: #292522; }
+
+  .kr-lookbook__ig-details {
+    height: 7.15em;
+    padding: .05em .9em .45em;
+    overflow: hidden;
+    color: #292522;
+    font-size: .91em;
+    line-height: 1.35;
+  }
+
+  .kr-lookbook__ig-details p { margin: 0; }
+  .kr-lookbook__ig-likes { font-weight: 700; }
+  .kr-lookbook__ig-caption {
+    display: -webkit-box;
+    margin-top: .3em !important;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .kr-lookbook__ig-comments {
+    display: block;
+    margin-top: .25em;
+    color: #888;
+    text-decoration: none;
+  }
+  .kr-lookbook__ig-time { margin-top: .25em !important; color: #999; font-size: .78em; }
+
+  .kr-lookbook__desktop-card[data-position="-2"] .kr-lookbook__ig-details,
+  .kr-lookbook__desktop-card[data-position="2"] .kr-lookbook__ig-details { display: none; }
+
+  .kr-lookbook__desktop-card a:focus-visible,
+  .kr-lookbook__desktop-card button:focus-visible {
+    outline: 2px solid #0095f6;
+    outline-offset: 2px;
+  }
+
+  @keyframes kr-lookbook-like-pop {
+    50% { transform: scale(1.22); }
+  }
+
+  .kr-lookbook__desktop-card--missing {
+    background: #fff;
+  }
+
+  .kr-lookbook__desktop-arrow {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    display: grid;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    transform: translateY(-50%);
+    place-items: center;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 180ms ease, color 180ms ease;
+  }
+
+  .kr-lookbook__desktop-arrow--prev { left: 2px; }
+  .kr-lookbook__desktop-arrow--next { right: 2px; }
+  .kr-lookbook__desktop-arrow--prev:hover { transform: translateY(-50%) translateX(-3px); color: #fff; }
+  .kr-lookbook__desktop-arrow--next:hover { transform: translateY(-50%) translateX(3px); color: #fff; }
+  .kr-lookbook__desktop-arrow:hover svg { filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .75)); }
+
+  .kr-lookbook__desktop-arrow:focus-visible { outline: none; }
+  .kr-lookbook__desktop-arrow:focus-visible svg {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .kr-lookbook__desktop-arrow svg {
+    display: block;
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .55));
+  }
+
+  .kr-lookbook__dots[hidden] {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .kr-lookbook__desktop-card,
+  .kr-lookbook__desktop-arrow,
+  .kr-lookbook__ig-like {
+    transition: none;
+    animation: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kr-lookbook__track { transition: none; }
+  .kr-lookbook__ig-like { animation: none !important; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .kryaa-luxe-image,
   .kryaa-luxe-cta {
@@ -782,4 +1475,423 @@
   header nav .kryaa-category-header-list {
     transform: translateX(calc(-1 * clamp(60px, 5vw, 110px)));
   }
+}
+
+.kr-updates-signup {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  box-sizing: border-box;
+  aspect-ratio: 2030 / 775;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(23, 20, 18, 0.1);
+  background: #fff;
+  color: #171412;
+  isolation: isolate;
+  text-align: center;
+}
+
+.kr-updates-signup::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.2) 30%, rgba(255, 255, 255, 0.08) 70%, rgba(255, 255, 255, 0.12));
+  content: "";
+  pointer-events: none;
+}
+
+.kr-updates-signup__media {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+}
+
+.kr-updates-signup__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.kr-updates-signup__content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 720px);
+  padding: clamp(64px, 7vw, 112px) 0 40px;
+  margin: 0 auto;
+  animation: kr-updates-fade-up 700ms ease-out both;
+}
+
+.kr-updates-signup__title {
+  margin: 0;
+  color: #171412;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(38px, 4.5vw, 60px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 0.98;
+}
+
+.kr-updates-signup__divider {
+  width: 112px;
+  height: 1px;
+  margin: 24px auto 20px;
+  background: #a77c6b;
+}
+
+.kr-updates-signup__headline {
+  margin: 0;
+  color: #a77c6b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(25px, 3vw, 36px);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.kr-updates-signup__description {
+  max-width: 610px;
+  margin: 12px auto 28px;
+  color: #171412;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+
+.kr-updates-signup__description-mobile,
+.kr-updates-signup__footer-mobile {
+  display: none;
+}
+
+.kr-updates-signup__form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.kr-updates-signup__field {
+  position: relative;
+  display: flex;
+  width: min(100%, 640px);
+  min-height: 66px;
+  min-width: 0;
+  border: 1px solid rgba(23, 20, 18, 0.24);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(23, 20, 18, 0.06);
+  text-align: left;
+}
+
+.kr-updates-signup__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.kr-updates-signup__field::after {
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  left: 20px;
+  height: 2px;
+  background: #a77c6b;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms ease;
+}
+
+.kr-updates-signup__field:focus-within::after {
+  transform: scaleX(1);
+}
+
+.kr-updates-signup__form input {
+  min-width: 0;
+  flex: 1;
+  width: 100%;
+  padding: 0 22px;
+  border: 0;
+  outline: 0;
+  color: #171412;
+  background: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+
+.kr-updates-signup__form input::placeholder {
+  color: #8f7368;
+  opacity: 1;
+}
+
+.kr-updates-signup__form input:focus-visible {
+  outline: 2px solid rgba(167, 124, 107, 0.55);
+  outline-offset: -2px;
+}
+
+.kr-updates-signup__form button {
+  width: 200px;
+  min-height: 64px;
+  margin-top: 42px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 10px;
+  background: #a77c6b;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.kr-updates-signup__form button:hover {
+  background: #171412;
+}
+
+.kr-updates-signup__form button:focus-visible {
+  outline: 2px solid #a77c6b;
+  outline-offset: 3px;
+}
+
+.kr-updates-signup__footer {
+  margin: 20px 0 0;
+  color: #a77c6b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+}
+
+@keyframes kr-updates-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .kr-updates-signup {
+    min-height: 0;
+    aspect-ratio: auto;
+    padding: 0 22px;
+    overflow-x: hidden;
+    background: #fff;
+  }
+
+  .kr-updates-signup::before {
+    display: none;
+  }
+
+  .kr-updates-signup__media {
+    display: none;
+  }
+
+  .kr-updates-signup__content {
+    width: 100%;
+    padding: 42px 0 36px;
+  }
+
+  .kr-updates-signup__title {
+    font-size: clamp(32px, 9.2vw, 36px);
+    letter-spacing: 0.025em;
+    line-height: 1.02;
+  }
+
+  .kr-updates-signup__divider {
+    width: 76px;
+    margin: 17px auto 16px;
+  }
+
+  .kr-updates-signup__headline {
+    font-size: clamp(23px, 6.4vw, 26px);
+  }
+
+  .kr-updates-signup__description {
+    margin: 10px auto 20px;
+    max-width: 330px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+
+  .kr-updates-signup__description-desktop,
+  .kr-updates-signup__footer-desktop {
+    display: none;
+  }
+
+  .kr-updates-signup__description-mobile,
+  .kr-updates-signup__footer-mobile {
+    display: inline;
+  }
+
+  .kr-updates-signup__form {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .kr-updates-signup__field {
+    width: 100%;
+    min-height: 50px;
+    border-radius: 9px;
+    box-shadow: none;
+  }
+
+  .kr-updates-signup__field::after {
+    right: 16px;
+    left: 16px;
+  }
+
+  .kr-updates-signup__form input {
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .kr-updates-signup__form button {
+    width: 100%;
+    min-width: 0;
+    min-height: 50px;
+    margin-top: 0;
+    font-size: 11px;
+  }
+
+  .kr-updates-signup__footer {
+    margin-top: 16px;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kr-updates-signup__content {
+    animation: none;
+  }
+
+  .kr-updates-signup__field::after,
+  .kr-updates-signup__form button {
+    transition: none;
+  }
+}
+
+/* Compact, card-style footer based on the supplied visual direction. */
+.kr-converto-footer {
+  margin-top: clamp(36px, 6vw, 88px);
+  padding: clamp(42px, 7vw, 92px) clamp(16px, 4vw, 48px);
+  overflow: hidden;
+  background: #393938;
+  color: #f4f2ed;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.kr-converto-footer *,
+.kr-converto-footer *::before,
+.kr-converto-footer *::after { box-sizing: border-box; }
+.kr-converto-footer a { color: inherit; text-decoration: none; }
+.kr-converto-footer a:hover { color: #43ae8c; }
+.kr-converto-footer__card {
+  position: relative;
+  width: min(1080px, 100%);
+  min-height: clamp(420px, 54vw, 580px);
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 88px) clamp(26px, 5vw, 64px) 22px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #080808;
+}
+.kr-converto-footer__top {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(180px, 2.2fr) repeat(4, minmax(68px, 1fr));
+  gap: clamp(18px, 3vw, 46px);
+}
+.kr-converto-footer__brand { max-width: 260px; }
+.kr-converto-footer__logo {
+  display: block;
+  margin: 0 0 15px;
+  color: #fff;
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 700;
+  letter-spacing: -.07em;
+  line-height: 1;
+}
+.kr-converto-footer__brand p { margin: 0; color: #c2c0bd; font-size: 11px; line-height: 1.65; }
+.kr-converto-footer h2 { margin: 0 0 15px; color: #fff; font-size: 11px; font-weight: 500; line-height: 1.2; }
+.kr-converto-footer ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.kr-converto-footer li { color: #bbb9b6; font-size: 10px; line-height: 1.3; }
+.kr-converto-footer__meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(62px, 10vw, 118px);
+  color: #aaa8a6;
+  font-size: 10px;
+}
+.kr-converto-footer__meta p { margin: 0; }
+.kr-converto-footer__name {
+  position: absolute;
+  z-index: 0;
+  right: clamp(26px, 5vw, 64px);
+  bottom: -0.13em;
+  left: clamp(26px, 5vw, 64px);
+  margin: 0;
+  color: #3ba987;
+  font-size: clamp(56px, 11.6vw, 158px);
+  font-weight: 800;
+  letter-spacing: -.09em;
+  line-height: .72;
+  white-space: nowrap;
+  opacity: .92;
+  background: linear-gradient(90deg, #082d25 0%, #45b892 48%, #0a3027 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (max-width: 680px) {
+  .kr-converto-footer { margin-top: 36px; padding: 28px 16px 32px; }
+  .kr-converto-footer__card { min-height: 0; padding: 30px 22px 16px; border-radius: 10px; }
+  .kr-converto-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 18px; }
+  .kr-converto-footer__brand { grid-column: 1 / -1; }
+  .kr-converto-footer__brand p { max-width: 285px; font-size: 12px; line-height: 1.55; }
+  .kr-converto-footer__logo { margin-bottom: 12px; font-size: 21px; }
+  .kr-converto-footer h2 { margin-bottom: 11px; font-size: 12px; }
+  .kr-converto-footer ul { gap: 1px; }
+  .kr-converto-footer li { min-width: 0; font-size: 11px; }
+  .kr-converto-footer li a { display: inline-flex; align-items: center; min-height: 38px; overflow-wrap: anywhere; }
+  .kr-converto-footer__meta { flex-direction: column; gap: 7px; margin-top: 34px; padding-bottom: 62px; font-size: 10px; line-height: 1.45; }
+  .kr-converto-footer__name { right: 22px; bottom: -.1em; left: 22px; font-size: clamp(44px, 15.1vw, 94px); letter-spacing: -.105em; }
+}
+
+@media (max-width: 390px) {
+  .kr-converto-footer { padding-inline: 12px; }
+  .kr-converto-footer__card { padding-inline: 19px; }
+  .kr-converto-footer__top { gap: 26px 14px; }
+  .kr-converto-footer__name { right: 19px; left: 19px; font-size: 15vw; }
 }

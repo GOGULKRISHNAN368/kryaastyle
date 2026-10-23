@@ -108,7 +108,13 @@
       const filteredSections = sections.filter((section) => {
         const title = String(section.title || '').toLowerCase();
         const heading = String(section.sectionHeadingText || '').replace(/\s+/g, ' ').trim();
-        return title !== 'magazine' && heading !== 'Kryaa Editorials' && heading !== "What's Next?";
+        const normalizedHeading = heading.toLowerCase();
+        return title !== 'magazine' &&
+          title !== 'celebrity_style' &&
+          normalizedHeading !== 'kryaa editorials' &&
+          normalizedHeading !== "what's next?" &&
+          normalizedHeading !== 'celebrity closet' &&
+          normalizedHeading !== 'get insider access';
       });
 
       let dataChanged = filteredSections.length !== sections.length;
@@ -1035,6 +1041,404 @@
     });
   };
 
+  const setupKryaaLookbook = () => {
+    const posts = [
+      {
+        name: 'Kavya Lakshmi',
+        initials: 'KL',
+        followers: '3,084 followers',
+        imageFile: 'Ethnic1.avif',
+        alt: 'Ethnic wear look by Kavya Lakshmi',
+        title: 'Festive Glow | Ethnic Wear',
+        description: 'Comfortable for festive evenings and family functions.',
+        likes: 1248, comments: 48, timestamp: '2 HOURS AGO', categoryHref: '#'
+      },
+      {
+        name: 'Meenakshi Sundaram',
+        initials: 'MS',
+        followers: '2,716 followers',
+        imageFile: 'Kurta1.avif',
+        alt: 'Kurta set look by Meenakshi Sundaram',
+        title: 'Everyday Chic | Kurta Sets',
+        description: 'Light, easy outfits for office and casual days.',
+        likes: 986, comments: 31, timestamp: '5 HOURS AGO', categoryHref: '#'
+      },
+      {
+        name: 'Thenmozhi Rajan',
+        initials: 'TR',
+        followers: '4,152 followers',
+        imageFile: 'salwar1.avif',
+        alt: 'Salwar suit look by Thenmozhi Rajan',
+        title: 'Evening Elegance | Salwar Suits',
+        description: 'Statement sets for receptions and festive nights.',
+        likes: 2031, comments: 72, timestamp: '1 DAY AGO', categoryHref: '#'
+      },
+      {
+        name: 'Aarthi Karthik',
+        initials: 'AK',
+        followers: '1,978 followers',
+        imageFile: 'Saree_Img1.avif',
+        alt: 'Saree look by Aarthi Karthik',
+        title: 'Sparkle in Style | Saree',
+        description: 'Rich drapes for weddings, cocktails and evening receptions.',
+        likes: 1574, comments: 56, timestamp: '2 DAYS AGO', categoryHref: '#'
+      },
+      {
+        name: 'Priya Dharshini',
+        initials: 'PD',
+        followers: '3,645 followers',
+        imageFile: 'top1.avif',
+        alt: 'Casual top look by Priya Dharshini',
+        title: 'Chic Tops | Casual Wear',
+        description: 'Fresh, easy tops for brunch, college and city days.',
+        likes: 1812, comments: 64, timestamp: '3 DAYS AGO', categoryHref: '#'
+      }
+    ];
+    const imageAspect = 591 / 625;
+    const desktopScales = { '-2': 0.54, '-1': 0.76, 0: 1, 1: 0.76, 2: 0.54 };
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[character]);
+    const arrowIcon = (direction) => direction === 'prev'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>';
+    const heartIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.2-8.8 10.2S3.2 14 3.2 8.8A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.8 2.3Z"></path></svg>';
+    const shareIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.1"></path></svg>';
+    const commentIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H6l-3 2v-6.5a7.5 7.5 0 1 1 17-3Z"></path></svg>';
+    const bookmarkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5h12v17l-6-4-6 4v-17Z"></path></svg>';
+    const verifiedIcon = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2 9.8 2l1.9-.1.8 1.7 1.6 1-.3 1.9.6 1.8-1.3 1.4-.5 1.9-1.9.4-1.5 1.2-1.7-.8-1.9.1-.8-1.7-1.6-1 .3-1.9-.6-1.8 1.3-1.4.5-1.9 1.9-.4L8 1.2Z"/><path d="m5.3 8 1.7 1.7 3.7-3.8" fill="none" stroke="#fff" stroke-width="1.3"/></svg>';
+    const moreIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>';
+    document.querySelectorAll('.kr-lookbook').forEach((section) => {
+      if (section.dataset.krLookbookReady === 'true') return;
+      const slider = section.querySelector('.kr-lookbook__slider');
+      const viewport = section.querySelector('.kr-lookbook__viewport');
+      const track = section.querySelector('.kr-lookbook__track');
+      const dots = section.querySelector('.kr-lookbook__dots');
+      const toast = section.querySelector('.kr-lookbook__toast');
+      if (!slider || !viewport || !track || !dots || !toast) return;
+
+      const desktopQuery = window.matchMedia('(min-width: 768px)');
+      let desktopMode = null;
+      let activeIndex = 0;
+      let toastTimer = 0;
+      let pointerStart = null;
+      let pointerDragged = false;
+      let suppressClickUntil = 0;
+      let resizeObserver = null;
+
+      const createInstagramCard = (post, index, desktop) => {
+        const loading = index === 0 ? '' : ' loading="lazy"';
+        const name = escapeHtml(post.name);
+        const initials = escapeHtml(post.initials);
+        const followers = escapeHtml(post.followers);
+        const title = escapeHtml(post.title);
+        const description = escapeHtml(post.description);
+        const category = escapeHtml(post.categoryHref);
+        const cardClass = desktop ? 'kr-lookbook__desktop-card' : 'kr-lookbook__post';
+        const indexAttribute = desktop ? 'data-desktop-index' : 'data-post-index';
+        const image = desktop
+          ? '<a class="kr-lookbook__desktop-image-link" data-desktop-card-link href="#" aria-label="Open ' + title + '"><img data-desktop-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '></a>'
+          : '<img class="kr-lookbook__mobile-image" data-lookbook-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '>';
+        const mobileControls = desktop ? '' : '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--prev" data-post-action="prev" aria-label="Previous post">' + arrowIcon('prev') + '</button>' +
+          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--next" data-post-action="next" aria-label="Next post">' + arrowIcon('next') + '</button>';
+        return '<article class="' + cardClass + ' kr-lookbook__ig-card" ' + indexAttribute + '="' + index + '" role="group" aria-roledescription="slide" aria-label="' +
+          (index + 1) + ' of ' + posts.length + ': ' + name + '"><header class="kr-lookbook__ig-header"><span class="kr-lookbook__ig-avatar"><span class="kr-lookbook__initials" aria-hidden="true">' + initials + '</span></span>' +
+          '<span class="kr-lookbook__ig-identity"><span class="kr-lookbook__ig-name">' + name + verifiedIcon + '</span><span class="kr-lookbook__ig-followers">' + followers + '</span></span>' +
+          '<a class="kr-lookbook__ig-follow" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Follow">Follow</a><a class="kr-lookbook__ig-more" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="More options">' + moreIcon + '</a></header>' +
+          '<div class="kr-lookbook__ig-image">' + image + mobileControls + '</div>' +
+          '<div class="kr-lookbook__ig-actions"><span class="kr-lookbook__ig-action-group"><button type="button" class="kr-lookbook__ig-icon kr-lookbook__ig-like" data-like aria-label="Like" aria-pressed="false">' + heartIcon + '</button><a class="kr-lookbook__ig-icon" data-comment href="' + category + '" aria-label="Comment">' + commentIcon + '</a><button type="button" class="kr-lookbook__ig-icon" data-share aria-label="Share">' + shareIcon + '</button></span><button type="button" class="kr-lookbook__ig-icon kr-lookbook__ig-save" data-save aria-label="Save" aria-pressed="false">' + bookmarkIcon + '</button></div>' +
+          '<div class="kr-lookbook__ig-details"><p class="kr-lookbook__ig-likes" data-like-count>' + Number(post.likes).toLocaleString('en-US') + ' likes</p><p class="kr-lookbook__ig-caption"><strong>' + name + '</strong> ' + title + ' ' + description + '</p><a class="kr-lookbook__ig-comments" data-comment href="' + category + '">View all ' + post.comments + ' comments</a><p class="kr-lookbook__ig-time">' + escapeHtml(post.timestamp) + '</p></div></article>';
+      };
+
+      const createMobileSlide = (post, index) => createInstagramCard(post, index, false);
+      const createDesktopSlide = (post, index) => createInstagramCard(post, index, true);
+
+      const renderDots = () => {
+        dots.innerHTML = posts.map((post, index) =>
+        '<button type="button" class="kr-lookbook__dot" data-dot-index="' + index +
+        '" aria-label="Go to post ' + (index + 1) + '" aria-current="' + (index === 0 ? 'true' : 'false') + '"></button>'
+        ).join('');
+      };
+
+      const layoutDesktop = (direction = 0, previousIndex = activeIndex) => {
+        if (!desktopMode) return;
+        const cards = Array.from(track.querySelectorAll('.kr-lookbook__desktop-card'));
+        if (!cards.length) return;
+        const rowWidth = track.clientWidth;
+        const availableForCards = rowWidth;
+        const gap = 14;
+        const scaleTotal = 0.54 * 2 + 0.76 * 2 + 1;
+        const totalGaps = gap * 4;
+        const centerImageHeight = Math.min(430, Math.max(120, (availableForCards - totalGaps) / (imageAspect * scaleTotal)));
+        const cardChromeHeight = 187;
+        const centerHeight = centerImageHeight + cardChromeHeight;
+        slider.style.setProperty('--kr-lookbook-center-height', centerHeight + 'px');
+        const totalWidth = imageAspect * centerImageHeight * scaleTotal + totalGaps;
+        let cursor = (rowWidth - totalWidth) / 2;
+        const orderedPositions = [];
+        for (let relative = -2; relative <= 2; relative += 1) {
+          const index = (activeIndex + relative + posts.length) % posts.length;
+          orderedPositions.push({ relative, index, scale: desktopScales[relative] });
+        }
+
+        if (direction === 1 || direction === -1) {
+          const outgoingRelative = direction === 1 ? -2 : 2;
+          const outgoingIndex = (previousIndex + outgoingRelative + posts.length) % posts.length;
+          const outgoing = cards.find((card) => Number(card.dataset.desktopIndex) === outgoingIndex);
+          if (outgoing) outgoing.classList.add('kr-lookbook__desktop-card--teleport');
+          window.requestAnimationFrame(() => {
+            if (outgoing) outgoing.classList.remove('kr-lookbook__desktop-card--teleport');
+          });
+        }
+
+        orderedPositions.forEach(({ relative, index, scale }) => {
+          const card = cards.find((item) => Number(item.dataset.desktopIndex) === index);
+          if (!card) return;
+          const height = centerHeight * scale;
+          const width = centerImageHeight * imageAspect * scale;
+          card.style.left = (cursor + width / 2) + 'px';
+          card.style.top = ((centerHeight - height) / 2) + 'px';
+          card.style.width = width + 'px';
+          card.style.height = height + 'px';
+          card.style.opacity = relative === 0 ? '1' : '0.92';
+          card.style.zIndex = String(3 - Math.abs(relative));
+          card.dataset.position = String(relative);
+          card.style.fontSize = (14 * scale) + 'px';
+          card.setAttribute('aria-hidden', 'false');
+          const image = card.querySelector('[data-desktop-image]');
+          if (image) {
+            if (Math.abs(relative) <= 1) image.loading = 'eager';
+            else image.loading = 'lazy';
+          }
+          cursor += width + gap;
+        });
+
+        const centerCard = cards.find((card) => Number(card.dataset.desktopIndex) === activeIndex);
+        if (centerCard) {
+          const image = centerCard.querySelector('.kr-lookbook__ig-image');
+          const previousArrow = slider.querySelector('.kr-lookbook__desktop-arrow--prev');
+          const nextArrow = slider.querySelector('.kr-lookbook__desktop-arrow--next');
+          if (image && previousArrow) image.appendChild(previousArrow);
+          if (image && nextArrow) image.appendChild(nextArrow);
+        }
+
+      };
+
+      const setActive = (requestedIndex, direction = 0) => {
+        const previousIndex = activeIndex;
+        activeIndex = (requestedIndex + posts.length) % posts.length;
+        if (desktopMode) {
+          layoutDesktop(direction, previousIndex);
+        } else {
+          track.style.transform = 'translate3d(-' + (activeIndex * 100 / posts.length) + '%, 0, 0)';
+          Array.from(track.children).forEach((slide, index) => {
+            const isActive = index === activeIndex;
+            slide.setAttribute('aria-hidden', String(!isActive));
+            if ('inert' in slide) slide.inert = !isActive;
+          });
+        }
+        dots.querySelectorAll('.kr-lookbook__dot').forEach((dot, index) => {
+          dot.setAttribute('aria-current', String(index === activeIndex));
+        });
+      };
+
+      const showImageFallbacks = () => {
+        section.querySelectorAll('[data-lookbook-image], [data-desktop-image]').forEach((image) => {
+          image.addEventListener('error', () => {
+            image.hidden = true;
+            const frame = image.closest('.kr-lookbook__ig-image');
+            if (frame) frame.classList.add('kr-lookbook__ig-image--missing');
+          }, { once: true });
+        });
+      };
+
+      const renderMode = () => {
+        const nextDesktopMode = desktopQuery.matches;
+        if (desktopMode === nextDesktopMode) {
+          if (desktopMode) layoutDesktop();
+          return;
+        }
+        desktopMode = nextDesktopMode;
+        slider.querySelectorAll('.kr-lookbook__desktop-arrow, .kr-lookbook__desktop-caption').forEach((element) => element.remove());
+        if (desktopMode) {
+          slider.classList.add('kr-lookbook__slider--desktop');
+          viewport.classList.add('kr-lookbook__viewport--desktop');
+          track.classList.add('kr-lookbook__track--desktop');
+          dots.hidden = true;
+          track.style.transform = 'none';
+          track.innerHTML = posts.map(createDesktopSlide).join('');
+          slider.insertAdjacentHTML('afterbegin', '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--prev" data-desktop-nav="prev" aria-label="Previous look">' + arrowIcon('prev') + '</button>' +
+            '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--next" data-desktop-nav="next" aria-label="Next look">' + arrowIcon('next') + '</button>');
+          showImageFallbacks();
+          layoutDesktop();
+        } else {
+          slider.classList.remove('kr-lookbook__slider--desktop');
+          viewport.classList.remove('kr-lookbook__viewport--desktop');
+          track.classList.remove('kr-lookbook__track--desktop');
+          track.style.cssText = '';
+          dots.hidden = false;
+          track.innerHTML = posts.map(createMobileSlide).join('');
+          renderDots();
+          showImageFallbacks();
+          setActive(activeIndex);
+        }
+      };
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.dataset.visible = 'true';
+        toastTimer = window.setTimeout(() => {
+          delete toast.dataset.visible;
+        }, 1500);
+      };
+      const copyFallback = (value) => {
+        const input = document.createElement('textarea');
+        input.value = value;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch (_) {}
+        input.remove();
+        return copied;
+      };
+
+      section.addEventListener('click', async (event) => {
+        const navButton = event.target.closest('[data-desktop-nav], [data-post-action]');
+        if (navButton) {
+          const isNext = (navButton.dataset.desktopNav || navButton.dataset.postAction) === 'next';
+          setActive(activeIndex + (isNext ? 1 : -1), isNext ? 1 : -1);
+          return;
+        }
+        const dot = event.target.closest('[data-dot-index]');
+        if (dot) {
+          setActive(Number(dot.dataset.dotIndex));
+          return;
+        }
+        const desktopLink = event.target.closest('[data-desktop-card-link]');
+        if (desktopMode && desktopLink) {
+          event.preventDefault();
+          const index = Number(desktopLink.closest('[data-desktop-index]').dataset.desktopIndex);
+          if (index !== activeIndex) {
+            const delta = (index - activeIndex + posts.length) % posts.length;
+            setActive(index, delta === 1 ? 1 : delta === posts.length - 1 ? -1 : 0);
+          }
+          return;
+        }
+        const likeButton = event.target.closest('[data-like]');
+        if (likeButton) {
+          const isLiked = likeButton.getAttribute('aria-pressed') !== 'true';
+          likeButton.setAttribute('aria-pressed', String(isLiked));
+          likeButton.classList.toggle('kr-lookbook__like--active', isLiked);
+          const card = likeButton.closest('.kr-lookbook__ig-card');
+          if (card) {
+            const cardIndex = Number(card.dataset.desktopIndex ?? card.dataset.postIndex);
+            const post = posts[cardIndex];
+            const count = card.querySelector('[data-like-count]');
+            const updatedLikes = post.likes + (isLiked ? 1 : -1);
+            count.textContent = updatedLikes.toLocaleString('en-US') + ' likes';
+          }
+          return;
+        }
+        const saveButton = event.target.closest('[data-save]');
+        if (saveButton) {
+          const saved = saveButton.getAttribute('aria-pressed') !== 'true';
+          saveButton.setAttribute('aria-pressed', String(saved));
+          saveButton.classList.toggle('kr-lookbook__save--active', saved);
+          return;
+        }
+        const shareButton = event.target.closest('[data-share]');
+        if (!shareButton) return;
+        const shareCard = shareButton.closest('[data-desktop-index], [data-post-index]');
+        const shareIndex = shareCard ? Number(shareCard.dataset.desktopIndex ?? shareCard.dataset.postIndex) : activeIndex;
+        const shareData = { title: posts[shareIndex].title, url: window.location.href };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (error) {
+            if (error && error.name === 'AbortError') return;
+          }
+        }
+        let copied = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(shareData.url);
+            copied = true;
+          }
+        } catch (_) {}
+        if (!copied) copied = copyFallback(shareData.url);
+        if (copied) showToast('Link copied');
+      });
+
+      slider.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          const direction = event.key === 'ArrowRight' ? 1 : -1;
+          setActive(activeIndex + direction, direction);
+        }
+      });
+      viewport.addEventListener('pointerdown', (event) => {
+        if (desktopMode) {
+          if (event.target.closest('[data-desktop-nav], .kr-lookbook__ig-follow, .kr-lookbook__ig-more, [data-comment], [data-share], [data-like], [data-save]') || (event.pointerType === 'mouse' && event.button !== 0)) return;
+          pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+          pointerDragged = false;
+          if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+          return;
+        }
+        if (event.target.closest('button, a') || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+        pointerDragged = false;
+        if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+      });
+      viewport.addEventListener('pointermove', (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        if (Math.abs(event.clientX - pointerStart.x) > 8 && Math.abs(event.clientX - pointerStart.x) > Math.abs(event.clientY - pointerStart.y)) {
+          pointerDragged = true;
+          event.preventDefault();
+        }
+      }, { passive: false });
+      const finishPointer = (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const deltaX = event.clientX - pointerStart.x;
+        const deltaY = event.clientY - pointerStart.y;
+        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+          const direction = deltaX < 0 ? 1 : -1;
+          setActive(activeIndex + direction, desktopMode ? direction : 0);
+        }
+        if (pointerDragged) suppressClickUntil = performance.now() + 250;
+        pointerStart = null;
+        pointerDragged = false;
+      };
+      viewport.addEventListener('pointerup', finishPointer);
+      viewport.addEventListener('pointercancel', finishPointer);
+      viewport.addEventListener('click', (event) => {
+        if (performance.now() >= suppressClickUntil) return;
+        event.preventDefault();
+        event.stopPropagation();
+      }, true);
+
+      renderDots();
+      renderMode();
+      const handleModeChange = () => renderMode();
+      if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', handleModeChange);
+      else desktopQuery.addListener(handleModeChange);
+      if (window.ResizeObserver) {
+        resizeObserver = new ResizeObserver(() => { if (desktopMode) layoutDesktop(); });
+        resizeObserver.observe(slider);
+      } else {
+        window.addEventListener('resize', () => { if (desktopMode) layoutDesktop(); });
+      }
+      section.dataset.krLookbookReady = 'true';
+    });
+  };
+
   const setupKryaaReviews = () => {
     document.querySelectorAll('.kr-reviews').forEach((section) => {
       if (section.dataset.krReviewsReady === 'true') return;
@@ -1143,8 +1547,8 @@
         previousScrollLeft = viewport.scrollLeft;
       };
 
-      const canAnimate = () => !reducedMotion.matches && inViewport && !document.hidden && marqueeReady &&
-        !hovered && !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
+      const canAnimate = () => !reducedMotion.matches && !document.hidden && marqueeReady &&
+        !pointerDown && !keyboardFocus && performance.now() >= resumeAt;
 
       const stopAnimation = () => {
         if (!animationFrame) return;
@@ -1198,12 +1602,15 @@
             ? Promise.resolve()
             : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
           const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-          Promise.all([pageLoaded, fontsReady]).then(() => {
+          const startDesktopMarquee = () => {
             if (!desktopMode) return;
             measure();
+            if (!setWidth) return;
             marqueeReady = true;
             updateAnimation();
-          });
+          };
+          Promise.all([pageLoaded, fontsReady]).then(startDesktopMarquee);
+          window.setTimeout(startDesktopMarquee, 1200);
           if (reducedMotion.matches && !reducedMotionLogged) {
             console.info('Kryaa reviews marquee paused because reduced motion is enabled.');
             reducedMotionLogged = true;
@@ -1292,12 +1699,12 @@
       viewport.addEventListener('pointerenter', (event) => {
         if (event.pointerType !== 'mouse') return;
         hovered = true;
-        pauseForInteraction();
+        updateAnimation();
       });
       viewport.addEventListener('pointerleave', (event) => {
         if (event.pointerType !== 'mouse') return;
         hovered = false;
-        resumeAfterInteraction();
+        updateAnimation();
       });
 
       document.addEventListener('keydown', (event) => {
@@ -1395,6 +1802,69 @@
     });
   };
 
+  const cleanCelebrityClosetSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      if (heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() !== 'celebrity closet') return;
+
+      const section = heading.closest('section') || heading.parentElement?.parentElement;
+      if (section) section.remove();
+    });
+  };
+
+  const cleanInsiderAccessSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      if (heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() !== 'get insider access') return;
+
+      const section = heading.closest('div[style*="men-desk.jpg"]') || heading.closest('section');
+      if (section) section.remove();
+    });
+  };
+
+  const setupUpdatesSignup = () => {
+    const reviews = document.querySelector('.kr-reviews');
+    if (!reviews || document.getElementById('kr-updates-signup')) return;
+
+    const visitHeading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((heading) => heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'visit our store');
+    const visitSection = visitHeading?.parentElement?.parentElement;
+
+    const section = document.createElement('section');
+    section.id = 'kr-updates-signup';
+    section.className = 'kr-updates-signup';
+    section.setAttribute('aria-labelledby', 'kr-updates-signup-heading');
+    section.innerHTML = `
+      <picture class="kr-updates-signup__media" aria-hidden="true">
+        <source media="(max-width: 767px)" srcset="../image/women-insider-access-banner-mobile.png">
+        <img src="../image/women-insider-access-banner.png" alt="" loading="lazy" decoding="async">
+      </picture>
+      <div class="kr-updates-signup__content">
+        <h2 id="kr-updates-signup-heading" class="kr-updates-signup__title">JOIN WITH US</h2>
+        <div class="kr-updates-signup__divider" aria-hidden="true"></div>
+        <p class="kr-updates-signup__headline">Stay in Style. Stay Updated.</p>
+        <p id="kr-updates-signup-description" class="kr-updates-signup__description">
+          <span class="kr-updates-signup__description-desktop">Join us for the latest updates, new arrivals, styling inspiration, and exclusive offers. Be the first to discover thoughtful edits, timeless silhouettes, and new stories from our world of style. Sign up today for early access to the pieces you will love next.</span>
+          <span class="kr-updates-signup__description-mobile">Discover new arrivals, exclusive offers and a little inspiration for your style.</span>
+        </p>
+        <form class="kr-updates-signup__form" aria-describedby="kr-updates-signup-description" novalidate>
+          <div class="kr-updates-signup__field">
+            <label class="kr-updates-signup__label" for="kr-updates-email">Email address</label>
+            <input id="kr-updates-email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required>
+          </div>
+          <button type="submit">SUBSCRIBE <span aria-hidden="true">↗</span></button>
+        </form>
+        <p class="kr-updates-signup__footer">
+          <span class="kr-updates-signup__footer-desktop">NEW ARRIVALS · EXCLUSIVE OFFERS · STYLE UPDATES</span>
+          <span class="kr-updates-signup__footer-mobile">NEW ARRIVALS · EXCLUSIVE OFFERS</span>
+        </p>
+      </div>
+    `;
+
+    section.querySelector('form')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+    });
+    (visitSection || reviews).insertAdjacentElement('afterend', section);
+  };
+
   const cleanMenPage = () => {
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
@@ -1411,16 +1881,87 @@
     setupCuratedTrendingLooks();
     cleanPageLinks();
     cleanEditorialSection();
+    cleanCelebrityClosetSection();
+    cleanInsiderAccessSection();
+    setupUpdatesSignup();
+  };
+
+  const replaceSiteFooter = () => {
+    const legacyFooter = document.querySelector('footer.footer');
+    if (!legacyFooter || document.querySelector('.kr-shopper-footer')) return;
+
+    const footer = document.createElement('footer');
+    footer.className = 'kr-shopper-footer';
+    footer.setAttribute('aria-label', 'Kryaa Style footer');
+    footer.innerHTML = `
+      <div class="kr-shopper-footer__inner">
+        <div class="kr-shopper-footer__top">
+          <section class="kr-shopper-footer__brand" aria-label="Kryaa Style">
+            <a class="kr-shopper-footer__wordmark" href="index.html"><img src="../image/logo.png" alt="Kryaa Style"></a>
+            <p>Discover designer Indian occasionwear, curated for every celebration.</p>
+            <div class="kr-shopper-footer__social" aria-label="Follow Kryaa Style">
+              <a href="https://www.instagram.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+              <a href="https://www.facebook.com/AzaFashions" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
+              <a href="https://in.pinterest.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Pinterest">P</a>
+              <a href="https://www.youtube.com/@azafashions" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+            </div>
+          </section>
+          <section>
+            <h2>SHOP</h2>
+            <ul>
+              <li><a href="collection/men/kurta-sets.html">Kurta Sets</a></li>
+              <li><a href="collection/men/sherwanis.html">Sherwanis</a></li>
+              <li><a href="collection/men/nehru-jacket-and-sets.html">Nehru Jackets</a></li>
+              <li><a href="collection/men/bandhgalas.html">Bandhgalas</a></li>
+              <li><a href="collection/men/kurtas.html">Kurtas</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>CUSTOMER CARE</h2>
+            <ul>
+              <li><a href="contact-us">Contact Us</a></li>
+              <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+              <li><a href="return-policy.html">Returns &amp; Exchanges</a></li>
+              <li><a href="faq.html">FAQs</a></li>
+              <li><a href="store-locator.html">Find a Store</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ABOUT KRYAA</h2>
+            <ul>
+              <li><a href="about-aza.html">About Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="events.html">In-Store Events</a></li>
+              <li><a href="important-information.html">Important Information</a></li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            </ul>
+          </section>
+        </div>
+        <div class="kr-shopper-footer__divider"></div>
+        <div class="kr-shopper-footer__bottom">
+          <span>© ${new Date().getFullYear()} Kryaa Style. All rights reserved.</span>
+          <nav class="kr-shopper-footer__policies" aria-label="Footer policies">
+            <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="return-policy.html">Returns</a>
+          </nav>
+        </div>
+      </div>`;
+    legacyFooter.replaceWith(footer);
   };
 
   cleanNextData();
   cleanMenPage();
+  replaceSiteFooter();
 
-  const initializeKryaaReviews = () => window.setTimeout(setupKryaaReviews, 0);
+  const initializeKryaaSections = () => window.setTimeout(() => {
+    setupKryaaReviews();
+    setupKryaaLookbook();
+  }, 0);
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeKryaaReviews, { once: true });
+    document.addEventListener('DOMContentLoaded', initializeKryaaSections, { once: true });
   } else {
-    initializeKryaaReviews();
+    initializeKryaaSections();
   }
 
   const observer = new MutationObserver(cleanMenPage);

@@ -802,6 +802,401 @@
     });
   };
 
+  const setupKryaaLookbook = () => {
+    const posts = [
+      {
+        name: 'Kavya Lakshmi',
+        initials: 'KL',
+        followers: '3,084 followers',
+        imageFile: 'Ethnic1.avif',
+        alt: 'Ethnic wear look by Kavya Lakshmi',
+        title: 'Festive Glow | Ethnic Wear',
+        description: 'Comfortable for festive evenings and family functions.'
+      },
+      {
+        name: 'Meenakshi Sundaram',
+        initials: 'MS',
+        followers: '2,716 followers',
+        imageFile: 'Kurta1.avif',
+        alt: 'Kurta set look by Meenakshi Sundaram',
+        title: 'Everyday Chic | Kurta Sets',
+        description: 'Light, easy outfits for office and casual days.'
+      },
+      {
+        name: 'Thenmozhi Rajan',
+        initials: 'TR',
+        followers: '4,152 followers',
+        imageFile: 'salwar1.avif',
+        alt: 'Salwar suit look by Thenmozhi Rajan',
+        title: 'Evening Elegance | Salwar Suits',
+        description: 'Statement sets for receptions and festive nights.'
+      },
+      {
+        name: 'Aarthi Karthik',
+        initials: 'AK',
+        followers: '1,978 followers',
+        imageFile: 'Saree_Img1.avif',
+        alt: 'Saree look by Aarthi Karthik',
+        title: 'Sparkle in Style | Saree',
+        description: 'Rich drapes for weddings, cocktails and evening receptions.'
+      },
+      {
+        name: 'Priya Dharshini',
+        initials: 'PD',
+        followers: '3,645 followers',
+        imageFile: 'top1.avif',
+        alt: 'Casual top look by Priya Dharshini',
+        title: 'Chic Tops | Casual Wear',
+        description: 'Fresh, easy tops for brunch, college and city days.'
+      }
+    ];
+    const imageAspect = 591 / 625;
+    const desktopScales = { '-2': 0.54, '-1': 0.76, 0: 1, 1: 0.76, 2: 0.54 };
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    })[character]);
+    const arrowIcon = (direction) => direction === 'prev'
+      ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"></path></svg>'
+      : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"></path></svg>';
+    const heartIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.2-8.8 10.2S3.2 14 3.2 8.8A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.8 2.3Z"></path></svg>';
+    const shareIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.1"></path></svg>';
+    const bagIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l1 13H4L5 8Z"></path><path d="M9 9V6a3 3 0 0 1 6 0v3"></path></svg>';
+    document.querySelectorAll('.kr-lookbook').forEach((section) => {
+      if (section.dataset.krLookbookReady === 'true') return;
+      const slider = section.querySelector('.kr-lookbook__slider');
+      const viewport = section.querySelector('.kr-lookbook__viewport');
+      const track = section.querySelector('.kr-lookbook__track');
+      const dots = section.querySelector('.kr-lookbook__dots');
+      const toast = section.querySelector('.kr-lookbook__toast');
+      if (!slider || !viewport || !track || !dots || !toast) return;
+
+      const desktopQuery = window.matchMedia('(min-width: 768px)');
+      let desktopMode = null;
+      let activeIndex = 0;
+      let toastTimer = 0;
+      let pointerStart = null;
+      let pointerDragged = false;
+      let suppressClickUntil = 0;
+      let caption = null;
+      let resizeObserver = null;
+
+      const createMobileSlide = (post, postIndex) => {
+        const safeName = escapeHtml(post.name);
+        const safeInitials = escapeHtml(post.initials);
+        const safeTitle = escapeHtml(post.title);
+        const safeFollowers = escapeHtml(post.followers);
+        const safeDescription = escapeHtml(post.description);
+        const safeImageFile = escapeHtml(post.imageFile);
+        const safeAlt = escapeHtml(post.alt);
+        const loading = postIndex === 0 ? '' : ' loading="lazy"';
+        const avatar = '<span class="kr-lookbook__avatar"><img data-lookbook-avatar src="../images/lookbook/avatar' +
+          (postIndex + 1) + '.jpg" alt="" aria-hidden="true"' + loading +
+          '><span class="kr-lookbook__initials" aria-hidden="true">' + safeInitials + '</span></span>';
+        const image = '<div class="kr-lookbook__collage"><div class="kr-lookbook__tile"><a href="#" class="kr-lookbook__tile-link" tabindex="-1" aria-label="' +
+          safeTitle + '"><img data-lookbook-image src="../images/Insta_Img/' + safeImageFile + '" alt="' + safeAlt + '"' + loading + '></a></div>' +
+          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--prev" data-post-action="prev" aria-label="Previous post">' + arrowIcon('prev') + '</button>' +
+          '<button type="button" class="kr-lookbook__arrow kr-lookbook__arrow--next" data-post-action="next" aria-label="Next post">' + arrowIcon('next') + '</button></div>';
+
+        return '<article class="kr-lookbook__post" role="group" aria-roledescription="slide" aria-label="Post ' +
+          (postIndex + 1) + ' of ' + posts.length + ': ' + safeName + '" data-post-index="' + postIndex + '">' +
+          '<header class="kr-lookbook__creator">' + avatar + '<span class="kr-lookbook__creator-copy"><span class="kr-lookbook__creator-name">' +
+          safeName + '</span><span class="kr-lookbook__followers">' + safeFollowers + '</span></span></header>' +
+          image +
+          '<footer class="kr-lookbook__footer"><div class="kr-lookbook__post-copy"><a class="kr-lookbook__post-title" href="#">' +
+          safeTitle + '</a><p class="kr-lookbook__description">' + safeDescription + '</p></div>' +
+          '<div class="kr-lookbook__actions"><button type="button" class="kr-lookbook__action kr-lookbook__like" data-like aria-label="Like" aria-pressed="false">' +
+          heartIcon + '</button><button type="button" class="kr-lookbook__action" data-share aria-label="Share">' + shareIcon + '</button></div></footer></article>';
+      };
+
+      const createDesktopSlide = (post, index) => {
+        const loading = index === activeIndex || Math.abs(((index - activeIndex + posts.length) % posts.length + posts.length / 2) % posts.length - posts.length / 2) <= 1
+          ? '' : ' loading="lazy"';
+        return '<article class="kr-lookbook__desktop-card" data-desktop-index="' + index + '" role="group" aria-roledescription="slide" aria-label="' +
+          (index + 1) + ' of ' + posts.length + ': ' + escapeHtml(post.name) + '"><a class="kr-lookbook__desktop-image-link" data-desktop-card-link href="#" aria-label="Open ' +
+          escapeHtml(post.title) + '"><img data-desktop-image src="../images/Insta_Img/' + escapeHtml(post.imageFile) + '" alt="' + escapeHtml(post.alt) + '"' + loading + '></a>' +
+          '<a class="kr-lookbook__shop-all" data-shop-all href="#" aria-label="Shop all ' + escapeHtml(post.title.split('|').pop().trim()) + ' looks">' + bagIcon + '<span>Shop All</span></a></article>';
+      };
+
+      const renderDots = () => {
+        dots.innerHTML = posts.map((post, index) =>
+        '<button type="button" class="kr-lookbook__dot" data-dot-index="' + index +
+        '" aria-label="Go to post ' + (index + 1) + '" aria-current="' + (index === 0 ? 'true' : 'false') + '"></button>'
+        ).join('');
+      };
+
+      const layoutDesktop = (direction = 0, previousIndex = activeIndex) => {
+        if (!desktopMode) return;
+        const cards = Array.from(track.querySelectorAll('.kr-lookbook__desktop-card'));
+        if (!cards.length) return;
+        const rowWidth = track.clientWidth;
+        const availableForCards = rowWidth;
+        const gap = 14;
+        const scaleTotal = 0.54 * 2 + 0.76 * 2 + 1;
+        const centerHeight = Math.min(465, Math.max(120, (availableForCards - gap * 4) / (imageAspect * scaleTotal)));
+        slider.style.setProperty('--kr-lookbook-center-height', centerHeight + 'px');
+        const totalWidth = imageAspect * centerHeight * scaleTotal + gap * 4;
+        let cursor = (rowWidth - totalWidth) / 2;
+        const orderedPositions = [];
+        for (let relative = -2; relative <= 2; relative += 1) {
+          const index = (activeIndex + relative + posts.length) % posts.length;
+          orderedPositions.push({ relative, index, scale: desktopScales[relative] });
+        }
+
+        if (direction === 1 || direction === -1) {
+          const outgoingRelative = direction === 1 ? -2 : 2;
+          const outgoingIndex = (previousIndex + outgoingRelative + posts.length) % posts.length;
+          const outgoing = cards.find((card) => Number(card.dataset.desktopIndex) === outgoingIndex);
+          if (outgoing) outgoing.classList.add('kr-lookbook__desktop-card--teleport');
+          window.requestAnimationFrame(() => {
+            if (outgoing) outgoing.classList.remove('kr-lookbook__desktop-card--teleport');
+          });
+        }
+
+        orderedPositions.forEach(({ relative, index, scale }) => {
+          const card = cards.find((item) => Number(item.dataset.desktopIndex) === index);
+          if (!card) return;
+          const height = centerHeight * scale;
+          const width = height * imageAspect;
+          card.style.left = (cursor + width / 2) + 'px';
+          card.style.top = ((centerHeight - height) / 2) + 'px';
+          card.style.width = width + 'px';
+          card.style.height = height + 'px';
+          card.style.opacity = relative === 0 ? '1' : '0.92';
+          card.style.zIndex = String(3 - Math.abs(relative));
+          card.dataset.position = String(relative);
+          card.setAttribute('aria-hidden', 'false');
+          const image = card.querySelector('[data-desktop-image]');
+          if (image) {
+            if (Math.abs(relative) <= 1) image.loading = 'eager';
+            else image.loading = 'lazy';
+          }
+          cursor += width + gap;
+        });
+
+        if (caption) {
+          caption.style.opacity = '0';
+          caption.textContent = posts[activeIndex].name + ' · ' + posts[activeIndex].followers;
+          window.requestAnimationFrame(() => { caption.style.opacity = '1'; });
+        }
+      };
+
+      const setActive = (requestedIndex, direction = 0) => {
+        const previousIndex = activeIndex;
+        activeIndex = (requestedIndex + posts.length) % posts.length;
+        if (desktopMode) {
+          layoutDesktop(direction, previousIndex);
+        } else {
+          track.style.transform = 'translate3d(-' + (activeIndex * 100 / posts.length) + '%, 0, 0)';
+          Array.from(track.children).forEach((slide, index) => {
+            const isActive = index === activeIndex;
+            slide.setAttribute('aria-hidden', String(!isActive));
+            if ('inert' in slide) slide.inert = !isActive;
+          });
+        }
+        dots.querySelectorAll('.kr-lookbook__dot').forEach((dot, index) => {
+          dot.setAttribute('aria-current', String(index === activeIndex));
+        });
+      };
+
+      const showImageFallbacks = () => {
+        section.querySelectorAll('[data-lookbook-image], [data-desktop-image]').forEach((image) => {
+          image.addEventListener('error', () => {
+            image.hidden = true;
+            const frame = image.closest('.kr-lookbook__tile, .kr-lookbook__desktop-card');
+            frame.classList.add(frame.matches('.kr-lookbook__desktop-card') ? 'kr-lookbook__desktop-card--missing' : 'kr-lookbook__tile--missing');
+          }, { once: true });
+        });
+        section.querySelectorAll('[data-lookbook-avatar]').forEach((image) => {
+          const initials = image.nextElementSibling;
+          const showInitials = () => {
+            image.hidden = true;
+            initials.hidden = false;
+          };
+          const showAvatar = () => { initials.hidden = true; };
+          image.addEventListener('error', showInitials, { once: true });
+          image.addEventListener('load', showAvatar, { once: true });
+          if (image.complete) {
+            if (image.naturalWidth) showAvatar();
+            else showInitials();
+          }
+        });
+      };
+
+      const renderMode = () => {
+        const nextDesktopMode = desktopQuery.matches;
+        if (desktopMode === nextDesktopMode) {
+          if (desktopMode) layoutDesktop();
+          return;
+        }
+        desktopMode = nextDesktopMode;
+        slider.querySelectorAll('.kr-lookbook__desktop-arrow, .kr-lookbook__desktop-caption').forEach((element) => element.remove());
+        if (desktopMode) {
+          slider.classList.add('kr-lookbook__slider--desktop');
+          viewport.classList.add('kr-lookbook__viewport--desktop');
+          track.classList.add('kr-lookbook__track--desktop');
+          dots.hidden = true;
+          track.style.transform = 'none';
+          track.innerHTML = posts.map(createDesktopSlide).join('');
+          slider.insertAdjacentHTML('afterbegin', '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--prev" data-desktop-nav="prev" aria-label="Previous look">' + arrowIcon('prev') + '</button>' +
+            '<button type="button" class="kr-lookbook__desktop-arrow kr-lookbook__desktop-arrow--next" data-desktop-nav="next" aria-label="Next look">' + arrowIcon('next') + '</button>');
+          caption = document.createElement('p');
+          caption.className = 'kr-lookbook__desktop-caption';
+          caption.setAttribute('aria-live', 'polite');
+          viewport.insertAdjacentElement('afterend', caption);
+          showImageFallbacks();
+          layoutDesktop();
+        } else {
+          caption = null;
+          slider.classList.remove('kr-lookbook__slider--desktop');
+          viewport.classList.remove('kr-lookbook__viewport--desktop');
+          track.classList.remove('kr-lookbook__track--desktop');
+          track.style.cssText = '';
+          dots.hidden = false;
+          track.innerHTML = posts.map(createMobileSlide).join('');
+          renderDots();
+          showImageFallbacks();
+          setActive(activeIndex);
+        }
+      };
+      const showToast = (message) => {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.dataset.visible = 'true';
+        toastTimer = window.setTimeout(() => {
+          delete toast.dataset.visible;
+        }, 1500);
+      };
+      const copyFallback = (value) => {
+        const input = document.createElement('textarea');
+        input.value = value;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        let copied = false;
+        try { copied = document.execCommand('copy'); } catch (_) {}
+        input.remove();
+        return copied;
+      };
+
+      section.addEventListener('click', async (event) => {
+        const navButton = event.target.closest('[data-desktop-nav], [data-post-action]');
+        if (navButton) {
+          const isNext = (navButton.dataset.desktopNav || navButton.dataset.postAction) === 'next';
+          setActive(activeIndex + (isNext ? 1 : -1), isNext ? 1 : -1);
+          return;
+        }
+        const dot = event.target.closest('[data-dot-index]');
+        if (dot) {
+          setActive(Number(dot.dataset.dotIndex));
+          return;
+        }
+        const desktopLink = event.target.closest('[data-desktop-card-link]');
+        if (desktopMode && desktopLink) {
+          const index = Number(desktopLink.closest('[data-desktop-index]').dataset.desktopIndex);
+          if (index !== activeIndex) {
+            event.preventDefault();
+            const delta = (index - activeIndex + posts.length) % posts.length;
+            setActive(index, delta === 1 ? 1 : delta === posts.length - 1 ? -1 : 0);
+          }
+          return;
+        }
+        const likeButton = event.target.closest('[data-like]');
+        if (likeButton) {
+          const isLiked = likeButton.getAttribute('aria-pressed') !== 'true';
+          likeButton.setAttribute('aria-pressed', String(isLiked));
+          likeButton.classList.toggle('kr-lookbook__like--active', isLiked);
+          return;
+        }
+        const shareButton = event.target.closest('[data-share]');
+        if (!shareButton) return;
+        const shareData = { title: posts[activeIndex].title, url: window.location.href };
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (error) {
+            if (error && error.name === 'AbortError') return;
+          }
+        }
+        let copied = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(shareData.url);
+            copied = true;
+          }
+        } catch (_) {}
+        if (!copied) copied = copyFallback(shareData.url);
+        if (copied) showToast('Link copied');
+      });
+
+      slider.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          const direction = event.key === 'ArrowRight' ? 1 : -1;
+          setActive(activeIndex + direction, direction);
+        }
+      });
+      viewport.addEventListener('pointerdown', (event) => {
+        if (desktopMode) {
+          if (event.target.closest('[data-desktop-nav], [data-shop-all]') || (event.pointerType === 'mouse' && event.button !== 0)) return;
+          pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+          pointerDragged = false;
+          if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+          return;
+        }
+        if (event.target.closest('button, a') || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+        pointerDragged = false;
+        if (viewport.setPointerCapture) viewport.setPointerCapture(event.pointerId);
+      });
+      viewport.addEventListener('pointermove', (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        if (Math.abs(event.clientX - pointerStart.x) > 8 && Math.abs(event.clientX - pointerStart.x) > Math.abs(event.clientY - pointerStart.y)) {
+          pointerDragged = true;
+          event.preventDefault();
+        }
+      }, { passive: false });
+      const finishPointer = (event) => {
+        if (!pointerStart || pointerStart.id !== event.pointerId) return;
+        const deltaX = event.clientX - pointerStart.x;
+        const deltaY = event.clientY - pointerStart.y;
+        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {
+          const direction = deltaX < 0 ? 1 : -1;
+          setActive(activeIndex + direction, desktopMode ? direction : 0);
+        }
+        if (pointerDragged) suppressClickUntil = performance.now() + 250;
+        pointerStart = null;
+        pointerDragged = false;
+      };
+      viewport.addEventListener('pointerup', finishPointer);
+      viewport.addEventListener('pointercancel', finishPointer);
+      viewport.addEventListener('click', (event) => {
+        if (performance.now() >= suppressClickUntil) return;
+        event.preventDefault();
+        event.stopPropagation();
+      }, true);
+
+      renderDots();
+      renderMode();
+      const handleModeChange = () => renderMode();
+      if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', handleModeChange);
+      else desktopQuery.addListener(handleModeChange);
+      if (window.ResizeObserver) {
+        resizeObserver = new ResizeObserver(() => { if (desktopMode) layoutDesktop(); });
+        resizeObserver.observe(slider);
+      } else {
+        window.addEventListener('resize', () => { if (desktopMode) layoutDesktop(); });
+      }
+      section.dataset.krLookbookReady = 'true';
+    });
+  };
+
   const setupKryaaReviews = () => {
     document.querySelectorAll('.kr-reviews').forEach((section) => {
       if (section.dataset.krReviewsReady === 'true') return;
@@ -1179,11 +1574,14 @@
   cleanNextData();
   cleanMenPage();
 
-  const initializeKryaaReviews = () => window.setTimeout(setupKryaaReviews, 0);
+  const initializeKryaaSections = () => window.setTimeout(() => {
+    setupKryaaReviews();
+    setupKryaaLookbook();
+  }, 0);
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeKryaaReviews, { once: true });
+    document.addEventListener('DOMContentLoaded', initializeKryaaSections, { once: true });
   } else {
-    initializeKryaaReviews();
+    initializeKryaaSections();
   }
 
   const observer = new MutationObserver(cleanMenPage);

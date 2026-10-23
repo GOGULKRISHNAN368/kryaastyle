@@ -127,6 +127,62 @@
     });
   };
 
+  const setupHeroCarousel = () => {
+    const hero = Array.from(document.querySelectorAll('.slick-slider'))
+      .find((slider) => slider.querySelector('img[src*="banner-desktop.jpg"]'));
+    const track = hero?.querySelector('.slick-track');
+    const firstSlide = track?.querySelector('.slick-slide');
+    if (!hero || !track || !firstSlide || hero.classList.contains('kryaa-hero-carousel')) return;
+
+    const secondSlide = firstSlide.cloneNode(true);
+    secondSlide.classList.remove('slick-active', 'slick-current');
+    secondSlide.classList.add('kryaa-inclusive-slide');
+    secondSlide.dataset.index = '1';
+    secondSlide.setAttribute('aria-hidden', 'true');
+    const image = secondSlide.querySelector('img');
+    const source = secondSlide.querySelector('source');
+    const imagePath = '../images/Inclusive%20Comfort%20Fashion%20Collection%20(1).png';
+    if (image) {
+      image.src = imagePath;
+      image.alt = 'Inclusive Comfort Fashion Collection';
+      image.removeAttribute('srcset');
+      image.removeAttribute('fetchpriority');
+    }
+    if (source) source.srcset = '../images/Designed%20for%20Every%20Story.png';
+    const link = secondSlide.querySelector('a');
+    if (link) {
+      link.href = 'collection/men';
+      link.setAttribute('aria-label', 'Shop the Inclusive Comfort Fashion collection');
+    }
+    track.appendChild(secondSlide);
+    hero.classList.add('kryaa-hero-carousel');
+    track.dataset.kryaaSlide = '0';
+
+    const slides = [firstSlide, secondSlide];
+    const update = (index) => {
+      const active = (index + slides.length) % slides.length;
+      track.dataset.kryaaSlide = String(active);
+      track.style.setProperty('--kryaa-hero-slide', String(active));
+      slides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === active;
+        slide.classList.toggle('slick-active', isActive);
+        slide.classList.toggle('slick-current', isActive);
+        slide.setAttribute('aria-hidden', String(!isActive));
+      });
+    };
+    hero.querySelectorAll('.slick-arrow').forEach((arrow) => {
+      arrow.addEventListener('click', () => {
+        update(Number(track.dataset.kryaaSlide || 0) + (arrow.classList.contains('slick-prev') ? -1 : 1));
+      });
+    });
+    let timer = window.setInterval(() => update(Number(track.dataset.kryaaSlide || 0) + 1), 3000);
+    hero.addEventListener('mouseenter', () => window.clearInterval(timer));
+    hero.addEventListener('mouseleave', () => {
+      window.clearInterval(timer);
+      timer = window.setInterval(() => update(Number(track.dataset.kryaaSlide || 0) + 1), 3000);
+    });
+  };
+
   const renameNewArrivalsSection = () => {
     document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
       if (heading.textContent.replace(/\s+/g, ' ').trim() === 'Designers In The Spotlight') {
@@ -592,6 +648,7 @@
   };
 
   const cleanMenPage = () => {
+    setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();
     cleanImageSearch();

@@ -3,6 +3,37 @@
   display: none !important;
 }
 
+/* Two-slide homepage hero, including the inclusive comfort campaign. */
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-list { overflow: hidden; }
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-track {
+  position: relative;
+  left: 0 !important;
+  width: 200% !important;
+  transform: translate3d(0, 0, 0) !important;
+  transition: transform .55s ease;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-track[data-kryaa-slide="1"] {
+  transform: translate3d(-50%, 0, 0) !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-slide {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-hero-carousel .slick-arrow {
+  display: flex !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture {
+  background: #f2f0ec;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture img {
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture::before,
+.wrapperContainer:has(img[src*="banner-desktop.jpg"]) .kryaa-inclusive-slide picture::after {
+  content: none !important;
+}
+
 /* Curated trending looks lookbook carousel. */
 .curated-trending-looks { width: 100%; max-width: 1440px; min-width: 0; margin: 0 auto; padding: 12px 24px 24px; color: #29231f; }
 .curated-trending-looks__original { display: none !important; }

@@ -938,18 +938,24 @@
     section.setAttribute('aria-label', 'Kryaa Luxe collection');
     section.innerHTML = `
       <div class="kryaa-luxe-banner">
-        <div class="kryaa-luxe-copy">
-          <p class="kryaa-luxe-eyebrow">THE KRYAA EDIT</p>
-          <h2>KRYAA LUXE</h2>
-          <span class="kryaa-luxe-rule" aria-hidden="true"></span>
-          <p class="kryaa-luxe-description">Elegance curated,<br>luxury redefined</p>
-          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">SHOP NOW</a>
+        <div class="kr-luxe__panel">
+          <img class="kr-luxe__logo" src="../image/logo.png" alt="Kryaa Style" width="50" height="18" decoding="async">
+          <h2 class="kr-luxe__heading __className_f37194">KRYAA STYLE</h2>
+          <span class="kr-luxe__divider" aria-hidden="true"></span>
+          <p class="kr-luxe__tagline __className_f37194">Elegance curated, luxury redefined</p>
+          <p class="kr-luxe__description">Handcrafted lehengas, sarees and festive sets, embroidered with care and styled for every celebration.</p>
+          <ul class="kr-luxe__highlights" aria-label="Kryaa Luxe collection highlights">
+            <li>HANDCRAFTED</li><li>FESTIVE EDIT</li><li>WEDDING READY</li>
+          </ul>
+          <div class="kr-luxe__actions">
+            <a class="kr-luxe__button kr-luxe__button--primary" href="collection/women/sarees.html">SHOP NOW</a>
+          </div>
         </div>
         <div class="kryaa-luxe-media">
           <a class="kryaa-luxe-image-link" href="collection/women/sarees.html" aria-label="Shop the Kryaa Luxe collection">
             <span class="kryaa-luxe-image-track">
               ${kryaaLuxeSlides.map((slide, index) => `
-                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} draggable="false">
+                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} draggable="false">
               `).join('')}
             </span>
           </a>

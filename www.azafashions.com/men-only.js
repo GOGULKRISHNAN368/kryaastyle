@@ -2034,7 +2034,65 @@
     section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
   };
 
+  const removeKryaaInstagramSection = () => {
+    document.querySelectorAll('.kr-lookbook').forEach((section) => section.remove());
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      const label = heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+      if (label.startsWith("shop kryaa's instagram")) {
+        heading.closest('.wrapperContainer')?.remove();
+      }
+    });
+  };
+
+  const setupEditorsPicksSection = () => {
+    if (document.getElementById('kr-editors-picks')) return;
+
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase().replace(/[’']/g, "'") === "editor's picks");
+    if (!heading) return;
+
+    const original = heading.closest('.wrapperContainer') || heading.closest('section') || heading.parentElement?.parentElement;
+    if (!original) return;
+
+    const section = document.createElement('section');
+    section.id = 'kr-editors-picks';
+    section.className = 'kr-editors-picks';
+    section.setAttribute('aria-labelledby', 'kr-editors-picks-heading');
+    section.innerHTML = `
+      <div class="kr-editors-picks__intro">
+        <p class="kr-editors-picks__eyebrow">CURATED FOR YOU</p>
+        <h2 id="kr-editors-picks-heading">Editor’s Picks</h2>
+        <p>Modern Indian silhouettes selected for every celebration.</p>
+      </div>
+      <div class="kr-editors-picks__grid">
+        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="category.html?category=full-frocks">
+          <img src="../image/kryaa-luxe-red.png" alt="Woman in a red embroidered lehenga" width="900" height="1350" loading="eager">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>THE OCCASION EDIT</small><strong>Lehenga Love</strong><em>Shop lehengas</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=sarees">
+          <img src="../image/kryaa-luxe-green.png" alt="Woman in an emerald green embroidered saree" width="900" height="1350" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>FESTIVE FAVOURITES</small><strong>Statement Sarees</strong><em>Shop sarees</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=salwar-suits">
+          <img src="../image/kryaa-luxe-blue.png" alt="Woman in a blue evening outfit" width="900" height="1350" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>AFTER DARK</small><strong>Evening Elegance</strong><em>Shop salwar suits</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=kurti-sets">
+          <img src="../image/category-salwar-suits.png" alt="Women's salwar suit collection" width="600" height="800" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>EVERYDAY LUXE</small><strong>Easy Kurta Sets</strong><em>Shop kurta sets</em></span>
+        </a>
+      </div>
+    `;
+    original.replaceWith(section);
+  };
+
   const cleanMenPage = () => {
+    removeKryaaInstagramSection();
+    setupEditorsPicksSection();
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();
@@ -2130,7 +2188,6 @@
 
   const initializeKryaaSections = () => window.setTimeout(() => {
     setupKryaaReviews();
-    setupKryaaLookbook();
   }, 0);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeKryaaSections, { once: true });

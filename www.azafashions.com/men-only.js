@@ -1213,6 +1213,32 @@
   };
 
   const setupKryaaLookbook = () => {
+    if (!document.querySelector('.kr-lookbook')) {
+      const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+        .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase().startsWith("shop kryaa's instagram"));
+      const original = heading?.closest('.wrapperContainer');
+      if (original) {
+        const section = document.createElement('section');
+        section.id = 'kr-lookbook';
+        section.className = 'kr-lookbook';
+        section.setAttribute('aria-labelledby', 'kr-lookbook-title');
+        section.innerHTML = `
+          <header class="kr-lookbook__intro">
+            <h2 class="kr-lookbook__heading" id="kr-lookbook-title">Kryaa Diaries</h2>
+            <p class="kr-lookbook__subtitle">Real looks. Real women. Shop them.</p>
+          </header>
+          <div class="kr-lookbook__slider" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Kryaa Diaries creator posts">
+            <div class="kr-lookbook__viewport">
+              <div class="kr-lookbook__track"></div>
+            </div>
+            <div class="kr-lookbook__dots" role="group" aria-label="Choose a post"></div>
+          </div>
+          <div class="kr-lookbook__toast" role="status" aria-live="polite" aria-atomic="true"></div>
+        `;
+        original.replaceWith(section);
+      }
+    }
+
     const posts = [
       {
         name: 'Kavya Lakshmi',
@@ -2044,16 +2070,6 @@
     section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
   };
 
-  const removeKryaaInstagramSection = () => {
-    document.querySelectorAll('.kr-lookbook').forEach((section) => section.remove());
-    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
-      const label = heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
-      if (label.startsWith("shop kryaa's instagram")) {
-        heading.closest('.wrapperContainer')?.remove();
-      }
-    });
-  };
-
   const setupEditorsPicksSection = () => {
     if (document.getElementById('kr-editors-picks')) return;
 
@@ -2101,7 +2117,6 @@
   };
 
   const cleanMenPage = () => {
-    removeKryaaInstagramSection();
     setupEditorsPicksSection();
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
@@ -2198,6 +2213,7 @@
 
   const initializeKryaaSections = () => window.setTimeout(() => {
     setupKryaaReviews();
+    setupKryaaLookbook();
   }, 0);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeKryaaSections, { once: true });

@@ -438,6 +438,12 @@
           line-height: 1;
         }
 
+        .new-arrivals-mobile-controls button svg {
+          display: block;
+          width: 16px;
+          height: 16px;
+        }
+
         .new-arrivals-mobile-controls button:disabled {
           opacity: .35;
         }
@@ -535,11 +541,15 @@
       controls = document.createElement('div');
       controls.className = 'new-arrivals-mobile-controls';
       controls.innerHTML = `
-        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">â€¹</button>
+        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg>
+        </button>
         <div class="new-arrivals-mobile-progress" aria-hidden="true">
           <span class="new-arrivals-mobile-progress-thumb"></span>
         </div>
-        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">â€º</button>
+        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg>
+        </button>
       `;
       host.appendChild(controls);
     }
@@ -825,7 +835,7 @@
       <div class="kr-own__collage" aria-label="Kryaa custom style collection">
         <div class="kr-own__tile kr-own__tile--video">
           <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
-          <video class="kr-own__video" muted loop playsinline preload="metadata" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
+          <video class="kr-own__video" muted loop playsinline autoplay preload="auto" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
             <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
           </video>
         </div>
@@ -846,34 +856,18 @@
     curatedSection.insertAdjacentElement('afterend', section);
 
     const video = section.querySelector('.kr-own__video');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const pauseVideo = () => {
-      video.pause();
-      section.classList.remove('kr-own--playing');
-    };
+    video.muted = true;
+    video.defaultMuted = true;
     const playVideo = () => {
-      if (reduceMotion.matches) return;
       video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
         section.classList.remove('kr-own--playing');
       });
     };
-
-    const applyMotionPreference = () => {
-      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
-      if (reduceMotion.matches) pauseVideo();
-    };
-    applyMotionPreference();
-    reduceMotion.addEventListener?.('change', applyMotionPreference);
-
-    if ('IntersectionObserver' in window) {
-      const visibilityObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio >= .4 && !reduceMotion.matches) playVideo();
-          else pauseVideo();
-        });
-      }, { threshold: [.0, .4, 1] });
-      visibilityObserver.observe(section);
-    }
+    video.addEventListener('playing', () => section.classList.add('kr-own--playing'));
+    playVideo();
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) playVideo();
+    });
   };
 
   const setupShopByCategorySection = () => {
@@ -1219,6 +1213,32 @@
   };
 
   const setupKryaaLookbook = () => {
+    if (!document.querySelector('.kr-lookbook')) {
+      const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+        .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase().startsWith("shop kryaa's instagram"));
+      const original = heading?.closest('.wrapperContainer');
+      if (original) {
+        const section = document.createElement('section');
+        section.id = 'kr-lookbook';
+        section.className = 'kr-lookbook';
+        section.setAttribute('aria-labelledby', 'kr-lookbook-title');
+        section.innerHTML = `
+          <header class="kr-lookbook__intro">
+            <h2 class="kr-lookbook__heading" id="kr-lookbook-title">Kryaa Diaries</h2>
+            <p class="kr-lookbook__subtitle">Real looks. Real women. Shop them.</p>
+          </header>
+          <div class="kr-lookbook__slider" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Kryaa Diaries creator posts">
+            <div class="kr-lookbook__viewport">
+              <div class="kr-lookbook__track"></div>
+            </div>
+            <div class="kr-lookbook__dots" role="group" aria-label="Choose a post"></div>
+          </div>
+          <div class="kr-lookbook__toast" role="status" aria-live="polite" aria-atomic="true"></div>
+        `;
+        original.replaceWith(section);
+      }
+    }
+
     const posts = [
       {
         name: 'Kavya Lakshmi',
@@ -2050,7 +2070,54 @@
     section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
   };
 
+  const setupEditorsPicksSection = () => {
+    if (document.getElementById('kr-editors-picks')) return;
+
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase().replace(/[’']/g, "'") === "editor's picks");
+    if (!heading) return;
+
+    const original = heading.closest('.wrapperContainer') || heading.closest('section') || heading.parentElement?.parentElement;
+    if (!original) return;
+
+    const section = document.createElement('section');
+    section.id = 'kr-editors-picks';
+    section.className = 'kr-editors-picks';
+    section.setAttribute('aria-labelledby', 'kr-editors-picks-heading');
+    section.innerHTML = `
+      <div class="kr-editors-picks__intro">
+        <p class="kr-editors-picks__eyebrow">CURATED FOR YOU</p>
+        <h2 id="kr-editors-picks-heading">Editor’s Picks</h2>
+        <p>Modern Indian silhouettes selected for every celebration.</p>
+      </div>
+      <div class="kr-editors-picks__grid">
+        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="category.html?category=full-frocks">
+          <img src="../image/kryaa-luxe-red.png" alt="Woman in a red embroidered lehenga" width="900" height="1350" loading="eager">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>THE OCCASION EDIT</small><strong>Lehenga Love</strong><em>Shop lehengas</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=sarees">
+          <img src="../image/kryaa-luxe-green.png" alt="Woman in an emerald green embroidered saree" width="900" height="1350" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>FESTIVE FAVOURITES</small><strong>Statement Sarees</strong><em>Shop sarees</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=salwar-suits">
+          <img src="../image/kryaa-luxe-blue.png" alt="Woman in a blue evening outfit" width="900" height="1350" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>AFTER DARK</small><strong>Evening Elegance</strong><em>Shop salwar suits</em></span>
+        </a>
+        <a class="kr-editors-picks__card" href="category.html?category=kurti-sets">
+          <img src="../image/category-salwar-suits.png" alt="Women's salwar suit collection" width="600" height="800" loading="lazy">
+          <span class="kr-editors-picks__shade"></span>
+          <span class="kr-editors-picks__copy"><small>EVERYDAY LUXE</small><strong>Easy Kurta Sets</strong><em>Shop kurta sets</em></span>
+        </a>
+      </div>
+    `;
+    original.replaceWith(section);
+  };
+
   const cleanMenPage = () => {
+    setupEditorsPicksSection();
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
     cleanHeader();

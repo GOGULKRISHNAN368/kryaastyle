@@ -14,6 +14,19 @@
     '../image/newarrival10.jpg'
   ];
 
+  const newArrivalHoverImages = [
+    '../image/newarrival1-cloth.jpg',
+    '../image/newarrival2-cloth.jpg',
+    '../image/newarrival3-cloth.jpg',
+    '../image/newarrival4-cloth.jpg',
+    '../image/newarrival5-cloth.webp',
+    '../image/newarrival6-cloth.jpg',
+    '../image/newarrival7-cloth.jpg',
+    '../image/newarrival8-cloth.jpg',
+    '../image/newarrival9-cloth.jpg',
+    '../image/newarrival10-cloth.jpg'
+  ];
+
   const shopByOccasionCards = [
     {
       title: 'Wedding',
@@ -228,12 +241,68 @@
       if (label !== 'New Arrivals' && label !== 'Designers In The Spotlight') return;
 
       const section = heading.closest('section') || heading.parentElement?.parentElement;
-      const images = Array.from(section?.querySelectorAll('img') || []);
+      const images = Array.from(section?.querySelectorAll('img') || [])
+        .filter((image) => !image.classList.contains('kryaa-new-arrivals-hover-image'));
       images.slice(0, newArrivalImages.length).forEach((image, index) => {
         image.src = newArrivalImages[index];
         image.removeAttribute('srcset');
       });
     });
+  };
+
+  const setupNewArrivalsImageHover = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => {
+        const label = item.textContent.replace(/\s+/g, ' ').trim();
+        return label === 'New Arrivals' || label === 'Designers In The Spotlight';
+      });
+    const section = heading?.closest('section') || heading?.parentElement?.parentElement;
+    if (!section) return;
+
+    section.classList.add('kryaa-new-arrivals-hover-section');
+    section.querySelectorAll('img').forEach((image) => {
+      if (image.classList.contains('kryaa-new-arrivals-hover-image')) return;
+      const match = image.getAttribute('src')?.match(/newarrival(\d+)\.jpg(?:$|[?#])/i);
+      const hoverImage = match ? newArrivalHoverImages[Number(match[1]) - 1] : null;
+      const frame = image.parentElement;
+      if (!hoverImage || !frame || frame.querySelector('.kryaa-new-arrivals-hover-image')) return;
+
+      frame.classList.add('kryaa-new-arrivals-hover-frame');
+      const alternate = document.createElement('img');
+      alternate.className = 'kryaa-new-arrivals-hover-image';
+      alternate.src = hoverImage;
+      alternate.alt = '';
+      alternate.setAttribute('aria-hidden', 'true');
+      alternate.loading = 'lazy';
+      alternate.decoding = 'async';
+      alternate.addEventListener('error', () => alternate.remove(), { once: true });
+      frame.appendChild(alternate);
+    });
+
+    if (document.getElementById('new-arrivals-hover-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'new-arrivals-hover-styles';
+    style.textContent = `
+      .kryaa-new-arrivals-hover-frame { position: relative !important; }
+      .kryaa-new-arrivals-hover-image {
+        position: absolute !important;
+        z-index: 2;
+        inset: 0;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s ease;
+      }
+      .kryaa-new-arrivals-hover-frame:hover .kryaa-new-arrivals-hover-image,
+      .kryaa-new-arrivals-hover-frame:focus-within .kryaa-new-arrivals-hover-image { opacity: 1; }
+      @media (prefers-reduced-motion: reduce) {
+        .kryaa-new-arrivals-hover-image { transition: none; }
+      }
+    `;
+    document.head.appendChild(style);
   };
 
   const setupNewArrivalsCollectionLinks = () => {
@@ -741,6 +810,72 @@
 
   };
 
+  const setupOwnStyleSection = () => {
+    if (document.getElementById('kr-own-style')) return;
+    const curated = document.querySelector('.curated-trending-looks');
+    if (!curated) return;
+    const curatedSection = curated.closest('.bg-sectionBG') || curated;
+
+    const section = document.createElement('section');
+    section.id = 'kr-own-style';
+    section.className = 'kr-own';
+    section.setAttribute('aria-labelledby', 'kr-own-heading');
+    section.innerHTML = `
+      <h2 class="kr-own__heading __className_f37194" id="kr-own-heading">Make your own style</h2>
+      <div class="kr-own__collage" aria-label="Kryaa custom style collection">
+        <div class="kr-own__tile kr-own__tile--video">
+          <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
+          <video class="kr-own__video" muted loop playsinline preload="metadata" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
+            <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="kr-own__tile kr-own__tile--own1"><img src="../images/unstiched_img/img1.png" alt="Kryaa fabric and outfit styling details" width="564" height="401" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own2"><img src="../images/unstiched_img/img2.png" alt="Kryaa outfit viewed from behind" width="558" height="632" loading="lazy" decoding="async"></div>
+        <div class="kr-own__tile kr-own__tile--own3"><img src="../images/unstiched_img/img%203.png" alt="Kryaa outfit styled for a special occasion" width="566" height="673" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="kr-own__content">
+        <p class="kr-own__eyebrow">A LOOK THAT IS YOURS</p>
+        <span class="kr-own__divider" aria-hidden="true"></span>
+        <p class="kr-own__tagline">Made personal. Made for you.</p>
+        <p class="kr-own__description">Bring your vision to life with thoughtful details, beautiful fabrics and a fit made around your style.</p>
+        <div class="kr-own__actions">
+          <a class="kr-own__button kr-own__button--secondary" href="collection/women/sarees.html">EXPLORE THE COLLECTION</a>
+        </div>
+      </div>
+    `;
+    curatedSection.insertAdjacentElement('afterend', section);
+
+    const video = section.querySelector('.kr-own__video');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pauseVideo = () => {
+      video.pause();
+      section.classList.remove('kr-own--playing');
+    };
+    const playVideo = () => {
+      if (reduceMotion.matches) return;
+      video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
+        section.classList.remove('kr-own--playing');
+      });
+    };
+
+    const applyMotionPreference = () => {
+      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
+      if (reduceMotion.matches) pauseVideo();
+    };
+    applyMotionPreference();
+    reduceMotion.addEventListener?.('change', applyMotionPreference);
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio >= .4 && !reduceMotion.matches) playVideo();
+          else pauseVideo();
+        });
+      }, { threshold: [.0, .4, 1] });
+      visibilityObserver.observe(section);
+    }
+  };
+
   const setupShopByCategorySection = () => {
     const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
       .find((item) => item.textContent.replace(/\s+/g, ' ').trim() === 'Shop By Category');
@@ -938,18 +1073,24 @@
     section.setAttribute('aria-label', 'Kryaa Luxe collection');
     section.innerHTML = `
       <div class="kryaa-luxe-banner">
-        <div class="kryaa-luxe-copy">
-          <p class="kryaa-luxe-eyebrow">THE KRYAA EDIT</p>
-          <h2>Tradition, Reimagined</h2>
-          <span class="kryaa-luxe-rule" aria-hidden="true"></span>
-          <p class="kryaa-luxe-description">Celebrate your roots with a touch of modern luxury.</p>
-          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">DISCOVER NOW</a>
+        <div class="kr-luxe__panel">
+          <img class="kr-luxe__logo" src="../image/logo.png" alt="Kryaa Style" width="50" height="18" decoding="async">
+          <h2 class="kr-luxe__heading __className_f37194">KRYAA STYLE</h2>
+          <span class="kr-luxe__divider" aria-hidden="true"></span>
+          <p class="kr-luxe__tagline __className_f37194">Elegance curated, luxury redefined</p>
+          <p class="kr-luxe__description">Handcrafted lehengas, sarees and festive sets, embroidered with care and styled for every celebration.</p>
+          <ul class="kr-luxe__highlights" aria-label="Kryaa Luxe collection highlights">
+            <li>HANDCRAFTED</li><li>FESTIVE EDIT</li><li>WEDDING READY</li>
+          </ul>
+          <div class="kr-luxe__actions">
+            <a class="kr-luxe__button kr-luxe__button--primary" href="collection/women/sarees.html">SHOP NOW</a>
+          </div>
         </div>
         <div class="kryaa-luxe-media">
           <a class="kryaa-luxe-image-link" href="collection/women/sarees.html" aria-label="Shop the Kryaa Luxe collection">
             <span class="kryaa-luxe-image-track">
               ${kryaaLuxeSlides.map((slide, index) => `
-                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} draggable="false">
+                <img class="kryaa-luxe-slide" src="${slide.image}" alt="${slide.alt}" width="900" height="1350" decoding="async" ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} draggable="false">
               `).join('')}
             </span>
           </a>
@@ -1028,6 +1169,42 @@
     });
 
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) startRotation();
+  };
+
+  const linkCuratedTilesToProducts = () => {
+    document.querySelectorAll('.kr-curated__tile').forEach((tile) => {
+      tile.href = 'category.html';
+    });
+  };
+
+  const sectionHeadingLabels = new Set([
+    'Shop By Category',
+    'New Arrivals',
+    'Shop by Occasion',
+    'Curated Trending Looks',
+    'Curated By Kryaa',
+    'Must-Own Designers',
+    'Editor’s Picks',
+    'Celebrity Closet',
+    'Over 5,000+5-starreviews',
+    'Visit Our Store',
+    'Get Insider Access',
+    'Make your own style'
+  ]);
+
+  const plainCenteredSectionHeadingLabels = new Set(['Kryaa Diaries', 'JOIN WITH US']);
+
+  const styleSectionHeadings = () => {
+    document.querySelectorAll('main h2').forEach((heading) => {
+      const label = heading.textContent.replace(/\s+/g, ' ').trim();
+      if (plainCenteredSectionHeadingLabels.has(label)) {
+        heading.classList.remove('kr-section-title');
+        heading.classList.add('kr-section-title--plain');
+      } else if (sectionHeadingLabels.has(label)) {
+        heading.classList.remove('kr-section-title--plain');
+        heading.classList.add('kr-section-title');
+      }
+    });
   };
 
   const cleanPageLinks = () => {
@@ -1865,6 +2042,14 @@
     (visitSection || reviews).insertAdjacentElement('afterend', section);
   };
 
+  const cleanVisitStoreCaptions = () => {
+    const heading = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]'))
+      .find((item) => item.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'visit our store');
+    const section = heading?.parentElement?.parentElement;
+    section?.classList.add('kryaa-visit-store-section');
+    section?.querySelectorAll('.slick-slide a > div.pt-3').forEach((caption) => caption.remove());
+  };
+
   const cleanMenPage = () => {
     setupHeroCarousel();
     injectNewArrivalsMobileStyles();
@@ -1873,21 +2058,91 @@
     renameNewArrivalsSection();
     replaceFirstNewArrivalImage();
     setupNewArrivalsMobileCarousel();
+    setupNewArrivalsImageHover();
     setupNewArrivalsDesktopCarousel();
     setupNewArrivalsCollectionLinks();
     setupShopByCategorySection();
     setupKryaaLuxeBanner();
     setupShopByOccasionSection();
+    linkCuratedTilesToProducts();
+    styleSectionHeadings();
     setupCuratedTrendingLooks();
+    setupOwnStyleSection();
     cleanPageLinks();
     cleanEditorialSection();
     cleanCelebrityClosetSection();
     cleanInsiderAccessSection();
+    cleanVisitStoreCaptions();
     setupUpdatesSignup();
+  };
+
+  const replaceSiteFooter = () => {
+    const legacyFooter = document.querySelector('footer.footer');
+    if (!legacyFooter || document.querySelector('.kr-shopper-footer')) return;
+
+    const footer = document.createElement('footer');
+    footer.className = 'kr-shopper-footer';
+    footer.setAttribute('aria-label', 'Kryaa Style footer');
+    footer.innerHTML = `
+      <div class="kr-shopper-footer__inner">
+        <div class="kr-shopper-footer__top">
+          <section class="kr-shopper-footer__brand" aria-label="Kryaa Style">
+            <a class="kr-shopper-footer__wordmark" href="index.html"><img src="../image/logo.png" alt="Kryaa Style"></a>
+            <p>Discover designer Indian occasionwear, curated for every celebration.</p>
+            <div class="kr-shopper-footer__social" aria-label="Follow Kryaa Style">
+              <a href="https://www.instagram.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+              <a href="https://www.facebook.com/AzaFashions" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
+              <a href="https://in.pinterest.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Pinterest">P</a>
+              <a href="https://www.youtube.com/@azafashions" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+            </div>
+          </section>
+          <section>
+            <h2>SHOP</h2>
+            <ul>
+              <li><a href="collection/men/kurta-sets.html">Kurta Sets</a></li>
+              <li><a href="collection/men/sherwanis.html">Sherwanis</a></li>
+              <li><a href="collection/men/nehru-jacket-and-sets.html">Nehru Jackets</a></li>
+              <li><a href="collection/men/bandhgalas.html">Bandhgalas</a></li>
+              <li><a href="collection/men/kurtas.html">Kurtas</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>CUSTOMER CARE</h2>
+            <ul>
+              <li><a href="contact-us">Contact Us</a></li>
+              <li><a href="shipping-policy.html">Shipping &amp; Delivery</a></li>
+              <li><a href="return-policy.html">Returns &amp; Exchanges</a></li>
+              <li><a href="faq.html">FAQs</a></li>
+              <li><a href="store-locator.html">Find a Store</a></li>
+            </ul>
+          </section>
+          <section>
+            <h2>ABOUT KRYAA</h2>
+            <ul>
+              <li><a href="about-aza.html">About Us</a></li>
+              <li><a href="careers.html">Careers</a></li>
+              <li><a href="events.html">In-Store Events</a></li>
+              <li><a href="important-information.html">Important Information</a></li>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            </ul>
+          </section>
+        </div>
+        <div class="kr-shopper-footer__divider"></div>
+        <div class="kr-shopper-footer__bottom">
+          <span>© ${new Date().getFullYear()} Kryaa Style. All rights reserved.</span>
+          <nav class="kr-shopper-footer__policies" aria-label="Footer policies">
+            <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="return-policy.html">Returns</a>
+          </nav>
+        </div>
+      </div>`;
+    legacyFooter.replaceWith(footer);
   };
 
   cleanNextData();
   cleanMenPage();
+  replaceSiteFooter();
 
   const initializeKryaaSections = () => window.setTimeout(() => {
     setupKryaaReviews();

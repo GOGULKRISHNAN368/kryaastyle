@@ -185,11 +185,11 @@
       link.href = 'collection/men';
       link.setAttribute('aria-label', 'Shop the Inclusive Comfort Fashion collection');
     }
-    track.appendChild(secondSlide);
+    track.prepend(secondSlide);
     hero.classList.add('kryaa-hero-carousel');
     track.dataset.kryaaSlide = '0';
 
-    const slides = [firstSlide, secondSlide];
+    const slides = [secondSlide, firstSlide];
     const update = (index) => {
       const active = (index + slides.length) % slides.length;
       track.dataset.kryaaSlide = String(active);
@@ -940,10 +940,10 @@
       <div class="kryaa-luxe-banner">
         <div class="kryaa-luxe-copy">
           <p class="kryaa-luxe-eyebrow">THE KRYAA EDIT</p>
-          <h2>KRYAA LUXE</h2>
+          <h2>Tradition, Reimagined</h2>
           <span class="kryaa-luxe-rule" aria-hidden="true"></span>
-          <p class="kryaa-luxe-description">Elegance curated,<br>luxury redefined</p>
-          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">SHOP NOW</a>
+          <p class="kryaa-luxe-description">Celebrate your roots with a touch of modern luxury.</p>
+          <a class="kryaa-luxe-cta" href="collection/women/sarees.html">DISCOVER NOW</a>
         </div>
         <div class="kryaa-luxe-media">
           <a class="kryaa-luxe-image-link" href="collection/women/sarees.html" aria-label="Shop the Kryaa Luxe collection">

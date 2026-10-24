@@ -124,6 +124,7 @@
         const normalizedHeading = heading.toLowerCase();
         return title !== 'magazine' &&
           title !== 'celebrity_style' &&
+          title !== 'must_own_designers' &&
           normalizedHeading !== 'kryaa editorials' &&
           normalizedHeading !== "what's next?" &&
           normalizedHeading !== 'celebrity closet' &&
@@ -836,8 +837,9 @@
         <div class="kr-own__tile kr-own__tile--video">
           <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
           <video class="kr-own__video" muted loop playsinline autoplay preload="auto" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
-            <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
+            <source src="../images/unstiched_img/Kryaa%20video.mp4?v=15" type="video/mp4">
           </video>
+          <button class="kr-own__video-play" type="button" aria-label="Play Kryaa styling video">PLAY</button>
         </div>
         <div class="kr-own__tile kr-own__tile--own1"><img src="../images/unstiched_img/img1.png" alt="Kryaa fabric and outfit styling details" width="564" height="401" loading="lazy" decoding="async"></div>
         <div class="kr-own__tile kr-own__tile--own2"><img src="../images/unstiched_img/img2.png" alt="Kryaa outfit viewed from behind" width="558" height="632" loading="lazy" decoding="async"></div>
@@ -856,18 +858,62 @@
     curatedSection.insertAdjacentElement('afterend', section);
 
     const video = section.querySelector('.kr-own__video');
+    const poster = section.querySelector('.kr-own__poster');
+    const playButton = section.querySelector('.kr-own__video-play');
+    const desktopViewport = window.matchMedia('(min-width: 768px)');
+    video.style.opacity = '0';
+    poster.style.opacity = '1';
+    if (desktopViewport.matches) video.controls = true;
     video.muted = true;
     video.defaultMuted = true;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const pauseVideo = () => {
+      video.pause();
+      section.classList.remove('kr-own--playing');
+    };
     const playVideo = () => {
-      video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
+      if (reduceMotion.matches) return;
+      const playRequest = video.play();
+      if (!playRequest || typeof playRequest.then !== 'function') {
+        section.classList.add('kr-own--playing');
+        return;
+      }
+      playRequest.then(() => section.classList.add('kr-own--playing')).catch(() => {
         section.classList.remove('kr-own--playing');
+        video.controls = true;
       });
     };
     video.addEventListener('playing', () => section.classList.add('kr-own--playing'));
-    playVideo();
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) playVideo();
-    });
+    playButton.addEventListener('click', playVideo);
+
+    const applyMotionPreference = () => {
+      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
+      if (reduceMotion.matches) pauseVideo();
+    };
+    applyMotionPreference();
+    reduceMotion.addEventListener?.('change', applyMotionPreference);
+
+    if (!reduceMotion.matches) {
+      video.addEventListener('loadedmetadata', playVideo);
+      video.addEventListener('canplay', playVideo);
+      video.addEventListener('pointerup', playVideo);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) playVideo();
+      });
+      video.load();
+      playVideo();
+      window.setTimeout(playVideo, 500);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio >= .1 && !reduceMotion.matches) playVideo();
+          else if (entry.intersectionRatio === 0) pauseVideo();
+        });
+      }, { threshold: [.0, .1, .4, 1] });
+      visibilityObserver.observe(section);
+    }
   };
 
   const setupShopByCategorySection = () => {
@@ -1201,6 +1247,46 @@
     });
   };
 
+  const ensureKryaaDiariesSection = () => {
+    if (document.querySelector('.kr-lookbook')) return;
+
+    const reviews = document.querySelector('.kr-reviews');
+    const stats = reviews?.previousElementSibling;
+    const anchor = stats || reviews;
+    const parent = anchor?.parentElement || document.querySelector('main');
+    if (!parent) return;
+
+    const section = document.createElement('section');
+    section.className = 'kr-lookbook';
+    section.id = 'kr-lookbook';
+    section.setAttribute('aria-labelledby', 'kr-lookbook-title');
+    section.innerHTML = `
+  <header class="kr-lookbook__intro">
+    <h2 class="kr-lookbook__heading __className_f37194" id="kr-lookbook-title">Kryaa Diaries</h2>
+    <p class="kr-lookbook__subtitle">Real looks. Real women. Shop them.</p>
+  </header>
+  <div class="kr-lookbook__slider" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Kryaa Diaries creator posts">
+    <div class="kr-lookbook__viewport">
+      <div class="kr-lookbook__track"></div>
+    </div>
+    <div class="kr-lookbook__dots" role="group" aria-label="Choose a post"></div>
+  </div>
+  <div class="kr-lookbook__toast" role="status" aria-live="polite" aria-atomic="true"></div>`;
+
+    if (anchor?.parentElement) anchor.parentElement.insertBefore(section, anchor);
+    else parent.appendChild(section);
+  };
+
+  const cleanInstagramShowcaseSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      const label = heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+      if (label !== "shop kryaa's instagram @azafashions.menswear") return;
+
+      const section = heading.closest('.wrapperContainer') || heading.closest('section') || heading.parentElement?.parentElement;
+      if (section) section.remove();
+    });
+  };
+
   const cleanPageLinks = () => {
     document.querySelectorAll('a[href]').forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -1370,7 +1456,7 @@
         const gap = 14;
         const scaleTotal = 0.54 * 2 + 0.76 * 2 + 1;
         const totalGaps = gap * 4;
-        const centerImageHeight = Math.min(430, Math.max(120, (availableForCards - totalGaps) / (imageAspect * scaleTotal)));
+        const centerImageHeight = Math.min(560, Math.max(120, (availableForCards - totalGaps) / (imageAspect * scaleTotal)));
         const cardChromeHeight = 187;
         const centerHeight = centerImageHeight + cardChromeHeight;
         slider.style.setProperty('--kr-lookbook-center-height', centerHeight + 'px');
@@ -2017,6 +2103,16 @@
     });
   };
 
+  const cleanMustOwnDesignersSection = () => {
+    document.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]').forEach((heading) => {
+      const label = heading.textContent.replace(/\s+/g, ' ').trim().toLowerCase();
+      if (label !== 'must-own designers' && label !== 'must own designers') return;
+
+      const section = heading.closest('section') || heading.parentElement?.parentElement;
+      if (section) section.remove();
+    });
+  };
+
   const setupUpdatesSignup = () => {
     const reviews = document.querySelector('.kr-reviews');
     if (!reviews || document.getElementById('kr-updates-signup')) return;
@@ -2136,10 +2232,13 @@
     setupCuratedTrendingLooks();
     setupOwnStyleSection();
     cleanPageLinks();
+    cleanInstagramShowcaseSection();
+    ensureKryaaDiariesSection();
     cleanEditorialSection();
     cleanCelebrityClosetSection();
     cleanInsiderAccessSection();
     cleanVisitStoreCaptions();
+    cleanMustOwnDesignersSection();
     setupUpdatesSignup();
   };
 

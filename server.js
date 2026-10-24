@@ -58,7 +58,7 @@ const server = http.createServer((req, res) => {
       if (err.code === 'ENOENT' && !path.extname(safePath)) {
         const htmlPath = safePath + '.html';
         if (fs.existsSync(htmlPath)) {
-          return serveFile(htmlPath, res);
+          return serveFile(htmlPath, req, res);
         }
       }
       res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -69,7 +69,7 @@ const server = http.createServer((req, res) => {
     if (stats.isDirectory()) {
       const indexPath = path.join(safePath, 'index.html');
       if (fs.existsSync(indexPath)) {
-        serveFile(indexPath, res);
+        serveFile(indexPath, req, res);
       } else {
         res.writeHead(403, { 'Content-Type': 'text/plain' });
         res.end('403 Directory Listing Not Allowed');
@@ -77,30 +77,74 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    serveFile(safePath, res);
+    serveFile(safePath, req, res);
   });
 });
 
-function serveFile(filePath, res) {
+function serveFile(filePath, req, res) {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-  res.writeHead(200, {
-    'Content-Type': contentType,
-    'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'no-cache, no-store, must-revalidate',
-    'Pragma': 'no-cache',
-    'Expires': '0'
-  });
-
-  const stream = fs.createReadStream(filePath);
-  stream.on('error', (err) => {
-    if (!res.headersSent) {
+  fs.stat(filePath, (err, stats) => {
+    if (err) {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
       res.end('500 Internal Server Error');
+      return;
     }
+
+    const commonHeaders = {
+      'Content-Type': contentType,
+      'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'Accept-Ranges': 'bytes'
+    };
+    const rangeHeader = req.headers.range;
+    const rangeMatch = rangeHeader && /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
+
+    if (rangeMatch) {
+      const requestedStart = rangeMatch[1] ? Number(rangeMatch[1]) : null;
+      const requestedEnd = rangeMatch[2] ? Number(rangeMatch[2]) : null;
+      const start = requestedStart === null
+        ? Math.max(0, stats.size - requestedEnd)
+        : requestedStart;
+      const end = requestedEnd === null
+        ? stats.size - 1
+        : Math.min(requestedEnd, stats.size - 1);
+
+      if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || start > end || start >= stats.size) {
+        res.writeHead(416, {
+          ...commonHeaders,
+          'Content-Range': `bytes */${stats.size}`
+        });
+        res.end();
+        return;
+      }
+
+      res.writeHead(206, {
+        ...commonHeaders,
+        'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+        'Content-Length': end - start + 1
+      });
+      if (req.method === 'HEAD') {
+        res.end();
+        return;
+      }
+      fs.createReadStream(filePath, { start, end }).pipe(res);
+      return;
+    }
+
+    res.writeHead(200, {
+      ...commonHeaders,
+      'Content-Length': stats.size
+    });
+    if (req.method === 'HEAD') {
+      res.end();
+      return;
+    }
+    fs.createReadStream(filePath).pipe(res);
   });
-  stream.pipe(res);
 }
 
 server.listen(PORT, () => {

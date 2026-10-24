@@ -825,7 +825,7 @@
       <div class="kr-own__collage" aria-label="Kryaa custom style collection">
         <div class="kr-own__tile kr-own__tile--video">
           <img class="kr-own__poster" src="../images/unstiched_img/img%203.png" alt="Kryaa custom outfit preview" width="566" height="673" loading="lazy" decoding="async">
-          <video class="kr-own__video" muted loop playsinline preload="metadata" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
+          <video class="kr-own__video" muted loop playsinline autoplay preload="auto" poster="../images/unstiched_img/img%203.png" width="566" height="673" aria-label="Kryaa outfit styling video">
             <source src="../images/unstiched_img/Kryaa%20video.mp4" type="video/mp4">
           </video>
         </div>
@@ -846,34 +846,18 @@
     curatedSection.insertAdjacentElement('afterend', section);
 
     const video = section.querySelector('.kr-own__video');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const pauseVideo = () => {
-      video.pause();
-      section.classList.remove('kr-own--playing');
-    };
+    video.muted = true;
+    video.defaultMuted = true;
     const playVideo = () => {
-      if (reduceMotion.matches) return;
       video.play().then(() => section.classList.add('kr-own--playing')).catch(() => {
         section.classList.remove('kr-own--playing');
       });
     };
-
-    const applyMotionPreference = () => {
-      section.classList.toggle('kr-own--reduced-motion', reduceMotion.matches);
-      if (reduceMotion.matches) pauseVideo();
-    };
-    applyMotionPreference();
-    reduceMotion.addEventListener?.('change', applyMotionPreference);
-
-    if ('IntersectionObserver' in window) {
-      const visibilityObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.intersectionRatio >= .4 && !reduceMotion.matches) playVideo();
-          else pauseVideo();
-        });
-      }, { threshold: [.0, .4, 1] });
-      visibilityObserver.observe(section);
-    }
+    video.addEventListener('playing', () => section.classList.add('kr-own--playing'));
+    playVideo();
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) playVideo();
+    });
   };
 
   const setupShopByCategorySection = () => {

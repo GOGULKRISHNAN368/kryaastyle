@@ -596,40 +596,39 @@
 @media (max-width: 767px) {
   .kryaa-luxe-section {
     width: calc(100% - 32px);
-    margin: 28px auto 38px;
+    margin: 24px auto 34px;
   }
 
   .kryaa-luxe-banner {
-    display: flex;
-    min-height: 0;
-    flex-direction: column;
-    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+    min-height: 280px;
+    aspect-ratio: 1.2 / 1;
     overflow: hidden;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: 14px;
   }
 
   .kryaa-luxe-media {
-    order: -1;
-    flex: 0 0 auto;
-    width: 100%;
-    height: auto;
+    order: 0;
+    width: auto;
+    height: 100%;
     min-height: 0;
-    aspect-ratio: 4 / 4.6;
+    aspect-ratio: auto;
   }
 
   .kr-luxe__panel {
-    order: 1;
-    width: 100%;
-    min-height: 0;
+    order: 0;
+    width: auto;
+    min-height: 100%;
     box-sizing: border-box;
-    padding: 36px 22px 40px;
+    padding: 24px 10px;
     background-color: #fbf6f0;
     background-image: radial-gradient(circle at 20% 15%, rgba(201, 168, 106, .1), transparent 55%);
   }
 
   .kr-luxe__panel::before {
-    inset: 10px;
+    inset: 7px;
   }
 
   .kr-luxe__eyebrow,
@@ -643,7 +642,7 @@
     animation-duration: .45s;
   }
 
-  .kr-luxe__logo { height: clamp(14px, 4.5vw, 18px); width: auto; margin: 0 auto 8px; }
+  .kr-luxe__logo { height: 12px; width: auto; margin: 0 auto 6px; }
   .kr-luxe__heading { animation-delay: .05s; }
   .kr-luxe__divider { animation-delay: .1s; }
   .kr-luxe__tagline { animation-delay: .15s; }
@@ -653,44 +652,30 @@
 
   .kr-luxe__heading {
     max-width: 100%;
-    font-size: clamp(28px, 8vw, 36px);
+    font-size: clamp(15px, 4.7vw, 19px);
     letter-spacing: .05em;
     line-height: 1.1;
     white-space: nowrap;
   }
 
   .kr-luxe__divider {
-    width: 56px;
-    margin: 14px 0;
+    width: 40px;
+    margin: 10px 0;
   }
 
   .kr-luxe__tagline {
-    max-width: 24ch;
+    max-width: 17ch;
     margin-bottom: 0;
-    font-size: clamp(17px, 4.8vw, 20px);
-    line-height: 1.4;
+    font-size: clamp(11px, 3.5vw, 13px);
+    line-height: 1.3;
   }
 
   .kr-luxe__description {
-    display: -webkit-box;
-    max-width: 32ch;
-    margin-top: 12px;
-    overflow: hidden;
-    color: #5f544e;
-    font-size: 14px;
-    line-height: 1.65;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    display: none;
   }
 
   .kr-luxe__highlights {
-    flex-wrap: nowrap;
-    gap: 0;
-    max-width: 100%;
-    margin-top: 18px;
-    color: #8f6f3a;
-    font-size: 10px;
-    letter-spacing: .12em;
+    display: none;
   }
 
   .kr-luxe__highlights li {
@@ -699,19 +684,19 @@
   }
 
   .kr-luxe__actions {
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 22px;
+    flex-direction: row;
+    gap: 0;
+    margin-top: 17px;
   }
 
   .kr-luxe__button {
-    width: 100%;
-    max-width: 300px;
-    min-height: 48px;
-    padding: 12px 14px;
+    width: auto;
+    max-width: none;
+    min-height: 34px;
+    padding: 9px 12px;
     box-sizing: border-box;
-    font-size: 12px;
-    letter-spacing: .16em;
+    font-size: 9px;
+    letter-spacing: .1em;
     touch-action: manipulation;
     transition: transform .15s ease;
   }
@@ -719,7 +704,7 @@
   .kr-luxe__button--primary {
     align-self: center;
     width: auto;
-    min-width: 152px;
+    min-width: 94px;
   }
 
   .kr-luxe__button:active {
@@ -732,7 +717,7 @@
   }
 
   .kryaa-luxe-slide {
-    object-position: center top;
+    object-position: center 12%;
     cursor: grab;
     user-select: none;
     -webkit-user-drag: none;

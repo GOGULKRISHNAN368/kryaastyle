@@ -59,10 +59,29 @@
     document.addEventListener('DOMContentLoaded', injectPreloader);
   }
 
-  // Duration: ~3.8 seconds (between 3 and 5 seconds)
-  const DURATION_MS = 3800;
+  const MIN_DURATION_MS = 3000;
+  const MAX_DURATION_MS = 3100;
   let isDismissed = false;
   let timerId = null;
+  let visibleSince = performance.now();
+
+  function scheduleAutoDismiss() {
+    if (timerId) clearTimeout(timerId);
+
+    const dismissAfterMinimum = () => {
+      if (isDismissed) return;
+      if (timerId) clearTimeout(timerId);
+      const remaining = Math.max(0, MIN_DURATION_MS - (performance.now() - visibleSince));
+      timerId = setTimeout(dismissLoader, remaining);
+    };
+
+    if (document.readyState === 'complete') {
+      dismissAfterMinimum();
+    } else {
+      timerId = setTimeout(dismissLoader, MAX_DURATION_MS);
+      window.addEventListener('load', dismissAfterMinimum, { once: true });
+    }
+  }
 
   function dismissLoader() {
     if (isDismissed) return;
@@ -83,7 +102,7 @@
   }
 
   function setupDismiss() {
-    timerId = setTimeout(dismissLoader, DURATION_MS);
+    scheduleAutoDismiss();
 
     // Tap or click anywhere to enter immediately
     document.addEventListener('click', (e) => {
@@ -116,7 +135,8 @@
         loader.style.display = 'flex';
         loader.classList.remove('kryaa-loaded');
         isDismissed = false;
-        setTimeout(dismissLoader, DURATION_MS);
+        visibleSince = performance.now();
+        scheduleAutoDismiss();
       }
     }
   };

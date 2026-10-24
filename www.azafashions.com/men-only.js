@@ -438,6 +438,12 @@
           line-height: 1;
         }
 
+        .new-arrivals-mobile-controls button svg {
+          display: block;
+          width: 16px;
+          height: 16px;
+        }
+
         .new-arrivals-mobile-controls button:disabled {
           opacity: .35;
         }
@@ -535,11 +541,15 @@
       controls = document.createElement('div');
       controls.className = 'new-arrivals-mobile-controls';
       controls.innerHTML = `
-        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">â€¹</button>
+        <button type="button" class="new-arrivals-mobile-prev" aria-label="Previous new arrivals">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg>
+        </button>
         <div class="new-arrivals-mobile-progress" aria-hidden="true">
           <span class="new-arrivals-mobile-progress-thumb"></span>
         </div>
-        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">â€º</button>
+        <button type="button" class="new-arrivals-mobile-next" aria-label="Next new arrivals">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></svg>
+        </button>
       `;
       host.appendChild(controls);
     }

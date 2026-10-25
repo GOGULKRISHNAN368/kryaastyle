@@ -5,6 +5,7 @@ const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
+const STOREFRONT_DIR = path.join(ROOT_DIR, 'kryafasions.com');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -34,8 +35,8 @@ const server = http.createServer((req, res) => {
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
   // The root opens directly into the storefront's editorial first view.
-  if (pathname === '/' || pathname === '') {
-    return serveFile(path.join(ROOT_DIR, 'www.azafashions.com', 'index.html'), res);
+  if (pathname === '/' || pathname === '' || pathname === '/index.html' || pathname === '/men.html') {
+    return serveFile(path.join(STOREFRONT_DIR, 'index.html'), res);
   }
 
   // Security check: prevent directory traversal
@@ -54,6 +55,13 @@ const server = http.createServer((req, res) => {
         if (fs.existsSync(htmlPath)) {
           return serveFile(htmlPath, res);
         }
+      }
+      // The storefront is exposed at the site root even though its source
+      // files are grouped in kryafasions.com. This keeps all local links and
+      // assets on the Krya Fasions site URL.
+      const storefrontPath = path.normalize(path.join(STOREFRONT_DIR, pathname));
+      if (storefrontPath.startsWith(STOREFRONT_DIR) && fs.existsSync(storefrontPath)) {
+        return serveFile(storefrontPath, res);
       }
       res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404 Not Found');
@@ -100,7 +108,6 @@ function serveFile(filePath, res) {
 server.listen(PORT, () => {
   console.log(`\n==================================================`);
   console.log(`  Kryaa Styles server running at:`);
-  console.log(`  > Opening Page:  http://localhost:${PORT}/`);
-  console.log(`  > Direct Store:  http://localhost:${PORT}/www.azafashions.com/index.html`);
+  console.log(`  > Krya Fasions storefront: http://localhost:${PORT}/`);
   console.log(`==================================================\n`);
 });

@@ -38,9 +38,9 @@
           <section>
             <h2>Social</h2>
             <ul>
-              <li><a href="https://www.facebook.com/AzaFashions" target="_blank" rel="noreferrer">Facebook</a></li>
+              <li><a href="https://www.facebook.com/kryafasions" target="_blank" rel="noreferrer">Facebook</a></li>
               <li><a href="https://in.linkedin.com/company/aza-fashions" target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.instagram.com/azafashions/" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://www.instagram.com/kryafasions/" target="_blank" rel="noreferrer">Instagram</a></li>
               <li><a href="https://twitter.com/aza_fashions" target="_blank" rel="noreferrer">X / Twitter</a></li>
             </ul>
           </section>

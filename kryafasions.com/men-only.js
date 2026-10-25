@@ -2182,10 +2182,10 @@ const kryaaLuxeSlides = [
             <a class="kr-shopper-footer__wordmark" href="index.html"><img src="../image/logo.png" alt="Kryaa Style"></a>
             <p>Discover designer Indian occasionwear, curated for every celebration.</p>
             <div class="kr-shopper-footer__social" aria-label="Follow Kryaa Style">
-              <a href="https://www.instagram.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
-              <a href="https://www.facebook.com/AzaFashions" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
-              <a href="https://in.pinterest.com/azafashions/" target="_blank" rel="noreferrer" aria-label="Pinterest">P</a>
-              <a href="https://www.youtube.com/@azafashions" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
+              <a href="https://www.instagram.com/kryafasions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+              <a href="https://www.facebook.com/kryafasions" target="_blank" rel="noreferrer" aria-label="Facebook">f</a>
+              <a href="https://in.pinterest.com/kryafasions/" target="_blank" rel="noreferrer" aria-label="Pinterest">P</a>
+              <a href="https://www.youtube.com/@kryafasions" target="_blank" rel="noreferrer" aria-label="YouTube">▶</a>
             </div>
           </section>
           <section>

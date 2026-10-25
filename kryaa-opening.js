@@ -9,7 +9,7 @@
   const CONFIG = {
     // 3.8s duration (within the 3 to 5-second range)
     displayDuration: 3800,
-    storeUrl: window.KRYAA_STORE_URL || 'www.azafashions.com/index.html',
+    storeUrl: window.KRYAA_STORE_URL || 'kryafasions.com/index.html',
     imagesToPreload: [
       'logo.png',
       'image/logo.png',

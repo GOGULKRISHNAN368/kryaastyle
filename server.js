@@ -33,11 +33,15 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
-  // If root requested, redirect straight to the store page
+  // If root requested, serve the Grand Opening & Loading Page
   if (pathname === '/' || pathname === '') {
-    res.writeHead(302, { Location: '/www.azafashions.com/index.html' });
-    res.end();
-    return;
+    const query = parsedUrl.query || '';
+    if (query.includes('skip=1') || query.includes('store=1')) {
+      res.writeHead(302, { Location: '/www.azafashions.com/index.html' });
+      res.end();
+      return;
+    }
+    return serveFile(path.join(ROOT_DIR, 'index.html'), res);
   }
 
   // Security check: prevent directory traversal
@@ -101,8 +105,8 @@ function serveFile(filePath, res) {
 
 server.listen(PORT, () => {
   console.log(`\n==================================================`);
-  console.log(`  Kryaastyle server running at:`);
-  console.log(`  > Local:   http://localhost:${PORT}/`);
-  console.log(`  > Direct:  http://localhost:${PORT}/www.azafashions.com/index.html`);
+  console.log(`  Kryaa Styles server running at:`);
+  console.log(`  > Opening Page:  http://localhost:${PORT}/`);
+  console.log(`  > Direct Store:  http://localhost:${PORT}/www.azafashions.com/index.html`);
   console.log(`==================================================\n`);
 });

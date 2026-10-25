@@ -2,11 +2,11 @@
   'use strict';
 
   const newArrivalImages = [
-    '../image/newarrival1.jpg',
-    '../image/newarrival2.jpg',
-    '../image/newarrival3.jpg',
-    '../image/newarrival4.jpg',
-    '../image/newarrival5.jpg',
+    '../images/real-products/Black_Kuti_3PieceSet_1.webp',
+    '../images/real-products/IceBlue_Kurti_1.webp',
+    '../images/real-products/Green_Kurti_1.webp',
+    '../images/real-products/Salwar_Suits_1.webp',
+    '../images/real-products/White_Kurti_1_DNG.webp',
     '../image/newarrival6.jpg',
     '../image/newarrival7.jpg',
     '../image/newarrival8.jpg',
@@ -15,16 +15,24 @@
   ];
 
   const newArrivalHoverImages = [
-    '../image/newarrival1-cloth.jpg',
-    '../image/newarrival2-cloth.jpg',
-    '../image/newarrival3-cloth.jpg',
-    '../image/newarrival4-cloth.jpg',
-    '../image/newarrival5-cloth.webp',
+    '../images/real-products/Unstiched_Kurti_Material_Black.webp',
+    '../images/real-products/Unstiched_Kurti_Material_IceBlue.webp',
+    '../images/real-products/Unstiched_Kurti_Material_Green.webp',
+    '../images/real-products/Unstiched_Kurti_Material_Pink.webp',
+    '../images/real-products/Unstiched_Kurti_Material_White.webp',
     '../image/newarrival6-cloth.jpg',
     '../image/newarrival7-cloth.jpg',
     '../image/newarrival8-cloth.jpg',
     '../image/newarrival9-cloth.jpg',
     '../image/newarrival10-cloth.jpg'
+  ];
+
+  const newArrivalNames = [
+    'Black Kurti Set',
+    'Teal Unstitched Fabric',
+    'Green Unstitched Fabric',
+    'Pink Unstitched Fabric',
+    'White Kurti Set'
   ];
 
   const shopByOccasionCards = [
@@ -50,20 +58,20 @@
     },
     {
       title: 'Casuals',
-      image: '../images/Casuals.png',
+      image: '../images/real-products/Casuals_Short_Tops_3.webp',
       href: 'category.html?edit=casual'
     },
     {
       title: 'Office Wear',
-      image: '../images/Office_Wear.png',
+      image: '../images/real-products/Office_Wear_White_Kurti_3.webp',
       href: 'category.html?edit=office-wear'
     }
   ];
 
   const curatedTrendingLooks = [
-    { title: 'Midnight Garden Suit Set', caption: 'A richly embroidered black suit set for elegant evening celebrations.', image: '../image/newarrival1.jpg', href: 'category.html?category=chudi' },
-    { title: 'Ruby Heirloom Gown', caption: 'A dramatic ruby silhouette with fine detailing for a memorable occasion.', image: '../image/newarrival2.jpg', href: 'category.html?category=full-frocks' },
-    { title: 'Emerald Garden Anarkali', caption: 'Deep emerald embroidery and a graceful flare bring this look to life.', image: '../image/newarrival3.jpg', href: 'category.html?category=anarkali-suits' },
+    { title: 'Ivory Garden Kurta Set', caption: 'Soft floral embroidery and a flowing dupatta bring a graceful touch to every day.', image: '../images/real-products/Curated_Ivory_Floral_Set.webp', href: 'category.html?category=salwar-suits' },
+    { title: 'Midnight Paisley Suit Set', caption: 'Rich embroidery gives this deep charcoal ensemble a striking, refined finish.', image: '../images/real-products/Curated_Midnight_Paisley_Black_Kurti_5.webp', href: 'category.html?category=chudi' },
+    { title: 'Paisley Tunic & Denim', caption: 'An easy sleeveless silhouette pairs with relaxed denim for a confident daytime look.', image: '../images/real-products/Curated_Modern_Kurta_Short_Tops_2.webp', href: 'category.html?category=short-tops' },
     { title: 'Sapphire Embroidered Gown', caption: 'A midnight blue statement with delicate embroidery and a fluid finish.', image: '../image/newarrival4.jpg', href: 'category.html?category=full-frocks' },
     { title: 'Golden Hour Celebration Suit', caption: 'A warm golden look designed for festive gatherings and special moments.', image: '../image/newarrival5.jpg', href: 'category.html?category=salwar-suits' },
     { title: 'Teal Blossom Anarkali', caption: 'A teal embroidered silhouette with soft movement and timeless detail.', image: '../image/newarrival6.jpg', href: 'category.html?category=anarkali-suits' },
@@ -74,27 +82,27 @@
   ];
 
   const shopByCategoryCards = [
-    { title: 'Chudi', image: '../image/category-chudi.png', href: 'category.html?category=chudi' },
-    { title: 'Short Tops', image: '../image/category-short-tops.png', href: 'category.html?category=short-tops' },
+    { title: 'Chudi', image: '../images/real-products/Black_Kuti_3PieceSet_1.webp', href: 'category.html?category=chudi' },
+    { title: 'Short Tops', image: '../images/real-products/Short_Tops_2.webp', href: 'category.html?category=short-tops' },
     { title: 'Full Frocks', image: '../image/category-full-frocks.png', href: 'category.html?category=full-frocks' },
-    { title: 'Kurti Sets', image: '../image/category-kurti-sets.png', href: 'category.html?category=kurti-sets' },
+    { title: 'Kurti Sets', image: '../images/real-products/White_Kurti_1.webp', href: 'category.html?category=kurti-sets' },
     { title: 'Sarees', image: '../image/category-sarees.png', href: 'category.html?category=sarees' },
-    { title: 'Salwar Suits', image: '../image/category-salwar-suits.png', href: 'category.html?category=salwar-suits' },
+    { title: 'Salwar Suits', image: '../images/real-products/Salwar_Suits_1.webp', href: 'category.html?category=salwar-suits' },
     { title: 'Anarkali Suits', image: '../image/category-anarkali-suits.png', href: 'category.html?category=anarkali-suits' }
   ];
 
-  const kryaaLuxeSlides = [
+const kryaaLuxeSlides = [
     {
-      image: '../image/kryaa-luxe-red.png',
-      alt: 'Original fashion editorial portrait of a woman wearing a ruby red embroidered lehenga'
+      image: '../images/real-products/Curated_Modern_Kurta_Short_Tops_2.webp',
+      alt: 'Woman wearing a patterned sleeveless top with denim'
     },
     {
-      image: '../image/kryaa-luxe-blue.png',
-      alt: 'Original fashion editorial portrait of a woman wearing a midnight blue couture gown'
+      image: '../images/real-products/Curated_Salwar_Black_Kurti_3.webp',
+      alt: 'Woman wearing a dark embroidered kurti set'
     },
     {
-      image: '../image/kryaa-luxe-green.png',
-      alt: 'Original fashion editorial portrait of a woman wearing an emerald green embroidered saree'
+      image: '../images/real-products/Kryaa_Luxe_White_Kurti_1.webp',
+      alt: 'Woman wearing a white floral kurti set'
     }
   ];
 
@@ -136,7 +144,9 @@
         if (heading === 'Designers In The Spotlight') {
           section.sectionHeadingText = 'New Arrivals';
           section.list?.slice(0, newArrivalImages.length).forEach((item, index) => {
-            if (item?.bannerData) item.bannerData.image = newArrivalImages[index];
+            if (!item?.bannerData) return;
+            item.bannerData.image = newArrivalImages[index];
+            if (newArrivalNames[index]) item.bannerData.headingText = newArrivalNames[index];
           });
           dataChanged = true;
         }
@@ -241,11 +251,21 @@
       if (label !== 'New Arrivals' && label !== 'Designers In The Spotlight') return;
 
       const section = heading.closest('section') || heading.parentElement?.parentElement;
-      const images = Array.from(section?.querySelectorAll('img') || [])
-        .filter((image) => !image.classList.contains('kryaa-new-arrivals-hover-image'));
-      images.slice(0, newArrivalImages.length).forEach((image, index) => {
-        image.src = newArrivalImages[index];
+      const slides = Array.from(section?.querySelectorAll('.slick-slide') || []);
+      slides.forEach((slide, position) => {
+        const image = slide.querySelector('img:not(.kryaa-new-arrivals-hover-image)');
+        if (!image) return;
+        const rawIndex = slide.getAttribute('data-index');
+        const parsedIndex = rawIndex === null ? position : Number(rawIndex);
+        const index = ((parsedIndex % newArrivalImages.length) + newArrivalImages.length) % newArrivalImages.length;
+        image.dataset.newArrivalIndex = String(index);
+        if (image.getAttribute('src') !== newArrivalImages[index]) image.src = newArrivalImages[index];
+        image.alt = newArrivalNames[index] || image.alt;
         image.removeAttribute('srcset');
+
+        const name = newArrivalNames[index];
+        const title = slide.querySelector('h3');
+        if (name && title && title.textContent.trim() !== name) title.textContent = name;
       });
     });
   };
@@ -260,10 +280,10 @@
     if (!section) return;
 
     section.classList.add('kryaa-new-arrivals-hover-section');
-    section.querySelectorAll('img').forEach((image) => {
+    section.querySelectorAll('.slick-slide img').forEach((image) => {
       if (image.classList.contains('kryaa-new-arrivals-hover-image')) return;
-      const match = image.getAttribute('src')?.match(/newarrival(\d+)\.jpg(?:$|[?#])/i);
-      const hoverImage = match ? newArrivalHoverImages[Number(match[1]) - 1] : null;
+      const index = Number(image.dataset.newArrivalIndex);
+      const hoverImage = Number.isInteger(index) ? newArrivalHoverImages[index] : null;
       const frame = image.parentElement;
       if (!hoverImage || !frame || frame.querySelector('.kryaa-new-arrivals-hover-image')) return;
 
@@ -284,6 +304,7 @@
     style.id = 'new-arrivals-hover-styles';
     style.textContent = `
       .kryaa-new-arrivals-hover-frame { position: relative !important; }
+      .kryaa-new-arrivals-hover-section .slick-slide h3 { white-space: nowrap !important; font-size: clamp(12px, 1.1vw, 15px) !important; }
       .kryaa-new-arrivals-hover-image {
         position: absolute !important;
         z-index: 2;
@@ -297,7 +318,8 @@
         transition: opacity .3s ease;
       }
       .kryaa-new-arrivals-hover-frame:hover .kryaa-new-arrivals-hover-image,
-      .kryaa-new-arrivals-hover-frame:focus-within .kryaa-new-arrivals-hover-image { opacity: 1; }
+      .kryaa-new-arrivals-hover-frame:focus-within .kryaa-new-arrivals-hover-image,
+      .kryaa-new-arrivals-hover-frame.kryaa-new-arrivals-touch-alt .kryaa-new-arrivals-hover-image { opacity: 1; }
       @media (prefers-reduced-motion: reduce) {
         .kryaa-new-arrivals-hover-image { transition: none; }
       }
@@ -410,8 +432,11 @@
         }
 
         .new-arrivals-mobile-grid-card h3 {
-          font-size: 17px !important;
-          line-height: 1.15 !important;
+          font-size: 13px !important;
+          line-height: 1.1 !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
         }
 
         .new-arrivals-mobile-controls {
@@ -942,7 +967,7 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: top;
+          object-position: center 30%;
           transition: transform .3s ease;
         }
 
@@ -1106,7 +1131,7 @@
     const setSlide = (index) => {
       currentSlide = (index + kryaaLuxeSlides.length) % kryaaLuxeSlides.length;
 
-      imageTrack.style.transform = `translate3d(-${currentSlide * (100 / kryaaLuxeSlides.length)}%, 0, 0)`;
+      imageTrack.style.transform = `translate3d(-${currentSlide * 100}%, 0, 0)`;
 
       dots.forEach((dot, dotIndex) => {
         const active = dotIndex === currentSlide;
@@ -2091,25 +2116,25 @@
         <p>Modern Indian silhouettes selected for every celebration.</p>
       </div>
       <div class="kr-editors-picks__grid">
-        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="category.html?category=full-frocks">
-          <img src="../image/kryaa-luxe-red.png" alt="Woman in a red embroidered lehenga" width="900" height="1350" loading="eager">
+        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="category.html?category=chudi">
+          <img src="../images/real-products/Black_Kurti.webp" alt="Woman wearing a black embroidered kurti set" width="900" height="1350" loading="eager">
           <span class="kr-editors-picks__shade"></span>
-          <span class="kr-editors-picks__copy"><small>THE OCCASION EDIT</small><strong>Lehenga Love</strong><em>Shop lehengas</em></span>
+          <span class="kr-editors-picks__copy"><small>EVERYDAY CLASSIC</small><strong>Black Kurti Elegance</strong><em>Shop kurti sets</em></span>
         </a>
-        <a class="kr-editors-picks__card" href="category.html?category=sarees">
-          <img src="../image/kryaa-luxe-green.png" alt="Woman in an emerald green embroidered saree" width="900" height="1350" loading="lazy">
+        <a class="kr-editors-picks__card" href="category.html?category=short-tops">
+          <img src="../images/real-products/Short_Tops_2.webp" alt="Woman wearing a dark paisley sleeveless top" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
-          <span class="kr-editors-picks__copy"><small>FESTIVE FAVOURITES</small><strong>Statement Sarees</strong><em>Shop sarees</em></span>
+          <span class="kr-editors-picks__copy"><small>EASY DAY STYLE</small><strong>Paisley Sleeveless Top</strong><em>Shop short tops</em></span>
         </a>
         <a class="kr-editors-picks__card" href="category.html?category=salwar-suits">
-          <img src="../image/kryaa-luxe-blue.png" alt="Woman in a blue evening outfit" width="900" height="1350" loading="lazy">
+          <img src="../images/real-products/White_Kurti_1.webp" alt="Woman wearing a white floral kurti set" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
-          <span class="kr-editors-picks__copy"><small>AFTER DARK</small><strong>Evening Elegance</strong><em>Shop salwar suits</em></span>
+          <span class="kr-editors-picks__copy"><small>SOFT FLORAL EDIT</small><strong>Ivory Floral Kurti Set</strong><em>Shop kurti sets</em></span>
         </a>
         <a class="kr-editors-picks__card" href="category.html?category=kurti-sets">
-          <img src="../image/category-salwar-suits.png" alt="Women's salwar suit collection" width="600" height="800" loading="lazy">
+          <img src="../images/real-products/Green_Kurti_1.webp" alt="Woman wearing a green printed kurti" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
-          <span class="kr-editors-picks__copy"><small>EVERYDAY LUXE</small><strong>Easy Kurta Sets</strong><em>Shop kurta sets</em></span>
+          <span class="kr-editors-picks__copy"><small>FRESH GREEN EDIT</small><strong>Emerald Everyday Kurti</strong><em>Shop kurti sets</em></span>
         </a>
       </div>
     `;
@@ -2224,3 +2249,15 @@
   const observer = new MutationObserver(cleanMenPage);
   observer.observe(document.documentElement, { childList: true, subtree: true });
 })();
+
+
+
+
+
+
+
+
+
+
+
+

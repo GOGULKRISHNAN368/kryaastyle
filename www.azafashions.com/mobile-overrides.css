@@ -537,7 +537,7 @@
 
 .kryaa-luxe-image-track {
   display: flex;
-  width: 300%;
+  width: 100%;
   height: 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -546,8 +546,8 @@
 
 .kryaa-luxe-slide {
   display: block;
-  flex: 0 0 33.333333%;
-  width: 33.333333%;
+  flex: 0 0 100%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 12%;
@@ -2692,6 +2692,10 @@
   .kr-editors-picks__card:hover .kr-editors-picks__shade { background: linear-gradient(180deg, rgba(25, 13, 9, .08) 28%, rgba(25, 13, 9, .82) 100%); }
 }
 
+@media (min-width: 768px) and (max-width: 1080px) {
+  .kr-editors-picks__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 @media (max-width: 767px) {
   .kr-editors-picks {
     width: calc(100% - 24px);
@@ -2709,3 +2713,13 @@
   .kr-editors-picks__copy strong { font-size: 18px; }
   .kr-editors-picks__copy em { font-size: 8px; }
 }
+/* Keep the second and third Kryaa Luxe outfits fully framed while filling the image panel. */
+.kryaa-luxe-slide:nth-child(2),
+.kryaa-luxe-slide:nth-child(3) {
+  object-position: center top;
+  transform-origin: center top;
+}
+.kryaa-luxe-slide:nth-child(2) { transform: scale(1.08); }
+.kryaa-luxe-slide:nth-child(3) { transform: scale(1.12); }
+.kryaa-luxe-image-link:hover .kryaa-luxe-slide:nth-child(2) { transform: scale(1.08); }
+.kryaa-luxe-image-link:hover .kryaa-luxe-slide:nth-child(3) { transform: scale(1.12); }

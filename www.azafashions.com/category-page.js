@@ -2,12 +2,12 @@
   'use strict';
 
   const categories = {
-    chudi: { title: 'Chudi Edit', description: 'Graceful silhouettes for every celebration.', image: 'category-chudi.png' },
-    'short-tops': { title: 'Short Tops', description: 'A modern edit of easy separates and polished looks.', image: 'category-short-tops.png' },
+    chudi: { title: 'Chudi Edit', description: 'Graceful silhouettes for every celebration.', image: '../images/real-products/Black_Kuti_3PieceSet_1.webp' },
+    'short-tops': { title: 'Short Tops', description: 'A modern edit of easy separates and polished looks.', image: '../images/real-products/Short_Tops_2.webp' },
     'full-frocks': { title: 'Full Frocks', description: 'Discover flowing silhouettes made for special moments.', image: 'category-full-frocks.png' },
-    'kurti-sets': { title: 'Kurti Sets', description: 'Coordinated sets with thoughtful details for every day and celebration.', image: 'category-kurti-sets.png' },
+    'kurti-sets': { title: 'Kurti Sets', description: 'Coordinated sets with thoughtful details for every day and celebration.', image: '../images/real-products/White_Kurti_1.webp' },
     sarees: { title: 'Sarees', description: 'Find timeless drapes and refined looks for every occasion.', image: 'category-sarees.png' },
-    'salwar-suits': { title: 'Salwar Suits', description: 'Shop elegant suit sets in rich colours and fluid silhouettes.', image: 'category-salwar-suits.png' },
+    'salwar-suits': { title: 'Salwar Suits', description: 'Shop elegant suit sets in rich colours and fluid silhouettes.', image: '../images/real-products/Salwar_Suits_1.webp' },
     'anarkali-suits': { title: 'Anarkali Suits', description: 'Explore beautifully flared Anarkali looks from the Kryaa edit.', image: 'category-anarkali-suits.png' }
   };
 
@@ -23,6 +23,39 @@
     { name: 'Ivory Lumière Embroidered Set', designer: 'KRYAA EDIT', image: 'newarrival9.jpg', hoverImage: 'newarrival9-cloth.jpg', price: 14990, color: 'light', occasion: 'evening', tags: ['try-on', 'custom'] },
     { name: 'Plum Royale Anarkali', designer: 'KRYAA EDIT', image: 'newarrival10.jpg', hoverImage: 'newarrival10-cloth.jpg', price: 13490, color: 'other', occasion: 'festive', tags: ['new', 'sale'] }
   ];
+  const realImage = (filename) => `../images/real-products/${filename}`;
+  const realProduct = (name, filename, price, color, occasion = 'festive') => ({
+    name, designer: 'KRYAA EDIT', image: realImage(filename), hoverImage: '', price, color, occasion, tags: ['new', 'ready']
+  });
+  const categoryProducts = {
+    chudi: [
+      realProduct('Black Embroidered Three-Piece Set', 'Black_Kuti_3PieceSet_1.webp', 8490, 'other'),
+      realProduct('Midnight Floral Kurti Set', 'Black_Kurti_1.webp', 7990, 'other'),
+      realProduct('Charcoal Embroidered Kurti Set', 'Black_Kurti_2.webp', 8290, 'other'),
+      realProduct('Midnight Paisley Kurti Set', 'Curated_Midnight_Paisley_Black_Kurti_5.webp', 8490, 'other'),
+      realProduct('Black Garden Kurti Set', 'Curated_Salwar_Black_Kurti_3.webp', 8190, 'other')
+    ],
+    'short-tops': [
+      realProduct('Paisley Sleeveless Short Top', 'Short_Tops_1.webp', 2490, 'other', 'casual'),
+      realProduct('Printed Sleeveless Short Top', 'Short_Tops_2.webp', 2590, 'other', 'casual'),
+      realProduct('Everyday Printed Short Top', 'Casuals_Short_Tops_3.webp', 2390, 'other', 'casual')
+    ],
+    'kurti-sets': [
+      realProduct('Ice Blue Embroidered Kurti Set', 'IceBlue_Kurti_1.webp', 4290, 'blue'),
+      realProduct('Emerald Floral Kurti Set', 'Green_Kurti_1.webp', 4490, 'green'),
+      realProduct('Ivory Floral Kurti Set', 'White_Kurti_1.webp', 4290, 'light'),
+      realProduct('White Embroidered Kurti Set', 'White_Kurti_2.webp', 4390, 'light'),
+      realProduct('Floral White Kurti Set', 'White_Kurti_4.webp', 4290, 'light'),
+      realProduct('Soft Pink Salwar Suit', 'Salwar_Suits_1.webp', 4690, 'red')
+    ],
+    'salwar-suits': [
+      realProduct('Soft Pink Embroidered Salwar Suit', 'Salwar_Suits_1.webp', 4690, 'red'),
+      realProduct('Midnight Embroidered Salwar Set', 'Curated_Salwar_Black_Kurti_3.webp', 8190, 'other'),
+      realProduct('Ice Blue Salwar Suit', 'IceBlue_Kurti_1.webp', 4290, 'blue'),
+      realProduct('Emerald Floral Salwar Suit', 'Green_Kurti_1.webp', 4490, 'green'),
+      realProduct('Ivory Floral Salwar Suit', 'White_Kurti_1.webp', 4290, 'light')
+    ]
+  };
   const categoryKey = new URLSearchParams(window.location.search).get('category') || '';
   const editKey = new URLSearchParams(window.location.search).get('edit') || '';
   const editTitles = {
@@ -49,7 +82,7 @@
     document.getElementById('breadcrumb-category').textContent = category.title;
     document.getElementById('collection-title').textContent = category.title;
     document.getElementById('collection-description').textContent = category.description;
-    heroImage.src = `../image/${category.image}`;
+    heroImage.src = imageUrl(category.image);
     heroImage.alt = `${category.title} occasionwear collection`;
   }
   if (!category && editTitles[editKey]) {
@@ -61,7 +94,7 @@
       ? 'Explore the latest looks from the Kryaa Style edit.'
       : `Discover occasion-ready styles curated for ${editTitle.toLowerCase()}.`;
     const editHeroImages = { 'new-arrivals': 'newarrival2.jpg', wedding: 'category-anarkali-suits.png', sangeet: 'category-full-frocks.png', reception: 'category-sarees.png', festival: 'category-kurti-sets.png', casual: 'category-short-tops.png', 'office-wear': 'category-chudi.png' };
-    heroImage.src = `../image/${editHeroImages[editKey] || 'newarrival2.jpg'}`;
+    heroImage.src = imageUrl(editHeroImages[editKey] || 'newarrival2.jpg');
     heroImage.alt = `${editTitle} occasionwear collection`;
   }
   document.querySelectorAll('.filter-link').forEach((link) => {
@@ -73,6 +106,10 @@
   const panel = document.getElementById('filter-panel');
   const toast = document.getElementById('catalog-toast');
   let toastTimer;
+
+  function imageUrl(path) {
+    return path.startsWith('../') ? path : `../image/${path}`;
+  }
 
   function currentFilters() {
     return Array.from(document.querySelectorAll('.filter-panel input:checked')).reduce((result, input) => {
@@ -88,7 +125,8 @@
   function renderProducts() {
     const filters = currentFilters();
     const quickFilters = activeQuickFilters();
-    let visible = products.filter((product) => {
+    const sourceProducts = categoryProducts[categoryKey] || products;
+    let visible = sourceProducts.filter((product) => {
       const occasionMatch = !filters.occasion || filters.occasion.includes(product.occasion);
       const colorMatch = !filters.color || filters.color.includes(product.color);
       const quickMatch = quickFilters.every((tag) => product.tags.includes(tag));
@@ -110,8 +148,8 @@
       card.className = 'product-card';
       card.innerHTML = `
         <div class="product-image-wrap">
-          <img class="product-image" src="../image/${product.image}" alt="${product.name}" loading="lazy" tabindex="0" role="button" aria-label="Quick view: ${product.name}">
-          <img class="product-image product-image--hover" src="../image/${product.hoverImage}" alt="" loading="lazy" aria-hidden="true">
+          <img class="product-image" src="${imageUrl(product.image)}" alt="${product.name}" loading="lazy" tabindex="0" role="button" aria-label="Quick view: ${product.name}">
+          ${product.hoverImage ? `<img class="product-image product-image--hover" src="${imageUrl(product.hoverImage)}" alt="" loading="lazy" aria-hidden="true">` : ''}
           <span class="product-badge">${product.tags.includes('new') ? 'NEW ARRIVAL' : product.tags.includes('sale') ? 'ON SALE' : 'KRYAA EDIT'}</span>
           <button class="wishlist" type="button" aria-label="Add ${product.name} to wishlist" aria-pressed="false">♡</button>
           <button class="quick-view" type="button">Quick view</button>
@@ -130,7 +168,7 @@
       card.querySelector('.quick-view').addEventListener('click', () => showQuickView(product));
       const productImage = card.querySelector('.product-image');
       const hoverImage = card.querySelector('.product-image--hover');
-      hoverImage.addEventListener('error', () => card.classList.add('product-card--without-hover-image'), { once: true });
+      if (hoverImage) hoverImage.addEventListener('error', () => card.classList.add('product-card--without-hover-image'), { once: true });
       productImage.addEventListener('click', () => showQuickView(product));
       productImage.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') return;
@@ -143,7 +181,7 @@
 
   function showQuickView(product) {
     const dialog = document.getElementById('quick-view-dialog');
-    dialog.querySelector('.quick-view-image').src = `../image/${product.image}`;
+    dialog.querySelector('.quick-view-image').src = imageUrl(product.image);
     dialog.querySelector('.quick-view-image').alt = product.name;
     dialog.querySelector('.quick-view-title').textContent = product.name;
     dialog.querySelector('.quick-view-price').textContent = `₹${product.price.toLocaleString('en-IN')}`;

@@ -141,3 +141,66 @@
     }
   };
 })();
+
+/* Replaces the legacy carousel with a single, intentional Kryaa Style first view. */
+(() => {
+  'use strict';
+
+  const heroMarkup = `
+    <section class="kr-reimagined-home" aria-label="Kryaa Style introduction">
+      <header class="kr-editorial-nav">
+        <a class="kr-editorial-logo" href="index.html" aria-label="Kryaa Style home"><img src="../image/logo.png" alt="Kryaa Style"></a>
+        <nav aria-label="Main navigation"><ul class="kr-editorial-menu">
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="collection/men/kurta-sets.html">Shop</a></li>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#journal">Journal</a></li>
+        </ul></nav>
+        <div class="kr-editorial-actions" aria-label="Quick actions">
+          <a class="kr-editorial-icon" href="search.html" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"></circle><path d="m16 16 5 5"></path></svg></a>
+          <a class="kr-editorial-icon" href="profile.html" aria-label="Account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.2" r="3.4"></circle><path d="M4.7 21c.4-4.2 2.8-6.3 7.3-6.3s6.9 2.1 7.3 6.3"></path></svg></a>
+          <a class="kr-editorial-icon" href="checkout.html" aria-label="Shopping bag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.3 8.1h13.4l1 12.1H4.3z"></path><path d="M8.5 8.1V6.6a3.5 3.5 0 0 1 7 0v1.5"></path></svg><b class="kr-editorial-bag-count">0</b></a>
+        </div>
+      </header>
+      <div class="kr-editorial-hero">
+        <div class="kr-editorial-copy">
+          <p class="kr-editorial-eyebrow">Elegance for every day</p>
+          <h1 class="kr-editorial-title"><span>Grace in</span><span><em>Everyday</em></span><span>Style</span></h1>
+          <p class="kr-editorial-description">Modern kurtis. Effortless style.<br>Made for your everyday stories.</p>
+          <a class="kr-editorial-cta" href="collection/men/kurta-sets.html">Shop now <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="kr-editorial-model" aria-hidden="true"><img src="../image/kryaa-luxe-blue.png" alt=""></div>
+        <div class="kr-editorial-slide-count" aria-hidden="true"><span>01</span><i></i><span>03</span></div>
+        <div class="kr-editorial-scroll" aria-hidden="true">Scroll<span></span></div>
+        <div class="kr-editorial-bottomline" aria-hidden="true">Wear your story</div>
+      </div>
+    </section>`;
+
+  function removeLegacyHero() {
+    document.querySelectorAll('img[src*="banner-desktop"], img[src*="banner-mobile"]').forEach((image) => {
+      const wrapper = image.closest('.wrapperContainer');
+      if (wrapper) wrapper.classList.add('kr-replaced-hero');
+    });
+  }
+
+  function injectHero() {
+    if (document.querySelector('.kr-reimagined-home')) return;
+    const app = document.getElementById('__next');
+    const main = app && app.querySelector('main');
+    if (!app || !main) return;
+    main.insertAdjacentHTML('beforebegin', heroMarkup);
+    removeLegacyHero();
+  }
+
+  function start() {
+    injectHero();
+    // Next hydrates after the document parses; repeat briefly to catch its carousel markup.
+    [80, 350, 1000].forEach((delay) => window.setTimeout(() => { injectHero(); removeLegacyHero(); }, delay));
+  }
+
+  // Let the server-rendered storefront finish React hydration first. Injecting
+  // before that point can produce hydration warnings and restore the old nav.
+  if (document.readyState === 'complete') window.setTimeout(start, 0);
+  else window.addEventListener('load', start, { once: true });
+})();

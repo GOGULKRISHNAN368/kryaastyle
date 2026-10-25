@@ -33,15 +33,9 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
-  // If root requested, serve the Grand Opening & Loading Page
+  // The root opens directly into the storefront's editorial first view.
   if (pathname === '/' || pathname === '') {
-    const query = parsedUrl.query || '';
-    if (query.includes('skip=1') || query.includes('store=1')) {
-      res.writeHead(302, { Location: '/www.azafashions.com/index.html' });
-      res.end();
-      return;
-    }
-    return serveFile(path.join(ROOT_DIR, 'index.html'), res);
+    return serveFile(path.join(ROOT_DIR, 'www.azafashions.com', 'index.html'), res);
   }
 
   // Security check: prevent directory traversal

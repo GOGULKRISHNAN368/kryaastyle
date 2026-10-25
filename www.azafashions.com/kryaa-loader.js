@@ -171,7 +171,6 @@
           <a class="kr-editorial-cta" href="collection/men/kurta-sets.html">Shop now <span aria-hidden="true">→</span></a>
         </div>
         <div class="kr-editorial-model" aria-hidden="true"><img src="../image/kryaa-luxe-blue.png" alt=""></div>
-        <div class="kr-editorial-slide-count" aria-hidden="true"><span>01</span><i></i><span>03</span></div>
         <div class="kr-editorial-bottomline" aria-hidden="true">Wear your story</div>
       </div>
     </section>`;

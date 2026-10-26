@@ -5,7 +5,7 @@ const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
-const STOREFRONT_DIR = path.join(ROOT_DIR, 'kryafasions.com');
+const STOREFRONT_DIR = path.join(ROOT_DIR, 'kryaastyles.com');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -57,8 +57,8 @@ const server = http.createServer((req, res) => {
         }
       }
       // The storefront is exposed at the site root even though its source
-      // files are grouped in kryafasions.com. This keeps all local links and
-      // assets on the Krya Fasions site URL.
+      // files are grouped in kryaastyles.com. This keeps all local links and
+      // assets on the Kryaa Styles site URL.
       const storefrontPath = path.normalize(path.join(STOREFRONT_DIR, pathname));
       if (storefrontPath.startsWith(STOREFRONT_DIR) && fs.existsSync(storefrontPath)) {
         return serveFile(storefrontPath, res);
@@ -108,6 +108,6 @@ function serveFile(filePath, res) {
 server.listen(PORT, () => {
   console.log(`\n==================================================`);
   console.log(`  Kryaa Styles server running at:`);
-  console.log(`  > Krya Fasions storefront: http://localhost:${PORT}/`);
+  console.log(`  > Kryaa Styles storefront: http://localhost:${PORT}/`);
   console.log(`==================================================\n`);
 });

@@ -2,11 +2,11 @@
   'use strict';
 
   const footer = `
-    <footer class="kr-converto-footer" aria-label="Kyraa Style footer">
+    <footer class="kr-converto-footer" aria-label="kyraastyle footer">
       <div class="kr-converto-footer__card">
         <div class="kr-converto-footer__top">
           <div class="kr-converto-footer__brand">
-            <a class="kr-converto-footer__logo" href="https://kyraastyle.com/" aria-label="Kyraa Style home">KYRAA STYLE</a>
+            <a class="kr-converto-footer__logo" href="https://kyraastyle.com/" aria-label="kyraastyle home">KYRAASTYLE</a>
             <p>Curated Indian fashion for every celebration, crafted with a modern point of view.</p>
           </div>
           <section>
@@ -40,21 +40,21 @@
             <ul>
               <li><a href="https://www.facebook.com/kyraastyle" target="_blank" rel="noreferrer">Facebook</a></li>
               <li><a href="https://in.linkedin.com/company/Kyraastyle" target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.instagram.com/kyraastyle/" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://www.instagram.com/kyraastyle/" target="_blank" rel="noreferrer" aria-label="Follow kyraastyle on Instagram">Instagram</a></li>
               <li><a href="https://twitter.com/kyraastyle" target="_blank" rel="noreferrer">X / Twitter</a></li>
             </ul>
           </section>
         </div>
         <div class="kr-converto-footer__meta">
-          <p>&copy; 2025 Kyraa Style. All rights reserved.</p>
-          <p>Design by Kyraa Style &ndash; Powered by fashion.</p>
+          <p>&copy; 2026 kyraastyle. All rights reserved.</p>
+          <p>Design by kyraastyle &ndash; Powered by fashion.</p>
         </div>
-        <div class="kr-converto-footer__name" aria-hidden="true">KYRAA STYLE</div>
+        <div class="kr-converto-footer__name" aria-hidden="true">KYRAASTYLE</div>
       </div>
     </footer>`;
 
   function installFooter() {
-    const legacyFooter = document.querySelector('footer.footer');
+    const legacyFooter = document.querySelector('footer:not(.kr-converto-footer)');
     if (legacyFooter && !document.querySelector('.kr-converto-footer')) {
       legacyFooter.outerHTML = footer;
     }

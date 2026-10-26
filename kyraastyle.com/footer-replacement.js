@@ -13,7 +13,7 @@
             <h2>Quick link</h2>
             <ul>
               <li><a href="index.html">Home</a></li>
-              <li><a href="about-aza.html">About us</a></li>
+              <li><a href="">About us</a></li>
               <li><a href="contact-us.html">Contact us</a></li>
               <li><a href="terms-and-conditions.html">License</a></li>
             </ul>
@@ -21,7 +21,7 @@
           <section>
             <h2>Company</h2>
             <ul>
-              <li><a href="collection/men/kurta-sets.html">Kurta sets</a></li>
+              <li><a href="category.html/kurti-sets">Kurta sets</a></li>
               <li><a href="collection/men/sherwanis.html">Sherwanis</a></li>
               <li><a href="collection/men/nehru-jacket-and-sets.html">Nehru jackets</a></li>
               <li><a href="store-locator.html">Store locator</a></li>

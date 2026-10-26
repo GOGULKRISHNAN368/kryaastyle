@@ -157,6 +157,11 @@
           <li><a href="#about">About</a></li>
           <li><a href="#journal">Journal</a></li>
         </ul></nav>
+        <button class="kr-editorial-menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false">
+          <span class="kr-editorial-menu-toggle__bar"></span>
+          <span class="kr-editorial-menu-toggle__bar"></span>
+          <span class="kr-editorial-menu-toggle__bar"></span>
+        </button>
         <div class="kr-editorial-actions" aria-label="Quick actions">
           <a class="kr-editorial-icon" href="search.html" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.7"></circle><path d="m16 16 5 5"></path></svg></a>
           <a class="kr-editorial-icon" href="profile.html" aria-label="Account"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.2" r="3.4"></circle><path d="M4.7 21c.4-4.2 2.8-6.3 7.3-6.3s6.9 2.1 7.3 6.3"></path></svg></a>
@@ -170,7 +175,7 @@
           <p class="kr-editorial-description">Modern kurtis. Effortless style.<br>Made for your everyday stories.</p>
           <a class="kr-editorial-cta" href="collection/men/kurta-sets.html">Shop now <span aria-hidden="true">→</span></a>
         </div>
-        <div class="kr-editorial-model" aria-hidden="true"><img src="../image/kryaa-luxe-blue.png" alt=""></div>
+        <div class="kr-editorial-model" aria-hidden="true"><img src="../hero-purple-mobile.jpg" alt=""></div>
         <div class="kr-editorial-bottomline" aria-hidden="true">Wear your story</div>
       </div>
     </section>`;
@@ -193,8 +198,29 @@
 
   function start() {
     injectHero();
+    wireMenuToggle();
     // Next hydrates after the document parses; repeat briefly to catch its carousel markup.
-    [80, 350, 1000].forEach((delay) => window.setTimeout(() => { injectHero(); removeLegacyHero(); }, delay));
+    [80, 350, 1000].forEach((delay) => window.setTimeout(() => { injectHero(); wireMenuToggle(); removeLegacyHero(); }, delay));
+  }
+
+  function wireMenuToggle() {
+    const toggle = document.querySelector('.kr-editorial-menu-toggle');
+    const menu = document.querySelector('.kr-editorial-menu');
+    if (!toggle || !menu) return;
+    if (toggle.dataset.wired === 'true') return;
+    toggle.dataset.wired = 'true';
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      menu.classList.toggle('kr-editorial-menu--open', !expanded);
+    });
+    document.addEventListener('click', () => {
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.classList.remove('kr-editorial-menu--open');
+      }
+    });
   }
 
   // Let the server-rendered storefront finish React hydration first. Injecting

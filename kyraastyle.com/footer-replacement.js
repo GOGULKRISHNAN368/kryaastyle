@@ -40,10 +40,10 @@
           <section>
             <h2>Social</h2>
             <ul>
-              <li><a href="https://www.facebook.com/kyraastyle" target="_blank" rel="noreferrer">Facebook</a></li>
-              <li><a href="https://in.linkedin.com/company/Kyraastyle" target="_blank" rel="noreferrer">LinkedIn</a></li>
+              <li><a href="https://www.facebook.com/kyraastyle/" target="_blank" rel="noreferrer">Facebook</a></li>
+              <li><a href="https://in.linkedin.com/company/Kyraastyle/" target="_blank" rel="noreferrer">LinkedIn</a></li>
               <li><a href="https://www.instagram.com/kyraastyle/" target="_blank" rel="noreferrer" aria-label="Follow kyraastyle on Instagram">Instagram</a></li>
-              <li><a href="https://twitter.com/kyraastyle" target="_blank" rel="noreferrer">X / Twitter</a></li>
+              <li><a href="https://twitter.com/kyraastyle/" target="_blank" rel="noreferrer">X / Twitter</a></li>
             </ul>
           </section>
         </div>

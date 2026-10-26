@@ -40,7 +40,7 @@
             <ul>
               <li><a href="https://www.facebook.com/kyraastyle" target="_blank" rel="noreferrer">Facebook</a></li>
               <li><a href="https://in.linkedin.com/company/Kyraastyle" target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.instagram.com/kryaaastyle/" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://www.instagram.com/kryaastyle/" target="_blank" rel="noreferrer">Instagram</a></li>
               <li><a href="https://twitter.com/kyraastyle" target="_blank" rel="noreferrer">X / Twitter</a></li>
             </ul>
           </section>

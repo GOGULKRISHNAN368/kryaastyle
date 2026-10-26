@@ -199,8 +199,9 @@
   function start() {
     injectHero();
     wireMenuToggle();
+    wireNavMotion();
     // Next hydrates after the document parses; repeat briefly to catch its carousel markup.
-    [80, 350, 1000].forEach((delay) => window.setTimeout(() => { injectHero(); wireMenuToggle(); removeLegacyHero(); }, delay));
+    [80, 350, 1000].forEach((delay) => window.setTimeout(() => { injectHero(); wireMenuToggle(); wireNavMotion(); removeLegacyHero(); }, delay));
   }
 
   function wireMenuToggle() {
@@ -221,6 +222,30 @@
         menu.classList.remove('kr-editorial-menu--open');
       }
     });
+  }
+
+  // Keep the header stable while scrolling, with the same solid treatment
+  // the reference navigation uses once the page has left its top edge.
+  function wireNavMotion() {
+    const nav = document.querySelector('.kr-editorial-nav');
+    if (!nav || nav.dataset.motionWired === 'true') return;
+    nav.dataset.motionWired = 'true';
+
+    let ticking = false;
+
+    const updateNavigation = () => {
+      nav.classList.toggle('kr-editorial-nav--solid', window.scrollY > 10);
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateNavigation);
+      }
+    }, { passive: true });
+
+    updateNavigation();
   }
 
   // Let the server-rendered storefront finish React hydration first. Injecting

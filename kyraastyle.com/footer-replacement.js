@@ -6,7 +6,9 @@
       <div class="kr-converto-footer__card">
         <div class="kr-converto-footer__top">
           <div class="kr-converto-footer__brand">
-            <a class="kr-converto-footer__logo" href="https://kyraastyle.com/" aria-label="kyraastyle home">KYRAASTYLE</a>
+            <a class="kr-converto-footer__logo" href="https://kyraastyle.com/" aria-label="kyraastyle home">
+              <img src="logo.png" alt="kyraastyle" />
+            </a>
             <p>Curated Indian fashion for every celebration, crafted with a modern point of view.</p>
           </div>
           <section>

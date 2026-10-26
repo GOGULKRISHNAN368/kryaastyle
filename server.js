@@ -5,7 +5,7 @@ const url = require('url');
 
 const PORT = process.env.PORT || 3000;
 const ROOT_DIR = __dirname;
-const STOREFRONT_DIR = path.join(ROOT_DIR, 'kryaastyles.com');
+const STOREFRONT_DIR = path.join(ROOT_DIR, 'kyraastyle.com');
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -57,7 +57,7 @@ const server = http.createServer((req, res) => {
         }
       }
       // The storefront is exposed at the site root even though its source
-      // files are grouped in kryaastyles.com. This keeps all local links and
+      // files are grouped in kyraastyle.com. This keeps all local links and
       // assets on the Kryaa Styles site URL.
       const storefrontPath = path.normalize(path.join(STOREFRONT_DIR, pathname));
       if (storefrontPath.startsWith(STOREFRONT_DIR) && fs.existsSync(storefrontPath)) {

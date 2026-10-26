@@ -21,9 +21,9 @@ Featuring the pleasant warm champagne silk opening screen and seamless site load
 1. **Main Entry & Opening Page**:
    - `index.html` (or `opening.html`)
 2. **Storefront & Collection Pages** (Built-in fullscreen loading screen):
-   - `kryaastyles.com/index.html`
-   - `kryaastyles.com/men.html`
-   - `kryaastyles.com/category.html`
+   - `kyraastyle.com/index.html`
+   - `kyraastyle.com/men.html`
+   - `kyraastyle.com/category.html`
 
 ## 🚀 How to View Locally
 

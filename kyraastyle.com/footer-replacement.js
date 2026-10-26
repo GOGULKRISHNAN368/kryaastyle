@@ -22,9 +22,9 @@
             <h2>Company</h2>
             <ul>
               <li><a href="category.html/kurti-sets">Kurta sets</a></li>
-              <li><a href="collection/men/sherwanis.html">Sherwanis</a></li>
-              <li><a href="collection/men/nehru-jacket-and-sets.html">Nehru jackets</a></li>
-              <li><a href="store-locator.html">Store locator</a></li>
+              <li><a href="collection/men/sherwanis.html">sarees</a></li>
+              <li><a href="collection/men/nehru-jacket-and-sets.html">short kurtis</a></li>
+              <li><a href="store-locator.html">products</a></li>
             </ul>
           </section>
           <section>

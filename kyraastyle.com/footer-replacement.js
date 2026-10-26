@@ -2,11 +2,11 @@
   'use strict';
 
   const footer = `
-    <footer class="kr-converto-footer" aria-label="Kryaa Style footer">
+    <footer class="kr-converto-footer" aria-label="Kyraa Style footer">
       <div class="kr-converto-footer__card">
         <div class="kr-converto-footer__top">
           <div class="kr-converto-footer__brand">
-            <a class="kr-converto-footer__logo" href="index.html" aria-label="Kryaa Style home">KRYAA STYLE</a>
+            <a class="kr-converto-footer__logo" href="index.html" aria-label="Kyraa Style home">KYRAA STYLE</a>
             <p>Curated Indian fashion for every celebration, crafted with a modern point of view.</p>
           </div>
           <section>
@@ -38,18 +38,18 @@
           <section>
             <h2>Social</h2>
             <ul>
-              <li><a href="https://www.facebook.com/kryafasions" target="_blank" rel="noreferrer">Facebook</a></li>
-              <li><a href="https://in.linkedin.com/company/aza-fashions" target="_blank" rel="noreferrer">LinkedIn</a></li>
-              <li><a href="https://www.instagram.com/kryafasions/" target="_blank" rel="noreferrer">Instagram</a></li>
-              <li><a href="https://twitter.com/aza_fashions" target="_blank" rel="noreferrer">X / Twitter</a></li>
+              <li><a href="https://www.facebook.com/kyraastyle" target="_blank" rel="noreferrer">Facebook</a></li>
+              <li><a href="https://in.linkedin.com/company/Kyraastyle" target="_blank" rel="noreferrer">LinkedIn</a></li>
+              <li><a href="https://www.instagram.com/kryaaastyle/" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://twitter.com/kyraastyle" target="_blank" rel="noreferrer">X / Twitter</a></li>
             </ul>
           </section>
         </div>
         <div class="kr-converto-footer__meta">
-          <p>&copy; 2025 Kryaa Style. All rights reserved.</p>
-          <p>Design by Kryaa Style &ndash; Powered by fashion.</p>
+          <p>&copy; 2025 Kyraa Style. All rights reserved.</p>
+          <p>Design by Kyraa Style &ndash; Powered by fashion.</p>
         </div>
-        <div class="kr-converto-footer__name" aria-hidden="true">KRYAA STYLE</div>
+        <div class="kr-converto-footer__name" aria-hidden="true">KYRAA STYLE</div>
       </div>
     </footer>`;
 

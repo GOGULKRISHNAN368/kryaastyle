@@ -12,7 +12,7 @@
     const favicon = document.createElement('link');
     favicon.rel = 'icon';
     favicon.type = 'image/png';
-    favicon.href = '../images/Fevicon_Img.png';
+    favicon.href = 'images/favicon.png';
     document.head.appendChild(favicon);
   }
 

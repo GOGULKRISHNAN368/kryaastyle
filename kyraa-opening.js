@@ -12,7 +12,7 @@
     storeUrl: window.KYRAA_STORE_URL || 'store/category.html',
     imagesToPreload: [
       'image/kyraastyle-logo.svg',
-      'images/Fevicon_Img.png',
+      'store/images/favicon.png',
       'image/banner-desktop-clean.jpg',
       'image/banner-mobile-photo.jpg'
     ]

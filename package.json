@@ -1,7 +1,7 @@
 {
-  "name": "kryaastyle",
+  "name": "kyraastyle",
   "version": "1.0.0",
-  "description": "Kryaa Style website",
+  "description": "KyraaStyle fashion e-commerce website",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js",

@@ -1,12 +1,11 @@
-# KyraaStyle — Luxury Indian Designer Fashion
+# Kyraa Style
 
-KyraaStyle is a static fashion storefront with a champagne-silk opening screen and locally captured catalogue pages.
+Kyraa Style is a static fashion storefront with a champagne-silk opening screen and a single storefront homepage.
 
 ## Pages
 
-- Homepage: `store/men.html`
-- Opening screen: `opening.html`
-- Men’s collection: `store/men.html`
+- Opening screen: `index.html`
+- Storefront homepage: `kyraastyle.com/index.html`
 - Category catalogue: `store/category.html`
 
 ## Run locally
@@ -15,6 +14,6 @@ KyraaStyle is a static fashion storefront with a champagne-silk opening screen a
 npm start
 ```
 
-Then open [http://localhost:3000/](http://localhost:3000/). Use `/store/index.html` to bypass the opening screen.
+Then open [http://localhost:3000/](http://localhost:3000/). The opening screen continues automatically, or you can tap it to open the storefront immediately.
 
 The product photography and catalogue data are preserved from the captured storefront. External asset and social URLs remain unchanged until KyraaStyle-owned production endpoints are available.

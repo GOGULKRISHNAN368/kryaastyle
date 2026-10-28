@@ -1,5 +1,5 @@
 /**
- * KYRAASTYLE - FULLSCREEN LUXURY OPENING & LOADING SCREEN
+ * KRYAA STYLES - FULLSCREEN LUXURY OPENING & LOADING SCREEN
  * Pleasant Warm Silk Template (~3.8s Display Duration)
  */
 
@@ -9,10 +9,11 @@
   const CONFIG = {
     // 3.8s duration (within the 3 to 5-second range)
     displayDuration: 3800,
-    storeUrl: window.KYRAA_STORE_URL || 'kyraastyle.com/index.html',
+    storeUrl: window.KRYAA_STORE_URL || 'kyraastyle.com/index.html',
     imagesToPreload: [
       'logo.png',
       'image/logo.png',
+      'images/Fevicon_Img.png',
       'image/banner-desktop-clean.jpg',
       'image/banner-mobile-photo.jpg'
     ]
@@ -40,10 +41,10 @@
     }
 
     try {
-      sessionStorage.setItem('kyraa_visited', 'true');
+      sessionStorage.setItem('kryaa_visited', 'true');
     } catch (e) {}
 
-    const stage = document.getElementById('kyraaStage');
+    const stage = document.getElementById('kryaaStage');
     if (stage) {
       stage.classList.add('exiting');
     }
@@ -63,7 +64,7 @@
     }, CONFIG.displayDuration);
 
     // Tap or click anywhere on the screen to enter immediately
-    const stage = document.getElementById('kyraaStage');
+    const stage = document.getElementById('kryaaStage');
     if (stage) {
       stage.addEventListener('click', () => {
         enterStore();

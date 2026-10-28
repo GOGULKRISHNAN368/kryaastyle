@@ -96,6 +96,6 @@ server.listen(PORT, () => {
   console.log(`\n==================================================`);
   console.log(`  KyraaStyle server running at:`);
   console.log(`  > Opening Page:  http://localhost:${PORT}/`);
-  console.log(`  > Direct Store:  http://localhost:${PORT}/store/index.html`);
+  console.log(`  > Storefront:    http://localhost:${PORT}/kyraastyle.com/index.html`);
   console.log(`==================================================\n`);
 });

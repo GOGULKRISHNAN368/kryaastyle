@@ -1,5 +1,5 @@
 /* ==========================================================================
-   KYRAASTYLE - PLEASANT LUXURY SILK BACKGROUND TEMPLATE
+   KRYAA STYLES - PLEASANT LUXURY SILK BACKGROUND TEMPLATE
    Features the official website logo & refined luxury tagline
    ========================================================================== */
 
@@ -43,7 +43,7 @@ html, body {
    PLEASANT FULLSCREEN STAGE
    ========================================================================== */
 
-.kyraa-fullscreen-stage {
+.kryaa-fullscreen-stage {
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -66,7 +66,7 @@ html, body {
 }
 
 /* Layer 1: Flowing Silk Folds / Satin Drapery Waves */
-.kyraa-silk-waves {
+.kryaa-silk-waves {
   position: absolute;
   inset: -30%;
   width: 160%;
@@ -102,7 +102,7 @@ html, body {
 }
 
 /* Layer 2: Moving Radiant Sheen */
-.kyraa-fullscreen-stage::before {
+.kryaa-fullscreen-stage::before {
   content: '';
   position: absolute;
   inset: -50%;
@@ -125,7 +125,7 @@ html, body {
 }
 
 /* Layer 3: Warm Ambient Vignette Border */
-.kyraa-fullscreen-stage::after {
+.kryaa-fullscreen-stage::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -137,7 +137,7 @@ html, body {
    CENTERPIECE BRAND SHOWCASE (OFFICIAL LOGO & REFINED TAGLINE)
    ========================================================================== */
 
-.kyraa-brand-showcase {
+.kryaa-brand-showcase {
   position: relative;
   z-index: 20;
   display: flex;
@@ -162,7 +162,7 @@ html, body {
 }
 
 /* Official Website Brand Logo */
-.kyraa-official-logo {
+.kryaa-official-logo {
   display: block;
   max-width: clamp(230px, 34vw, 380px);
   width: 100%;
@@ -186,7 +186,7 @@ html, body {
 }
 
 /* Refined Poetic Brand Tagline */
-.kyraa-tagline {
+.kryaa-tagline {
   font-family: var(--kr-font-sans);
   font-size: clamp(10.5px, 1.6vw, 13.5px);
   font-weight: 500;
@@ -211,7 +211,7 @@ html, body {
 }
 
 /* Celestial Sparkle / Diamond Ornament */
-.kyraa-sparkle-ornament {
+.kryaa-sparkle-ornament {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -225,13 +225,13 @@ html, body {
   100% { opacity: 1; }
 }
 
-.kyraa-sparkle-line {
+.kryaa-sparkle-line {
   width: clamp(26px, 4vw, 38px);
   height: 1px;
   background: linear-gradient(90deg, transparent, #b0a395, transparent);
 }
 
-.kyraa-sparkle-star {
+.kryaa-sparkle-star {
   font-size: clamp(12px, 1.8vw, 15px);
   color: var(--kr-sparkle);
   animation: starBreathe 3s ease-in-out infinite;
@@ -252,7 +252,7 @@ html, body {
 }
 
 /* Subtle Tap Cue at Bottom */
-.kyraa-tap-hint {
+.kryaa-tap-hint {
   position: absolute;
   bottom: clamp(22px, 3.8vh, 38px);
   font-size: 10px;
@@ -274,7 +274,7 @@ html, body {
    EXIT TRANSITION
    ========================================================================== */
 
-.kyraa-fullscreen-stage.exiting {
+.kryaa-fullscreen-stage.exiting {
   opacity: 0;
   transform: scale(1.04);
   filter: blur(6px);
@@ -286,12 +286,12 @@ html, body {
    ========================================================================== */
 
 @media (max-width: 480px) {
-  .kyraa-official-logo {
+  .kryaa-official-logo {
     max-width: 220px;
     margin-bottom: 14px;
   }
 
-  .kyraa-tagline {
+  .kryaa-tagline {
     font-size: 9.5px;
     letter-spacing: 0.32em;
     text-indent: 0.32em;

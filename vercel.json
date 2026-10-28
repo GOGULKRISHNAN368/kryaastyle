@@ -2,44 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "buildCommand": null,
-  "outputDirectory": ".",
-  "redirects": [
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "skip", "value": "1" }],
-      "destination": "/store/men.html",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "has": [{ "type": "query", "key": "store", "value": "1" }],
-      "destination": "/store/men.html",
-      "permanent": false
-    },
-    {
-      "source": "/www.azafashions.com/index.html",
-      "destination": "/store/men.html",
-      "permanent": false
-    },
-    {
-      "source": "/www.azafashions.com/men.html",
-      "destination": "/store/category.html",
-      "permanent": false
-    },
-    {
-      "source": "/www.azafashions.com/category.html",
-      "destination": "/store/category.html",
-      "permanent": false
-    },
-    {
-      "source": "/index.html",
-      "destination": "/store/men.html",
-      "permanent": false
-    },
-    {
-      "source": "/",
-      "destination": "/store/men.html",
-      "permanent": false
-    }
-  ]
+  "outputDirectory": "."
 }

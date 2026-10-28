@@ -33,13 +33,6 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
-  // The captured storefront homepage is the site root.
-  if (pathname === '/' || pathname === '') {
-    res.writeHead(302, { Location: '/store/men.html' });
-    res.end();
-    return;
-  }
-
   // Security check: prevent directory traversal
   let safePath = path.normalize(path.join(ROOT_DIR, pathname));
   if (!safePath.startsWith(ROOT_DIR)) {

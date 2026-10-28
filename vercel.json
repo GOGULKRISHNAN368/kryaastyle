@@ -12,6 +12,21 @@
       "has": [{ "type": "query", "key": "store", "value": "1" }],
       "destination": "/store/index.html",
       "permanent": false
+    },
+    {
+      "source": "/www.azafashions.com/index.html",
+      "destination": "/store/index.html",
+      "permanent": false
+    },
+    {
+      "source": "/www.azafashions.com/men.html",
+      "destination": "/store/men.html",
+      "permanent": false
+    },
+    {
+      "source": "/www.azafashions.com/category.html",
+      "destination": "/store/category.html",
+      "permanent": false
     }
   ]
 }

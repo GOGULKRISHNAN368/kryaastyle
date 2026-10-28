@@ -6,6 +6,16 @@
 (() => {
   'use strict';
 
+  // Keep the browser tab branded while the captured storefront is loading.
+  document.title = 'KyraaStyle | Curated For Every Celebration';
+  if (document.head && !document.querySelector('link[rel~="icon"]')) {
+    const favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.type = 'image/png';
+    favicon.href = '../images/Fevicon_Img.png';
+    document.head.appendChild(favicon);
+  }
+
   // Check URL parameters: ?skip=1 bypasses loader
   const urlParams = new URLSearchParams(window.location.search);
   const forceSkip = urlParams.get('skip') === '1';

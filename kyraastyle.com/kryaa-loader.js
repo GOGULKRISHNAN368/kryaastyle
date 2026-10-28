@@ -234,7 +234,7 @@
     let ticking = false;
 
     const updateNavigation = () => {
-      nav.classList.toggle('kr-editorial-nav--solid', window.scrollY > 10);
+      nav.classList.toggle('kr-editorial-nav--solid', window.scrollY > 24);
       ticking = false;
     };
 

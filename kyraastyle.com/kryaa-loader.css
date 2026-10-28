@@ -14,7 +14,7 @@
   height: 100vh;
   height: 100dvh;
   z-index: 99999999;
-  background: radial-gradient(ellipse at 50% 38%, #ffffff 0%, #fdfaf6 28%, #f7f1e7 56%, #efe4d5 82%, #e5d6c2 100%);
+  background: radial-gradient(ellipse at 50% 38%, #0d0d0d 0%, #0d0d0d 28%, #050505 56%, #090909 82%, #0f0e0e 100%);
   display: flex;
   flex-direction: column;
   align-items: center;

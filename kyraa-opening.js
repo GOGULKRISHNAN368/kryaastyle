@@ -9,7 +9,7 @@
   const CONFIG = {
     // 3.8s duration (within the 3 to 5-second range)
     displayDuration: 3800,
-    storeUrl: window.KYRAA_STORE_URL || 'store/index.html',
+    storeUrl: window.KYRAA_STORE_URL || 'store/category.html',
     imagesToPreload: [
       'image/kyraastyle-logo.svg',
       'images/Fevicon_Img.png',

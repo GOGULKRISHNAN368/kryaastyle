@@ -33,15 +33,11 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
   let pathname = decodeURIComponent(parsedUrl.pathname);
 
-  // If root requested, serve the Grand Opening & Loading Page
+  // The captured storefront homepage is the site root.
   if (pathname === '/' || pathname === '') {
-    const query = parsedUrl.query || '';
-    if (query.includes('skip=1') || query.includes('store=1')) {
-      res.writeHead(302, { Location: '/store/index.html' });
-      res.end();
-      return;
-    }
-    return serveFile(path.join(ROOT_DIR, 'index.html'), res);
+    res.writeHead(302, { Location: '/store/men.html' });
+    res.end();
+    return;
   }
 
   // Security check: prevent directory traversal

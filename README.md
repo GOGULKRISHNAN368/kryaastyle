@@ -4,8 +4,8 @@ KyraaStyle is a static fashion storefront with a champagne-silk opening screen a
 
 ## Pages
 
-- Opening screen: `index.html` (or `opening.html`)
-- Storefront: `store/index.html`
+- Homepage: `store/men.html`
+- Opening screen: `opening.html`
 - Men’s collection: `store/men.html`
 - Category catalogue: `store/category.html`
 

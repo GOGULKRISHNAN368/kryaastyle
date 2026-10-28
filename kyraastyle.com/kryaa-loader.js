@@ -23,7 +23,7 @@
       <!-- Centerpiece Brand Showcase -->
       <div class="kr-loader-center">
         <!-- Official Website Logo -->
-        <img src="logo.png" alt="Kryaa Style" class="kr-loader-official-logo" decoding="async">
+        <img src="../image/logo.png" alt="Kryaa Style" class="kr-loader-official-logo" decoding="async">
 
         <!-- Refined Brand Tagline -->
         <p class="kr-loader-tagline">CURATED FOR EVERY CELEBRATION</p>

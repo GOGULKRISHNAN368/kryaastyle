@@ -95,9 +95,9 @@
 }
 
 .kr-editorial-nav.kr-editorial-nav--solid {
-  background: rgba(255, 255, 255, .98);
-  border-bottom-color: rgba(35, 28, 24, .14);
-  box-shadow: 0 1px 18px rgba(31, 24, 19, .09);
+  background: rgba(3, 4, 7, .98);
+  border-bottom-color: rgba(255, 255, 255, .14);
+  box-shadow: 0 1px 18px rgba(0, 0, 0, .28);
 }
 
 .kr-editorial-nav:not(.kr-editorial-nav--solid) .kr-editorial-menu a,
@@ -123,22 +123,22 @@
 }
 
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-logo img {
-  filter: none;
+  filter: brightness(0) invert(1);
 }
 
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-menu a,
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-icon {
-  color: #24201d;
+  color: rgba(255, 255, 255, .96);
 }
 
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-menu a::after,
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-menu-toggle__bar {
-  background: #24201d;
+  background: #fff;
 }
 
 .kr-editorial-nav.kr-editorial-nav--solid .kr-editorial-bag-count {
-  background: #24201d;
-  color: #fff;
+  background: #fff;
+  color: #1e1916;
 }
 
 @media (max-width: 900px) {

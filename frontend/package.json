@@ -1,10 +1,1 @@
-{
-  "name": "kyraastyle-frontend",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Kyraa Style browser pages and static assets",
-  "scripts": {
-    "dev": "node ../backend/server.js",
-    "start": "node ../backend/server.js"
-  }
-}
+{"name":"kyraastyle-frontend","version":"1.0.0","private":true,"description":"Kyraa Style React storefront","scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},"dependencies":{"react":"latest","react-dom":"latest","react-router-dom":"latest"},"devDependencies":{"@vitejs/plugin-react":"latest","vite":"latest"}}

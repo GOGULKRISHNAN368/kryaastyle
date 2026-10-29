@@ -4,6 +4,7 @@ hts-log.txt
 cookies.txt
 .vercel
 node_modules/
+frontend/dist/
 .env
 .env.*
 !.env.example

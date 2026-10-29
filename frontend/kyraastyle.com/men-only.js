@@ -39,56 +39,56 @@
     {
       title: 'Wedding',
       image: '../images/Wedding.png',
-      href: 'category.html?edit=wedding'
+      href: '../store/category.html?edit=wedding'
     },
     {
       title: 'Sangeet',
       image: '../images/sangeet.png',
-      href: 'category.html?edit=sangeet'
+      href: '../store/category.html?edit=sangeet'
     },
     {
       title: 'Reception & Cocktail',
       image: '../images/Reception.png',
-      href: 'category.html?edit=reception'
+      href: '../store/category.html?edit=reception'
     },
     {
       title: 'Festive',
       image: '../images/festival.png',
-      href: 'category.html?edit=festival'
+      href: '../store/category.html?edit=festival'
     },
     {
       title: 'Casuals',
       image: '../images/real-products/Casuals_Short_Tops_3.webp',
-      href: 'category.html?edit=casual'
+      href: '../store/category.html?edit=casual'
     },
     {
       title: 'Office Wear',
       image: '../images/real-products/Office_Wear_White_Kurti_3.webp',
-      href: 'category.html?edit=office-wear'
+      href: '../store/category.html?edit=office-wear'
     }
   ];
 
   const curatedTrendingLooks = [
-    { title: 'Ivory Garden Kurta Set', caption: 'Soft floral embroidery and a flowing dupatta bring a graceful touch to every day.', image: '../images/real-products/Curated_Ivory_Floral_Set.webp', href: 'category.html?category=salwar-suits' },
-    { title: 'Midnight Paisley Suit Set', caption: 'Rich embroidery gives this deep charcoal ensemble a striking, refined finish.', image: '../images/real-products/Curated_Midnight_Paisley_Black_Kurti_5.webp', href: 'category.html?category=chudi' },
-    { title: 'Paisley Tunic & Denim', caption: 'An easy sleeveless silhouette pairs with relaxed denim for a confident daytime look.', image: '../images/real-products/Curated_Modern_Kurta_Short_Tops_2.webp', href: 'category.html?category=short-tops' },
-    { title: 'Sapphire Embroidered Gown', caption: 'A midnight blue statement with delicate embroidery and a fluid finish.', image: '../image/newarrival4.jpg', href: 'category.html?category=full-frocks' },
-    { title: 'Golden Hour Celebration Suit', caption: 'A warm golden look designed for festive gatherings and special moments.', image: '../image/newarrival5.jpg', href: 'category.html?category=salwar-suits' },
-    { title: 'Teal Blossom Anarkali', caption: 'A teal embroidered silhouette with soft movement and timeless detail.', image: '../image/newarrival6.jpg', href: 'category.html?category=anarkali-suits' },
-    { title: 'Lavender Dream Gown', caption: 'Light lavender layers and delicate embellishment create an ethereal finish.', image: '../image/newarrival7.jpg', href: 'category.html?category=full-frocks' },
-    { title: 'Coral Garden Occasion Look', caption: 'A fresh coral palette with floral detailing for daytime celebrations.', image: '../image/newarrival8.jpg', href: 'category.html?category=full-frocks' },
-    { title: 'Ivory Lumière Embroidered Look', caption: 'Soft ivory embroidery brings understated elegance to occasion dressing.', image: '../image/newarrival9.jpg', href: 'category.html?category=kurti-sets' },
-    { title: 'Plum Royale Anarkali', caption: 'A rich plum tone and intricate finish make this a striking celebration look.', image: '../image/newarrival10.jpg', href: 'category.html?category=anarkali-suits' }
+    { title: 'Ivory Garden Kurta Set', caption: 'Soft floral embroidery and a flowing dupatta bring a graceful touch to every day.', image: '../images/real-products/Curated_Ivory_Floral_Set.webp', href: '../store/category.html?category=salwar-suits' },
+    { title: 'Midnight Paisley Suit Set', caption: 'Rich embroidery gives this deep charcoal ensemble a striking, refined finish.', image: '../images/real-products/Curated_Midnight_Paisley_Black_Kurti_5.webp', href: '../store/category.html?category=chudi' },
+    { title: 'Paisley Tunic & Denim', caption: 'An easy sleeveless silhouette pairs with relaxed denim for a confident daytime look.', image: '../images/real-products/Curated_Modern_Kurta_Short_Tops_2.webp', href: '../store/category.html?category=short-tops' },
+    { title: 'Sapphire Embroidered Gown', caption: 'A midnight blue statement with delicate embroidery and a fluid finish.', image: '../image/newarrival4.jpg', href: '../store/category.html?category=full-frocks' },
+    { title: 'Golden Hour Celebration Suit', caption: 'A warm golden look designed for festive gatherings and special moments.', image: '../image/newarrival5.jpg', href: '../store/category.html?category=salwar-suits' },
+    { title: 'Teal Blossom Anarkali', caption: 'A teal embroidered silhouette with soft movement and timeless detail.', image: '../image/newarrival6.jpg', href: '../store/category.html?category=anarkali-suits' },
+    { title: 'Lavender Dream Gown', caption: 'Light lavender layers and delicate embellishment create an ethereal finish.', image: '../image/newarrival7.jpg', href: '../store/category.html?category=full-frocks' },
+    { title: 'Coral Garden Occasion Look', caption: 'A fresh coral palette with floral detailing for daytime celebrations.', image: '../image/newarrival8.jpg', href: '../store/category.html?category=full-frocks' },
+    { title: 'Ivory Lumière Embroidered Look', caption: 'Soft ivory embroidery brings understated elegance to occasion dressing.', image: '../image/newarrival9.jpg', href: '../store/category.html?category=kurti-sets' },
+    { title: 'Plum Royale Anarkali', caption: 'A rich plum tone and intricate finish make this a striking celebration look.', image: '../image/newarrival10.jpg', href: '../store/category.html?category=anarkali-suits' }
   ];
 
   const shopByCategoryCards = [
-    { title: 'Chudi', image: '../images/real-products/Black_Kuti_3PieceSet_1.webp', href: 'category.html?category=chudi' },
-    { title: 'Short Tops', image: '../images/real-products/Short_Tops_2.webp', href: 'category.html?category=short-tops' },
-    { title: 'Full Frocks', image: '../image/category-full-frocks.png', href: 'category.html?category=full-frocks' },
-    { title: 'Kurti Sets', image: '../images/real-products/White_Kurti_1.webp', href: 'category.html?category=kurti-sets' },
-    { title: 'Sarees', image: '../image/category-sarees.png', href: 'category.html?category=sarees' },
-    { title: 'Salwar Suits', image: '../images/real-products/Salwar_Suits_1.webp', href: 'category.html?category=salwar-suits' },
-    { title: 'Anarkali Suits', image: '../image/category-anarkali-suits.png', href: 'category.html?category=anarkali-suits' }
+    { title: 'Chudi', image: '../images/real-products/Black_Kuti_3PieceSet_1.webp', href: '../store/category.html?category=chudi' },
+    { title: 'Short Tops', image: '../images/real-products/Short_Tops_2.webp', href: '../store/category.html?category=short-tops' },
+    { title: 'Full Frocks', image: '../image/category-full-frocks.png', href: '../store/category.html?category=full-frocks' },
+    { title: 'Kurti Sets', image: '../images/real-products/White_Kurti_1.webp', href: '../store/category.html?category=kurti-sets' },
+    { title: 'Sarees', image: '../image/category-sarees.png', href: '../store/category.html?category=sarees' },
+    { title: 'Salwar Suits', image: '../images/real-products/Salwar_Suits_1.webp', href: '../store/category.html?category=salwar-suits' },
+    { title: 'Anarkali Suits', image: '../image/category-anarkali-suits.png', href: '../store/category.html?category=anarkali-suits' }
   ];
 
 const kryaaLuxeSlides = [
@@ -338,7 +338,7 @@ const kryaaLuxeSlides = [
       if (!card || !section.contains(card)) return;
       if (event.target.closest('button')) return;
       event.preventDefault();
-      window.location.href = 'category.html?edit=new-arrivals';
+      window.location.href = '../store/category.html?edit=new-arrivals';
     });
     section.dataset.collectionLinksReady = 'true';
   };
@@ -1192,7 +1192,7 @@ const kryaaLuxeSlides = [
 
   const linkCuratedTilesToProducts = () => {
     document.querySelectorAll('.kr-curated__tile').forEach((tile) => {
-      tile.href = 'category.html';
+      tile.href = '../store/category.html';
     });
   };
 
@@ -2116,22 +2116,22 @@ const kryaaLuxeSlides = [
         <p>Modern Indian silhouettes selected for every celebration.</p>
       </div>
       <div class="kr-editors-picks__grid">
-        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="category.html?category=chudi">
+        <a class="kr-editors-picks__card kr-editors-picks__card--featured" href="../store/category.html?category=chudi">
           <img src="../images/real-products/Black_Kurti.webp" alt="Woman wearing a black embroidered kurti set" width="900" height="1350" loading="eager">
           <span class="kr-editors-picks__shade"></span>
           <span class="kr-editors-picks__copy"><small>EVERYDAY CLASSIC</small><strong>Black Kurti Elegance</strong><em>Shop kurti sets</em></span>
         </a>
-        <a class="kr-editors-picks__card" href="category.html?category=short-tops">
+        <a class="kr-editors-picks__card" href="../store/category.html?category=short-tops">
           <img src="../images/real-products/Short_Tops_2.webp" alt="Woman wearing a dark paisley sleeveless top" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
           <span class="kr-editors-picks__copy"><small>EASY DAY STYLE</small><strong>Paisley Sleeveless Top</strong><em>Shop short tops</em></span>
         </a>
-        <a class="kr-editors-picks__card" href="category.html?category=salwar-suits">
+        <a class="kr-editors-picks__card" href="../store/category.html?category=salwar-suits">
           <img src="../images/real-products/White_Kurti_1.webp" alt="Woman wearing a white floral kurti set" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
           <span class="kr-editors-picks__copy"><small>SOFT FLORAL EDIT</small><strong>Ivory Floral Kurti Set</strong><em>Shop kurti sets</em></span>
         </a>
-        <a class="kr-editors-picks__card" href="category.html?category=kurti-sets">
+        <a class="kr-editors-picks__card" href="../store/category.html?category=kurti-sets">
           <img src="../images/real-products/Green_Kurti_1.webp" alt="Woman wearing a green printed kurti" width="900" height="1350" loading="lazy">
           <span class="kr-editors-picks__shade"></span>
           <span class="kr-editors-picks__copy"><small>FRESH GREEN EDIT</small><strong>Emerald Everyday Kurti</strong><em>Shop kurti sets</em></span>

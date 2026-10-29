@@ -1,0 +1,13 @@
+{
+  "name": "kyraastyle-backend",
+  "version": "1.0.0",
+  "description": "Kyraa Style static frontend development server",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

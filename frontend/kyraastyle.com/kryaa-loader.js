@@ -152,7 +152,7 @@
         <a class="kr-editorial-logo" href="index.html" aria-label="Kryaa Style home"><img src="../image/logo.png" alt="Kryaa Style"></a>
         <nav aria-label="Main navigation"><ul class="kr-editorial-menu">
           <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="collection/men/kurta-sets.html">Shop</a></li>
+          <li><a href="../store/category.html?edit=new-arrivals">Shop</a></li>
           <li><a href="#collections">Collections</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#journal">Journal</a></li>
@@ -192,7 +192,7 @@
     const app = document.getElementById('__next');
     const main = app && app.querySelector('main');
     if (!app || !main) return;
-    main.insertAdjacentHTML('beforebegin', heroMarkup);
+    main.insertAdjacentHTML('beforebegin', heroMarkup.replace('collection/men/kurta-sets.html', '../store/category.html?edit=new-arrivals'));
     removeLegacyHero();
   }
 

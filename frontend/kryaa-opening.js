@@ -13,7 +13,7 @@
     imagesToPreload: [
       'logo.png',
       'image/logo.png',
-      'images/Fevicon_Img.png',
+      'image/kyraastyle-logo.svg',
       'image/banner-desktop-clean.jpg',
       'image/banner-mobile-photo.jpg'
     ]

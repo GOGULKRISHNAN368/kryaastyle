@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const path = require('node:path');
+const fs = require('node:fs');
 
 const app = express();
 const PORT = Number.parseInt(process.env.PORT || '3000', 10);
@@ -101,6 +102,93 @@ app.get('/api/products/:id', async (req, res) => {
     console.error('Product lookup failed:', error.message);
     res.status(500).json({ error: 'Unable to load product.' });
   }
+});
+
+// Public, read-only content bridge for the customer storefront. Admin writes
+// remain protected by the separate admin API; this endpoint only returns data
+// intended to be visible to shoppers.
+function storefrontCategoryKey(name) {
+  return String(name || '').normalize('NFKD').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'category';
+}
+
+function storefrontImageUrl(cloudinaryId, width = 800) {
+  const safeWidth = Number.isFinite(Number(width)) && Number(width) > 0 ? Math.min(Number(width), 1200) : 800;
+  return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto:best,c_limit,w_${safeWidth}/${encodeURIComponent(cloudinaryId).replace(/%2F/g, '/')}`;
+}
+
+app.get('/api/storefront/content', async (_req, res) => {
+  try {
+    const db = mongoose.connection.db;
+    const now = new Date();
+    const [products, settings, announcements, coupons, reels, instagramPosts] = await Promise.all([
+      Product.find({ isActive: { $ne: false } }).sort({ section: 1, position: 1, name: 1 }).lean(),
+      db.collection('settings').findOne({ _id: 'productCategories' }),
+      db.collection('admin_announcements').find({}).sort({ createdAt: -1 }).toArray(),
+      db.collection('admin_coupons').find({ isActive: true, expiryDate: { $gte: now }, $or: [{ usageLimit: null }, { $expr: { $lt: ['$usedCount', '$usageLimit'] } }] }).sort({ createdAt: -1 }).toArray(),
+      db.collection('admin_reels').find({ isActive: { $ne: false } }).sort({ createdAt: -1 }).toArray(),
+      db.collection('admin_instagram_posts').find({}).sort({ position: 1, createdAt: -1 }).toArray(),
+    ]);
+    const ids = products.map((product) => product._id);
+    const [details, categoryDetails] = await Promise.all([
+      ids.length ? db.collection('admin_dress_details').find({ _id: { $in: ids } }).toArray() : [],
+      db.collection('admin_category_details').find({}).toArray(),
+    ]);
+    const detailsByProduct = new Map(details.map((item) => [String(item._id), item]));
+    const productPayload = products.map((product) => {
+      const dress = detailsByProduct.get(String(product._id)) || {};
+      return {
+        id: String(product._id), name: product.name, category: product.category, section: product.section || '',
+        position: product.position || 0, imageUrl: productWithImage(product).imageUrl, alt: product.alt || product.name,
+        price: product.price ?? null, description: product.description || '', link: product.link || '',
+        oldPrice: dress.oldPrice ?? null, sizes: dress.sizes || [],
+        images: (dress.images || []).map((image) => ({ imageUrl: storefrontImageUrl(image.cloudinaryId, image.width), width: image.width, height: image.height })),
+        isNewArrival: Boolean(dress.isNewArrival), isBestSeller: Boolean(dress.isBestSeller), isCuratedLook: Boolean(dress.isCuratedLook),
+      };
+    });
+    const countByCategory = new Map();
+    productPayload.forEach((product) => countByCategory.set(product.category, (countByCategory.get(product.category) || 0) + 1));
+    const categoryById = new Map(categoryDetails.map((item) => [item._id, item]));
+    const categoryNames = Array.isArray(settings?.categories) ? settings.categories : [];
+    const categories = categoryNames.map((name) => {
+      const key = storefrontCategoryKey(name);
+      const metadata = categoryById.get(key);
+      const productCover = productPayload.find((product) => product.category === name);
+      return {
+        id: key, name, description: metadata?.description || '',
+        imageUrl: metadata?.cloudinaryId ? storefrontImageUrl(metadata.cloudinaryId, metadata.width || 600) : productCover?.imageUrl || '',
+        productCount: countByCategory.get(name) || 0,
+      };
+    });
+    const couponPayload = coupons.filter((coupon) => coupon.usageLimit == null || coupon.usedCount < coupon.usageLimit).map((coupon) => ({
+      code: coupon.code, expiryDate: coupon.expiryDate, discountType: coupon.discountType,
+      discountValue: coupon.discountValue, minimumPurchase: coupon.minimumPurchase || 0,
+      applicableProductIds: (coupon.applicableProductIds || []).map(String),
+    }));
+    const reelPayload = reels.map((reel) => ({
+      id: String(reel._id), category: reel.category, productName: reel.productName,
+      mediaType: reel.mediaType || 'video', mediaUrl: reel.mediaUrl, thumbnailUrl: reel.thumbnailUrl,
+    }));
+    const instagramPayload = instagramPosts.map((post) => ({
+      id: String(post._id), alt: post.originalName || 'Kryaa Style collection',
+      imageUrl: `/api/storefront/instagram-posts/${post._id}/image`,
+    }));
+    res.set('Cache-Control', 'no-store');
+    res.json({ data: { products: productPayload, categories, announcements: announcements.map(({ _id, text, createdAt }) => ({ id: String(_id), text, createdAt })), coupons: couponPayload, reels: reelPayload, instagramPosts: instagramPayload } });
+  } catch (error) {
+    console.error('Storefront content lookup failed:', error.message);
+    res.status(500).json({ error: 'Unable to load storefront content.' });
+  }
+});
+
+app.get('/api/storefront/instagram-posts/:id/image', async (req, res) => {
+  try {
+    if (!/^[a-f\d]{24}$/i.test(req.params.id)) return res.sendStatus(404);
+    const post = await mongoose.connection.db.collection('admin_instagram_posts').findOne({ _id: new mongoose.Types.ObjectId(req.params.id) });
+    if (!post || !/^[a-f\d]{24}\.(jpg|png|webp|avif)$/.test(post.fileName || '')) return res.sendStatus(404);
+    const imagePath = path.resolve(__dirname, 'admin', 'api', 'uploads', 'instagram', post.fileName);
+    res.set({ 'Content-Type': post.mimeType, 'Cache-Control': 'public, max-age=3600', 'X-Content-Type-Options': 'nosniff' });
+    fs.createReadStream(imagePath).on('error', () => { if (!res.headersSent) res.sendStatus(404); }).pipe(res);
+  } catch (_error) { res.sendStatus(404); }
 });
 
 // Preserve the existing upload route and its `media` collection.

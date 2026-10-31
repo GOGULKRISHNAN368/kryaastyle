@@ -4,3 +4,4 @@ hts-log.txt
 cookies.txt
 .vercel
 .env*
+!.env

@@ -2,3 +2,8 @@
 hts-cache/
 hts-log.txt
 cookies.txt
+.vercel
+node_modules/
+.env
+.env.*
+!.env.example
